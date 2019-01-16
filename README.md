@@ -1,8 +1,7 @@
 # Command and Data Handling (CDH) for TSAT5
 This repository contains software for the TSAT5 (2018-2020) Command and Data Handling (CDH) board. The directory structure is like so:
-
-/cdh-tsat5-libero contains the Libero project required for configuring the device.
-/cdh-tsat5-softconsole contains the SoftConsole project required to write and debug the software.
+- /cdh-tsat5-libero contains the Libero project required for configuring the device.
+- /cdh-tsat5-softconsole contains the SoftConsole project required to write and debug the software.
 
 
 ## Build Steps
