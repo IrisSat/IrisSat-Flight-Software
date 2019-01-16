@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="drcss.xsl"?>
+<drcreport>
+  <header>cdh_tsat5_system</header>
+  <drc>
+    <status>C:\Microsemi\Libero_SoC_v11.9\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output pin cdh_tsat5_system_sb_0:FAB_CCC_GL0</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/cdh_tsat5_system/pins/cdh_tsat5_system_sb_0:FAB_CCC_GL0</crossprobe>
+  </drc>
+  <drc>
+    <status>C:\Microsemi\Libero_SoC_v11.9\Designer/data/drcreport\warn.png</status>
+    <StatusMessage>Warning</StatusMessage>
+    <message>Floating Driver</message>
+    <detail>Floating output pin cdh_tsat5_system_sb_0:FAB_CCC_LOCK</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/cdh_tsat5_system/pins/cdh_tsat5_system_sb_0:FAB_CCC_LOCK</crossprobe>
+  </drc>
+</drcreport>

@@ -1,0 +1,24 @@
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------
+# UMSATS 2018-2020
+#
+# Repository:
+#  Github: https://github.com/UMSATS/cdh-tsat5
+#
+# File Description:
+#  Gitignores for cdh-tsat5.
+#
+# History
+# 2019-01-16 by Tamkin Rahman
+# - Created.
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# SoftConsole 4.0 ignores:
+
+# Created for workspace.
+.metadata/
+RemoteSystemsTempFiles/
+
+# Created for builds.
+cdh-tsat5-softconsole/.settings/
+cdh-tsat5-softconsole/[Dd]ebug/
+cdh-tsat5-softconsole/[Rr]elease/
