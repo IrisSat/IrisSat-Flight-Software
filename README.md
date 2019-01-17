@@ -6,7 +6,7 @@ This repository contains software for the TSAT5 (2018-2020) Command and Data Han
 
 ## Build Steps
 
-## Required hardware
+### Required hardware
 This project requires the Microsemi Smartfusion2 Maker Board.
 
 ### Required Software
