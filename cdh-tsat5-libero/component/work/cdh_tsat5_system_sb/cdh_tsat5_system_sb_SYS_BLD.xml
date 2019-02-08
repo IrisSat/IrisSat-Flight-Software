@@ -2095,7 +2095,7 @@
 </row>
 <row>
  <cell>GL0_OUT_0_FREQ</cell>
- <cell>100.00</cell>
+ <cell>100</cell>
 </row>
 <row>
  <cell>GL1_IS_USED</cell>
@@ -3079,6 +3079,53 @@
 </data>
 <separator/>
 <data>
+<name>CORESPI_0</name>
+<table>
+<header>
+ <cell>Name</cell>
+ <cell>Subsystem</cell>
+ <cell>Vendor</cell>
+ <cell>Version</cell>
+</header>
+<row>
+ <cell>CORESPI</cell>
+ <cell>MSS FIC_0 - MSS Master Subsystem</cell>
+ <cell>Actel</cell>
+ <cell>3.0.156</cell>
+</row>
+</table>
+<cdata>
+<name>Configuration</name>
+<table>
+<header>
+ <cell>Parameter</cell>
+ <cell>Value</cell>
+</header>
+<row>
+ <cell>FAMILY</cell>
+ <cell>15</cell>
+</row>
+<row>
+ <cell>HDL_license</cell>
+ <cell>U</cell>
+</row>
+<row>
+ <cell>testbench</cell>
+ <cell>None</cell>
+</row>
+<row>
+ <cell>USE_MASTER</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>USE_SLAVE</cell>
+ <cell>0</cell>
+</row>
+</table>
+</cdata>
+</data>
+<separator/>
+<data>
 <name>MM_UART_0</name>
 <table>
 <header>
@@ -3592,6 +3639,11 @@
  <cell>Instance Name</cell>
  <cell>Instance Pins</cell>
 </header>
+<row>
+ <cell>cdh_tsat5_system_sb_MSS_0:MSS_INT_F2M[0]</cell>
+ <cell>CORESPI_0_0</cell>
+ <cell>interrupt, rx_data_ready, tx_reg_empty</cell>
+</row>
 </table>
 </data>
 <separator/>
@@ -3688,6 +3740,56 @@
 <row>
  <cell>GPIO_7_M2F</cell>
  <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>enable_master</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>enable_slave</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>m_miso</cell>
+ <cell>IN</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>m_mosi</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>m_sck</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>m_ss[7:0]</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>s_miso</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>s_mosi</cell>
+ <cell>IN</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>s_sck</cell>
+ <cell>IN</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>s_ss</cell>
+ <cell>IN</cell>
  <cell>-</cell>
 </row>
 </table>

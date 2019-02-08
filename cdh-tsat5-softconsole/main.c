@@ -111,6 +111,7 @@
 
 /* Application includes. */
 #include "leds.h"
+#include "spi.h"
 #include "uart.h"
 
 
@@ -172,6 +173,8 @@ static void prvSetupHardware( void )
 	/* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
 	 * UART 0 set to 115200 to connect to terminal */
 	vInitializeUARTs(MSS_UART_115200_BAUD);
+
+	init_spi();
 }
 /*-----------------------------------------------------------*/
 
