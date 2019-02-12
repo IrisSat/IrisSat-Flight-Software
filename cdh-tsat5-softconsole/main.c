@@ -2,14 +2,14 @@
 // UMSATS 2018-2020
 //
 // License:
-// 	Available under the GNU General Public License v3.0 (GPL-3.0-or-later)
+//  Available under the GNU General Public License v3.0 (GPL-3.0-or-later)
 //
 // Repository:
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
 //  Main entry point for the project. Created using the demo project given as a starting point:
-//	- https://www.digikey.com/eewiki/display/microcontroller/Getting+Started+with+the+Microsemi+SmartFusion+2+Maker-Board
+//    - https://www.digikey.com/eewiki/display/microcontroller/Getting+Started+with+the+Microsemi+SmartFusion+2+Maker-Board
 //
 // History
 // 2019-01-16 by Tamkin Rahman and Joseph Howarth
@@ -109,7 +109,7 @@
 #include "semphr.h"
 
 /* Driver includes. */
-#include "drivers/mss_uart/mss_uart.h"	// For baud rate defines and instances
+#include "drivers/mss_uart/mss_uart.h"    // For baud rate defines and instances
 
 /* Application includes. */
 #include "leds.h"
@@ -143,51 +143,51 @@ full information - including hardware setup requirements. */
 
 int main( void )
 {
-	BaseType_t status;
+    BaseType_t status;
 
-	/* Prepare the hardware to run this demo. */
-	prvSetupHardware();
+    /* Prepare the hardware to run this demo. */
+    prvSetupHardware();
 
-	// Create LED spinning task
-	status = xTaskCreate(	vTaskSpinLEDs,				// The task function that spins the LEDs
-							"LED Spinner",				// Text name for debugging
-							1000,						// Size of the stack allocated for this task
-							NULL,						// Task parameter is not used
-							1,							// Task runs at priority 1
-							NULL);						// Task handle is not used
+    // Create LED spinning task
+    status = xTaskCreate(    vTaskSpinLEDs,                // The task function that spins the LEDs
+                            "LED Spinner",                // Text name for debugging
+                            1000,                        // Size of the stack allocated for this task
+                            NULL,                        // Task parameter is not used
+                            1,                            // Task runs at priority 1
+                            NULL);                        // Task handle is not used
 
-	// Create UART0 RX Task
-	status = xTaskCreate(	vTaskUARTBridge,			// The task function that handles all UART RX events
-							"UART0 Receiver",			// Text name for debugging
-							1000,						// Size of the stack allocated for this task
-							(void *) &g_mss_uart0,		// Task parameter is the UART instance used by the task
-							2,							// Task runs at priority 2
-							&xUART0RxTaskToNotify);		// Task handle for task notification
+    // Create UART0 RX Task
+    status = xTaskCreate(    vTaskUARTBridge,            // The task function that handles all UART RX events
+                            "UART0 Receiver",            // Text name for debugging
+                            1000,                        // Size of the stack allocated for this task
+                            (void *) &g_mss_uart0,        // Task parameter is the UART instance used by the task
+                            2,                            // Task runs at priority 2
+                            &xUART0RxTaskToNotify);        // Task handle for task notification
 
-	status = xTaskCreate(vTestSPI,
-	                     "Test SPI",
-	                     1000,
-	                     NULL,
-	                     1,
-	                     NULL);
+    status = xTaskCreate(vTestSPI,
+                         "Test SPI",
+                         1000,
+                         NULL,
+                         1,
+                         NULL);
 
-	vTaskStartScheduler();
+    vTaskStartScheduler();
 
-	return 0;
+    return 0;
 }
 
 /*-----------------------------------------------------------*/
 
 static void prvSetupHardware( void )
 {
-	/* Perform any configuration necessary to use the hardware peripherals on the board. */
-	vInitializeLEDs();
+    /* Perform any configuration necessary to use the hardware peripherals on the board. */
+    vInitializeLEDs();
 
-	/* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
-	 * UART 0 set to 115200 to connect to terminal */
-	vInitializeUARTs(MSS_UART_115200_BAUD);
+    /* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
+     * UART 0 set to 115200 to connect to terminal */
+    vInitializeUARTs(MSS_UART_115200_BAUD);
 
-	init_spi();
+    init_spi();
 }
 
 /*-----------------------------------------------------------*/
@@ -227,61 +227,61 @@ static void vTestSPI(void *pvParameters)
 
 void vApplicationMallocFailedHook( void )
 {
-	/* vApplicationMallocFailedHook() will only be called if
-	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
-	function that will get called if a call to pvPortMalloc() fails.
-	pvPortMalloc() is called internally by the kernel whenever a task, queue,
-	timer or semaphore is created.  It is also called by various parts of the
-	demo application.  If heap_1.c or heap_2.c are used, then the size of the
-	heap available to pvPortMalloc() is defined by configTOTAL_HEAP_SIZE in
-	FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
-	to query the size of free heap space that remains (although it does not
-	provide information on how the remaining heap might be fragmented). */
+    /* vApplicationMallocFailedHook() will only be called if
+    configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
+    function that will get called if a call to pvPortMalloc() fails.
+    pvPortMalloc() is called internally by the kernel whenever a task, queue,
+    timer or semaphore is created.  It is also called by various parts of the
+    demo application.  If heap_1.c or heap_2.c are used, then the size of the
+    heap available to pvPortMalloc() is defined by configTOTAL_HEAP_SIZE in
+    FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
+    to query the size of free heap space that remains (although it does not
+    provide information on how the remaining heap might be fragmented). */
 
  // TODO - Log event!
 
-	taskDISABLE_INTERRUPTS();
-	for( ;; );
+    taskDISABLE_INTERRUPTS();
+    for( ;; );
 }
 /*-----------------------------------------------------------*/
 
 void vApplicationIdleHook( void )
 {
-	/* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
-	to 1 in FreeRTOSConfig.h.  It will be called on each iteration of the idle
-	task.  It is essential that code added to this hook function never attempts
-	to block in any way (for example, call xQueueReceive() with a block time
-	specified, or call vTaskDelay()).  If the application makes use of the
-	vTaskDelete() API function (as this demo application does) then it is also
-	important that vApplicationIdleHook() is permitted to return to its calling
-	function, because it is the responsibility of the idle task to clean up
-	memory allocated by the kernel to any task that has since been deleted. */
+    /* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
+    to 1 in FreeRTOSConfig.h.  It will be called on each iteration of the idle
+    task.  It is essential that code added to this hook function never attempts
+    to block in any way (for example, call xQueueReceive() with a block time
+    specified, or call vTaskDelay()).  If the application makes use of the
+    vTaskDelete() API function (as this demo application does) then it is also
+    important that vApplicationIdleHook() is permitted to return to its calling
+    function, because it is the responsibility of the idle task to clean up
+    memory allocated by the kernel to any task that has since been deleted. */
 
 }
 /*-----------------------------------------------------------*/
 
 void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 {
-	( void ) pcTaskName;
-	( void ) pxTask;
+    ( void ) pcTaskName;
+    ( void ) pxTask;
 
-	/* Run time stack overflow checking is performed if
-	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
-	function is called if a stack overflow is detected. */
+    /* Run time stack overflow checking is performed if
+    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+    function is called if a stack overflow is detected. */
 
-	// TODO - Log event!
+    // TODO - Log event!
 
-	taskDISABLE_INTERRUPTS();
-	for( ;; );
+    taskDISABLE_INTERRUPTS();
+    for( ;; );
 }
 /*-----------------------------------------------------------*/
 
 void vApplicationTickHook( void )
 {
-	/* This function will be called by each tick interrupt if
-	configUSE_TICK_HOOK is set to 1 in FreeRTOSConfig.h.  User code can be
-	added here, but the tick hook is called from an interrupt context, so
-	code must not attempt to block, and only the interrupt safe FreeRTOS API
-	functions can be used (those that end in FromISR()). */
+    /* This function will be called by each tick interrupt if
+    configUSE_TICK_HOOK is set to 1 in FreeRTOSConfig.h.  User code can be
+    added here, but the tick hook is called from an interrupt context, so
+    code must not attempt to block, and only the interrupt safe FreeRTOS API
+    functions can be used (those that end in FromISR()). */
 }
 /*-----------------------------------------------------------*/
