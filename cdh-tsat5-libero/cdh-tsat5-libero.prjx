@@ -459,8 +459,8 @@ PARENT="<project>\component\Actel\SmartFusion2MSS\MSS\1.1.500\MSS.cxf"
 ENDFILE
 VALUE "<project>\simulation\subsystem.bfm,sim"
 STATE="utd"
-TIME="1549580562"
-SIZE="759"
+TIME="1549581102"
+SIZE="791"
 PARENT="<project>\component\work\cdh_tsat5_system\cdh_tsat5_system.cxf"
 PARENT="<project>\component\work\cdh_tsat5_system_sb\cdh_tsat5_system_sb.cxf"
 ENDFILE
@@ -478,23 +478,23 @@ PARENT="<project>\component\work\cdh_tsat5_system_sb_MSS\cdh_tsat5_system_sb_MSS
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.edn,syn_edn"
 STATE="utd"
-TIME="1549580562"
-SIZE="108129"
+TIME="1549581265"
+SIZE="301297"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.so,so"
 STATE="utd"
-TIME="1549580562"
-SIZE="246"
+TIME="1549581265"
+SIZE="262"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_sdc.sdc,syn_sdc"
 STATE="utd"
-TIME="1549580562"
+TIME="1549581265"
 SIZE="1116"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_syn.prj,prj"
 STATE="utd"
-TIME="1549580562"
-SIZE="3104"
+TIME="1549581265"
+SIZE="4444"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -667,8 +667,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\synplify_pro.exe"
-PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
-BATCH=1
+PARAM=""
+BATCH=0
 LICENSE=""
 IS32BIT="1"
 EndProfile

@@ -14,6 +14,8 @@
 // History
 // 2019-01-16 by Tamkin Rahman and Joseph Howarth
 // - Removed UART1 and IoT node code.
+// 2019-02-08 by Tamkin Rahman
+// - Add test code for SPI.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -123,6 +125,11 @@ extern TaskHandle_t xUART0RxTaskToNotify;
  */
 static void prvSetupHardware( void );
 
+/*
+ * Test code for CoreSPI.
+ */
+static void vTestSPI(void *pvParameters);
+
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
 void vApplicationMallocFailedHook( void );
@@ -157,6 +164,12 @@ int main( void )
 							2,							// Task runs at priority 2
 							&xUART0RxTaskToNotify);		// Task handle for task notification
 
+	status = xTaskCreate(vTestSPI,
+	                     "Test SPI",
+	                     1000,
+	                     NULL,
+	                     1,
+	                     NULL);
 
 	vTaskStartScheduler();
 
@@ -176,6 +189,40 @@ static void prvSetupHardware( void )
 
 	init_spi();
 }
+
+/*-----------------------------------------------------------*/
+static void vTestSPI(void *pvParameters)
+{
+    uint8_t test_cmd[] = {0x55, 0x56};
+    uint8_t test_wr[] = {0x01, 0x02, 0x03, 0x04, 0x05};
+    uint8_t test_rd[4];
+
+    const TickType_t xDelay1000ms = pdMS_TO_TICKS(1000);
+
+    for (;;)
+    {
+        // Write a block every second.
+        spi_rtos_block_write(
+                    CORE_SPI_0,
+                    SPI_SLAVE_0,
+                    test_cmd,
+                    sizeof(test_cmd) / sizeof(test_cmd[0]),
+                    test_wr,
+                    sizeof(test_wr) / sizeof(test_wr[0])
+                );
+
+        spi_rtos_block_read(
+                    CORE_SPI_0,
+                    SPI_SLAVE_0,
+                    test_cmd,
+                    sizeof(test_cmd) / sizeof(test_cmd[0]),
+                    test_rd,
+                    sizeof(test_rd) / sizeof(test_rd[0])
+                );
+        vTaskDelay(xDelay1000ms);
+    }
+}
+
 /*-----------------------------------------------------------*/
 
 void vApplicationMallocFailedHook( void )
@@ -190,6 +237,9 @@ void vApplicationMallocFailedHook( void )
 	FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
 	to query the size of free heap space that remains (although it does not
 	provide information on how the remaining heap might be fragmented). */
+
+ // TODO - Log event!
+
 	taskDISABLE_INTERRUPTS();
 	for( ;; );
 }
@@ -218,6 +268,9 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 	/* Run time stack overflow checking is performed if
 	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
 	function is called if a stack overflow is detected. */
+
+	// TODO - Log event!
+
 	taskDISABLE_INTERRUPTS();
 	for( ;; );
 }

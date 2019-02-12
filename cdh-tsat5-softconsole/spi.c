@@ -8,44 +8,107 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  SPI tasks and functions. Currently contains test code.
+//  SPI tasks and functions for SPI masters. Functions with "rtos" in their name must be called from a FreeRTOS thread, as they use mutex
+//  objects to manage use of the core.
 //
 // History
 // 2019-02-08 by Tamkin Rahman
 // - Created.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// INCLUDES
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include "spi.h"
+
 #include "cdh_tsat5_system_hw_platform.h" // Contains the address of the CORE_SPI instance for the driver.
-#include "drivers/CoreSPI/core_spi.h"	// Contains the interface for the CoreSPI drivers.
+#include "FreeRTOS.h"
+#include "semphr.h"
 
-SPI_instance_t core_spi_0; // Initialized by CoreSPI initialization function.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// GLOBALS
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPI_instance_t core_spi[NUM_SPI_INSTANCES]; // Initialized by CoreSPI initialization function.
+SemaphoreHandle_t core_lock[NUM_SPI_INSTANCES]; // Semaphores for the mutex locks. Seems to be that for short operations (e.g. even 80 ms), a mutex is good: http://www.openrtos.net/FreeRTOS_Support_Forum_Archive/December_2014/freertos_FreeRTOS_FatFs_Works_only_with_taskENTER_CRITICAL_5dc853ffj.html
 
-void init_spi()
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// FUNCTIONS
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+int init_spi()
 {
-	// NOTE: Look at core_spi.h for descriptions for all the functions used.
-	uint8_t test_tx = 0x55;
-	uint8_t test_rx = 0x99;
+    int rc = 1;
 
-	// Initialize the core SPI instance. Note that with PCLK_DIV_256, the clock period is ~2 us (i.e. 256 / 144 MHz).
-	// With PCLK_DIV_128, the clock period is ~1 us. And so on. Keep this in mind when using a
-	// logic analyzer, as depending on the sample rate, it will not pick up the faster clock rates.
-	SPI_init(&core_spi_0, CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE2, PCLK_DIV_256);
-	SPI_enable(&core_spi_0);
+    for (int ix = 0; ix < NUM_SPI_INSTANCES; ix++)
+    {
+        core_lock[ix] = xSemaphoreCreateMutex();
+        if (core_lock[ix] == NULL)
+        {
+            rc = 0;
+            break; // Break out of this for loop.
+        }
+    }
 
-	// Optionally, you can configure a slave individually.
-	//SPI_configure(&core_spi_0, SPI_SLAVE_0, SPI_MODE2, PCLK_DIV_2, SPI_MSB_FIRST);
+    if (rc)
+    {
+      // Initialize the core SPI instance. Note that with PCLK_DIV_256, the clock period is ~2 us (i.e. 256 / 144 MHz).
+      // With PCLK_DIV_128, the clock period is ~1 us. And so on. Keep this in mind when using a
+      // logic analyzer, as depending on the sample rate, it will not pick up the faster clock rates.
+      SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE0, PCLK_DIV_256);
+    }
 
-	// Perform a slave select prior to writing any data.
-	SPI_slave_select(&core_spi_0, SPI_SLAVE_0);
+    return rc;
+}
 
-	// For some reason, this function doesn't seem to "just work" for writing a 8-bit value to SPI.
-	//rc = SPI_write_byte(&core_spi_0, &test_tx);
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPI_instance_t * get_spi_instance(CoreSPIInstance_t core)
+{
+    return &core_spi[core];
+}
 
-	// Use this "block_read" function instead to send a command, and then read in the data.
-	// SPI_block_read(&core_spi_0, &test_tx, 1, &test_rx, 1);
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+void spi_configure_slave(CoreSPIInstance_t core, SPI_slave_t slave, SPI_protocol_mode_t protocol_mode, SPI_pclk_div_t clk_rate, SPI_order_t data_xfer_order)
+{
+    SPI_configure(&core_spi[core], slave, protocol_mode, clk_rate, data_xfer_order);
+}
 
-	// Use this "block_write" function instead to send a command, and then send in the data.
-	SPI_block_write(&core_spi_0, &test_tx, 1, &test_rx, 1);
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+int spi_rtos_block_write(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * wr_buffer, int wr_size)
+{
+    int rc = 1;
+    if( xSemaphoreTake(core_lock[core], portMAX_DELAY) == pdTRUE )
+    {
+        SPI_enable(&core_spi[core]);
+        SPI_slave_select(&core_spi[core], slave);
+        SPI_block_write(&core_spi[core], cmd_buffer, cmd_size, wr_buffer, wr_size);
+        SPI_disable(&core_spi[core]);
 
-	SPI_disable(&core_spi_0);
+        xSemaphoreGive(core_lock[core]);
+    }
+    else
+    {
+        rc = 0;
+    }
+
+  return rc;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+int spi_rtos_block_read(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * rd_buffer, int rd_size)
+{
+    int rc = 1;
+    if( xSemaphoreTake(core_lock[core], portMAX_DELAY) == pdTRUE )
+    {
+        SPI_enable(&core_spi[core]);
+        SPI_slave_select(&core_spi[core], slave);
+        SPI_block_read(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
+        SPI_disable(&core_spi[core]);
+
+        xSemaphoreGive(core_lock[core]);
+    }
+    else
+    {
+        rc = 0;
+    }
+
+    return rc;
 }
