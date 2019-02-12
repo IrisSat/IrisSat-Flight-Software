@@ -4,7 +4,7 @@
 // UMSATS 2018-2020
 //
 // License:
-// 	Available under the GNU General Public License v3.0 (GPL-3.0-or-later)
+//  Available under the GNU General Public License v3.0 (GPL-3.0-or-later)
 //
 // Repository:
 //  Github: https://github.com/UMSATS/cdh-tsat5
@@ -28,8 +28,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 typedef enum
 {
-	CORE_SPI_0,
-	NUM_SPI_INSTANCES,
+    CORE_SPI_0,
+    NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
