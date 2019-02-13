@@ -14,6 +14,8 @@
 // History
 // 2019-01-16 by Tamkin Rahman and Joseph Howarth
 // - Removed UART1 and IoT node code.
+// 2019-02-08 by Tamkin Rahman
+// - Print the version string on request as well.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -37,6 +39,7 @@
 
 /* Application includes. */
 #include "uart.h"
+#include "version.h"
 
 #define UART_BUFFER_SIZE	128
 #define REPLY_QUEUE_SIZE	5
@@ -104,7 +107,14 @@ void vTaskUARTBridge(void *pvParameters)
 		}
 
 		uxBytesRead = strlen(copied_buffer);
-
+		for (int ix = 0; ix < uxBytesRead; ix++)
+		{
+			if (copied_buffer[ix] == 'v')
+			{
+				prvUARTSend(&g_mss_uart0, (const uint8_t *) CDH_SW_VERSION_STRING, strlen(CDH_SW_VERSION_STRING));
+				break;
+			}
+		}
 		/* Echo back all data to the terminal */
 		prvUARTSend(&g_mss_uart0, (const uint8_t *) copied_buffer, strlen(copied_buffer));
 

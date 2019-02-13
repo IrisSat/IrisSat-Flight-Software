@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Wed Jan 16 10:07:16 2019 
+# Date generated: Thu Feb 07 17:16:54 2019 
 
 
 # 
@@ -82,6 +82,30 @@ set_io MMUART_0_RXD_F2M  \
 set_io MMUART_0_TXD_M2F  \
     -pinname 2           \
     -fixed yes           \
+    -DIRECTION OUTPUT
+
+
+set_io m_miso         \
+    -pinname 21       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io m_mosi          \
+    -pinname 22        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io m_sck           \
+    -pinname 16        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io {m_ss[0]}       \
+    -pinname 92        \
+    -fixed yes         \
     -DIRECTION OUTPUT
 
 
