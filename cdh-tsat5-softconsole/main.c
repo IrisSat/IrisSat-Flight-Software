@@ -16,6 +16,8 @@
 // - Removed UART1 and IoT node code.
 // 2019-02-08 by Tamkin Rahman
 // - Add test code for SPI.
+// 2019-02-24 by Tamkin Rahman
+// - Update test code for SPI, and create a second task for SPI tests.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -149,23 +151,30 @@ int main( void )
     prvSetupHardware();
 
     // Create LED spinning task
-    status = xTaskCreate(    vTaskSpinLEDs,                // The task function that spins the LEDs
-                            "LED Spinner",                // Text name for debugging
+    status = xTaskCreate(    vTaskSpinLEDs,              // The task function that spins the LEDs
+                            "LED Spinner",               // Text name for debugging
                             1000,                        // Size of the stack allocated for this task
                             NULL,                        // Task parameter is not used
-                            1,                            // Task runs at priority 1
-                            NULL);                        // Task handle is not used
+                            1,                           // Task runs at priority 1
+                            NULL);                       // Task handle is not used
 
     // Create UART0 RX Task
     status = xTaskCreate(    vTaskUARTBridge,            // The task function that handles all UART RX events
                             "UART0 Receiver",            // Text name for debugging
                             1000,                        // Size of the stack allocated for this task
-                            (void *) &g_mss_uart0,        // Task parameter is the UART instance used by the task
-                            2,                            // Task runs at priority 2
-                            &xUART0RxTaskToNotify);        // Task handle for task notification
+                            (void *) &g_mss_uart0,       // Task parameter is the UART instance used by the task
+                            2,                           // Task runs at priority 2
+                            &xUART0RxTaskToNotify);      // Task handle for task notification
 
     status = xTaskCreate(vTestSPI,
                          "Test SPI",
+                         1000,
+                         NULL,
+                         1,
+                         NULL);
+
+    status = xTaskCreate(vTestSPI,
+                         "Test SPI2",
                          1000,
                          NULL,
                          1,
@@ -201,24 +210,28 @@ static void vTestSPI(void *pvParameters)
 
     for (;;)
     {
-        // Write a block every second.
-        spi_rtos_block_write(
-                    CORE_SPI_0,
-                    SPI_SLAVE_0,
-                    test_cmd,
-                    sizeof(test_cmd) / sizeof(test_cmd[0]),
-                    test_wr,
-                    sizeof(test_wr) / sizeof(test_wr[0])
-                );
+        if (WAIT_FOR_CORE_MAX_DELAY(CORE_SPI_0))
+        {
+            // Write a block every second.
+            spi_transaction_block_write(
+                        CORE_SPI_0,
+                        SPI_SLAVE_0,
+                        test_cmd,
+                        sizeof(test_cmd) / sizeof(test_cmd[0]),
+                        test_wr,
+                        sizeof(test_wr) / sizeof(test_wr[0])
+                    );
 
-        spi_rtos_block_read(
-                    CORE_SPI_0,
-                    SPI_SLAVE_0,
-                    test_cmd,
-                    sizeof(test_cmd) / sizeof(test_cmd[0]),
-                    test_rd,
-                    sizeof(test_rd) / sizeof(test_rd[0])
-                );
+            spi_transaction_block_read(
+                        CORE_SPI_0,
+                        SPI_SLAVE_0,
+                        test_cmd,
+                        sizeof(test_cmd) / sizeof(test_cmd[0]),
+                        test_rd,
+                        sizeof(test_rd) / sizeof(test_rd[0])
+                    );
+            RELEASE_CORE(CORE_SPI_0);
+        }
         vTaskDelay(xDelay1000ms);
     }
 }

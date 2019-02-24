@@ -14,6 +14,8 @@
 // History
 // 2019-02-08 by Tamkin Rahman
 // - Created.
+// 2019-02-24 by Tamkin Rahman
+// - Remove the use of mutex within spi.c functions. Instead, the user will have access to the mutexes via the header file.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -22,8 +24,6 @@
 #include "spi.h"
 
 #include "cdh_tsat5_system_hw_platform.h" // Contains the address of the CORE_SPI instance for the driver.
-#include "FreeRTOS.h"
-#include "semphr.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // GLOBALS
@@ -72,43 +72,19 @@ void spi_configure_slave(CoreSPIInstance_t core, SPI_slave_t slave, SPI_protocol
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int spi_rtos_block_write(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * wr_buffer, int wr_size)
+void spi_transaction_block_write(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * wr_buffer, int wr_size)
 {
-    int rc = 1;
-    if( xSemaphoreTake(core_lock[core], portMAX_DELAY) == pdTRUE )
-    {
-        SPI_enable(&core_spi[core]);
-        SPI_slave_select(&core_spi[core], slave);
-        SPI_block_write(&core_spi[core], cmd_buffer, cmd_size, wr_buffer, wr_size);
-        SPI_disable(&core_spi[core]);
-
-        xSemaphoreGive(core_lock[core]);
-    }
-    else
-    {
-        rc = 0;
-    }
-
-  return rc;
+    SPI_enable(&core_spi[core]);
+	SPI_slave_select(&core_spi[core], slave);
+	SPI_block_write(&core_spi[core], cmd_buffer, cmd_size, wr_buffer, wr_size);
+	SPI_disable(&core_spi[core]);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int spi_rtos_block_read(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * rd_buffer, int rd_size)
+void spi_transaction_block_read(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * rd_buffer, int rd_size)
 {
-    int rc = 1;
-    if( xSemaphoreTake(core_lock[core], portMAX_DELAY) == pdTRUE )
-    {
-        SPI_enable(&core_spi[core]);
-        SPI_slave_select(&core_spi[core], slave);
-        SPI_block_read(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
-        SPI_disable(&core_spi[core]);
-
-        xSemaphoreGive(core_lock[core]);
-    }
-    else
-    {
-        rc = 0;
-    }
-
-    return rc;
+	SPI_enable(&core_spi[core]);
+	SPI_slave_select(&core_spi[core], slave);
+	SPI_block_read(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
+	SPI_disable(&core_spi[core]);
 }

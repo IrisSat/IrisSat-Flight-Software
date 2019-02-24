@@ -16,12 +16,24 @@
 // History
 // 2019-02-08 by Tamkin Rahman
 // - Created.
+// 2019-02-24 by Tamkin Rahman
+// - Remove the use of mutex within spi.c functions. Instead, the user will have access to the mutexes via the header file.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "drivers/CoreSPI/core_spi.h"   // Contains the interface for the CoreSPI drivers.
+#include "FreeRTOS.h"
+#include "semphr.h"
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// DEFINES
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// NOTE: These macros should only be used in FreeRTOS threads.
+#define WAIT_FOR_CORE(core, delay) 		( xSemaphoreTake(core_lock[(core)], (delay)) == pdTRUE ) // Macro for acquiring a FreeRTOS mutex for an SPI core.
+#define WAIT_FOR_CORE_MAX_DELAY(core) 	WAIT_FOR_CORE(core, portMAX_DELAY)                       // Macro for acquiring a FreeRTOS mutex for an SPI core, with a timeout of portMAX_DELAY.
+#define RELEASE_CORE(core) 				xSemaphoreGive(core_lock[(core)])                        // Macro for releasing a FreeRTOS mutex for an SPI core.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
@@ -31,6 +43,11 @@ typedef enum
     CORE_SPI_0,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// EXTERNS
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+extern SemaphoreHandle_t core_lock[NUM_SPI_INSTANCES]; // Semaphores for the mutex locks. Should only be used in FreeRTOS threads.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
@@ -70,11 +87,8 @@ void spi_configure_slave(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  Perform a slave select, send a command, write data to a slave, and then disable the slave select. Should only be used within a FreeRTOS thread.
-//
-// Returns:
-//  1 on success, 0 on failure.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int spi_rtos_block_write(
+void spi_transaction_block_write(
     CoreSPIInstance_t core,
     SPI_slave_t slave,
     uint8_t * cmd_buffer,
@@ -86,11 +100,8 @@ int spi_rtos_block_write(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  Perform a slave select, send a command, read data from a slave, and then disable the slave select. Should only be used within a FreeRTOS thread.
-//
-// Returns:
-//  1 on success, 0 on failure.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int spi_rtos_block_read(
+void spi_transaction_block_read(
     CoreSPIInstance_t core,
     SPI_slave_t slave,
     uint8_t * cmd_buffer,
