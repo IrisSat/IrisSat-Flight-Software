@@ -75,16 +75,16 @@ void spi_configure_slave(CoreSPIInstance_t core, SPI_slave_t slave, SPI_protocol
 void spi_transaction_block_write(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * wr_buffer, int wr_size)
 {
     SPI_enable(&core_spi[core]);
-	SPI_slave_select(&core_spi[core], slave);
-	SPI_block_write(&core_spi[core], cmd_buffer, cmd_size, wr_buffer, wr_size);
-	SPI_disable(&core_spi[core]);
+    SPI_slave_select(&core_spi[core], slave);
+    SPI_block_write(&core_spi[core], cmd_buffer, cmd_size, wr_buffer, wr_size);
+    SPI_disable(&core_spi[core]);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_read(CoreSPIInstance_t core, SPI_slave_t slave, uint8_t * cmd_buffer, size_t cmd_size, uint8_t * rd_buffer, int rd_size)
 {
-	SPI_enable(&core_spi[core]);
-	SPI_slave_select(&core_spi[core], slave);
-	SPI_block_read(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
-	SPI_disable(&core_spi[core]);
+    SPI_enable(&core_spi[core]);
+    SPI_slave_select(&core_spi[core], slave);
+    SPI_block_read(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
+    SPI_disable(&core_spi[core]);
 }
