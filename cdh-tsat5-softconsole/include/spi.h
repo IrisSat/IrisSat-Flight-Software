@@ -10,14 +10,15 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  SPI tasks and functions for SPI masters. Functions with "rtos" in their name must be called from a FreeRTOS thread, as they use mutex
-//  objects to manage use of the core.
+//  SPI tasks and functions for SPI masters.
 //
 // History
 // 2019-02-08 by Tamkin Rahman
 // - Created.
 // 2019-02-24 by Tamkin Rahman
 // - Remove the use of mutex within spi.c functions. Instead, the user will have access to the mutexes via the header file.
+// 2019-03-28 by Tamkin Rahman
+// - Correct file description.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

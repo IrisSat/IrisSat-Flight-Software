@@ -2059,7 +2059,7 @@
 </row>
 <row>
  <cell>APB1CLK_RATIO</cell>
- <cell>1</cell>
+ <cell>4</cell>
 </row>
 <row>
  <cell>FDDR_CLK_DIVISOR</cell>
@@ -2095,7 +2095,7 @@
 </row>
 <row>
  <cell>GL0_OUT_0_FREQ</cell>
- <cell>100</cell>
+ <cell>128</cell>
 </row>
 <row>
  <cell>GL1_IS_USED</cell>
@@ -2123,7 +2123,7 @@
 </row>
 <row>
  <cell>M3CLK_FREQUENCY</cell>
- <cell>100.00</cell>
+ <cell>128.00</cell>
 </row>
 <row>
  <cell>MDDRCLK_RATIO</cell>
@@ -3173,6 +3173,37 @@
 </data>
 <separator/>
 <data>
+<name>MSS_CAN</name>
+<table>
+<header>
+ <cell>Name</cell>
+ <cell>Subsystem</cell>
+ <cell>Vendor</cell>
+ <cell>Version</cell>
+</header>
+<row>
+ <cell>SF2_MSS_CAN</cell>
+ <cell>MSS Peripherals</cell>
+ <cell>Actel</cell>
+ <cell>0.0.100</cell>
+</row>
+</table>
+<cdata>
+<name>Configuration</name>
+<table>
+<header>
+ <cell>Parameter</cell>
+ <cell>Value</cell>
+</header>
+<row>
+ <cell>CAN_MUX</cell>
+ <cell>MUX_FABRIC</cell>
+</row>
+</table>
+</cdata>
+</data>
+<separator/>
+<data>
 <name>MSS_GPIO</name>
 <table>
 <header>
@@ -3233,11 +3264,11 @@
 </row>
 <row>
  <cell>GPIO2_TYPE</cell>
- <cell>CONNECTION_FABRICA</cell>
+ <cell>CONNECTION_IOA</cell>
 </row>
 <row>
  <cell>GPIO2_USAGE</cell>
- <cell>USAGE_OUTPUT</cell>
+ <cell>NOT_USED</cell>
 </row>
 <row>
  <cell>GPIO3_FAB_CAPT</cell>
@@ -3257,11 +3288,11 @@
 </row>
 <row>
  <cell>GPIO4_TYPE</cell>
- <cell>CONNECTION_FABRICA</cell>
+ <cell>CONNECTION_IOA</cell>
 </row>
 <row>
  <cell>GPIO4_USAGE</cell>
- <cell>USAGE_OUTPUT</cell>
+ <cell>NOT_USED</cell>
 </row>
 <row>
  <cell>GPIO5_FAB_CAPT</cell>
@@ -3703,6 +3734,21 @@
  <cell>-</cell>
 </row>
 <row>
+ <cell>CAN_RX_F2M</cell>
+ <cell>IN</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>CAN_TX_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>CAN_TX_EN_N_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
  <cell>GPIO_0_M2F</cell>
  <cell>OUT</cell>
  <cell>-</cell>
@@ -3713,17 +3759,7 @@
  <cell>-</cell>
 </row>
 <row>
- <cell>GPIO_2_M2F</cell>
- <cell>OUT</cell>
- <cell>-</cell>
-</row>
-<row>
  <cell>GPIO_3_M2F</cell>
- <cell>OUT</cell>
- <cell>-</cell>
-</row>
-<row>
- <cell>GPIO_4_M2F</cell>
  <cell>OUT</cell>
  <cell>-</cell>
 </row>

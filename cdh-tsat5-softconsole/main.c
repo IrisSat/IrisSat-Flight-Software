@@ -18,6 +18,8 @@
 // - Add test code for SPI.
 // 2019-02-24 by Tamkin Rahman
 // - Update test code for SPI, and create a second task for SPI tests.
+// 2019-03-28 by Tamkin Rahman
+// - Add test code for CAN.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -107,6 +109,7 @@
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
+#include "queue.h"
 #include "task.h"
 #include "semphr.h"
 
@@ -114,6 +117,7 @@
 #include "drivers/mss_uart/mss_uart.h"    // For baud rate defines and instances
 
 /* Application includes. */
+#include "can.h"
 #include "leds.h"
 #include "spi.h"
 #include "uart.h"
@@ -131,6 +135,12 @@ static void prvSetupHardware( void );
  * Test code for CoreSPI.
  */
 static void vTestSPI(void *pvParameters);
+
+/*
+ * Test code for CAN.
+ */
+static void vTestCANTx(void *pvParameters);
+static void vTestCANRx(void *pvParameters);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -180,6 +190,22 @@ int main( void )
                          1,
                          NULL);
 
+    // TODO - Starting to run out of heap space for these tasks... should start thinking about
+    // increasing heap space or managing memory in a smarter manner.
+    status = xTaskCreate(vTestCANTx,
+                         "Test CAN Tx",
+						 configMINIMAL_STACK_SIZE,
+						 NULL,
+						 1,
+						 NULL);
+
+    status = xTaskCreate(vTestCANRx,
+                         "Test CAN Rx",
+						 configMINIMAL_STACK_SIZE,
+						 NULL,
+						 1,
+						 NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -197,6 +223,7 @@ static void prvSetupHardware( void )
     vInitializeUARTs(MSS_UART_115200_BAUD);
 
     init_spi();
+    init_CAN(CAN_BAUD_RATE_1000K);
 }
 
 /*-----------------------------------------------------------*/
@@ -233,6 +260,40 @@ static void vTestSPI(void *pvParameters)
             RELEASE_CORE(CORE_SPI_0);
         }
         vTaskDelay(xDelay1000ms);
+    }
+}
+
+/*-----------------------------------------------------------*/
+static void vTestCANTx(void *pvParameters)
+{
+    const TickType_t delay = pdMS_TO_TICKS(100);
+    CANMessage_t msg = {
+                        0x321,
+                        1,
+                        8,
+                        {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08}
+                     };
+    for (;;)
+    {
+        if (CAN_TRANSMIT_READY())
+        {
+            CAN_transmit_message(&msg);
+        }
+        vTaskDelay(delay);
+    }
+}
+
+/*-----------------------------------------------------------*/
+static void vTestCANRx(void *pvParameters)
+{
+    int messages_processed = 0;
+    CANMessage_t rx_msg;
+    for (;;)
+    {
+    	if (xQueueReceive(can_rx_queue, &rx_msg, portMAX_DELAY) == pdTRUE)
+    	{
+    		messages_processed++;
+    	}
     }
 }
 

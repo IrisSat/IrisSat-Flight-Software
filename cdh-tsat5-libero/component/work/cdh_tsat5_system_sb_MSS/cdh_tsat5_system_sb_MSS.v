@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Thu Feb 07 17:06:50 2019
+// Created by SmartDesign Thu Mar 28 10:46:28 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -8,6 +8,7 @@
 // cdh_tsat5_system_sb_MSS
 module cdh_tsat5_system_sb_MSS(
     // Inputs
+    CAN_RX_F2M,
     FIC_0_APB_M_PRDATA,
     FIC_0_APB_M_PREADY,
     FIC_0_APB_M_PSLVERR,
@@ -20,6 +21,8 @@ module cdh_tsat5_system_sb_MSS(
     MSS_INT_F2M,
     MSS_RESET_N_F2M,
     // Outputs
+    CAN_TX_EN_N_M2F,
+    CAN_TX_M2F,
     FIC_0_APB_M_PADDR,
     FIC_0_APB_M_PENABLE,
     FIC_0_APB_M_PSEL,
@@ -34,9 +37,7 @@ module cdh_tsat5_system_sb_MSS(
     FIC_2_APB_M_PWRITE,
     GPIO_0_M2F,
     GPIO_1_M2F,
-    GPIO_2_M2F,
     GPIO_3_M2F,
-    GPIO_4_M2F,
     GPIO_5_M2F,
     GPIO_6_M2F,
     GPIO_7_M2F,
@@ -47,6 +48,7 @@ module cdh_tsat5_system_sb_MSS(
 //--------------------------------------------------------------------
 // Input
 //--------------------------------------------------------------------
+input         CAN_RX_F2M;
 input  [31:0] FIC_0_APB_M_PRDATA;
 input         FIC_0_APB_M_PREADY;
 input         FIC_0_APB_M_PSLVERR;
@@ -61,6 +63,8 @@ input         MSS_RESET_N_F2M;
 //--------------------------------------------------------------------
 // Output
 //--------------------------------------------------------------------
+output        CAN_TX_EN_N_M2F;
+output        CAN_TX_M2F;
 output [31:0] FIC_0_APB_M_PADDR;
 output        FIC_0_APB_M_PENABLE;
 output        FIC_0_APB_M_PSEL;
@@ -75,9 +79,7 @@ output [31:0] FIC_2_APB_M_PWDATA;
 output        FIC_2_APB_M_PWRITE;
 output        GPIO_0_M2F;
 output        GPIO_1_M2F;
-output        GPIO_2_M2F;
 output        GPIO_3_M2F;
-output        GPIO_4_M2F;
 output        GPIO_5_M2F;
 output        GPIO_6_M2F;
 output        GPIO_7_M2F;
@@ -86,6 +88,9 @@ output        MSS_RESET_N_M2F;
 //--------------------------------------------------------------------
 // Nets
 //--------------------------------------------------------------------
+wire          CAN_RX_F2M;
+wire          CAN_TX_EN_N_M2F_net_0;
+wire          CAN_TX_M2F_net_0;
 wire   [31:0] FIC_0_APB_MASTER_PADDR;
 wire          FIC_0_APB_MASTER_PENABLE;
 wire   [31:0] FIC_0_APB_M_PRDATA;
@@ -106,9 +111,7 @@ wire   [31:0] FIC_2_APB_MASTER_0_PWDATA;
 wire          FIC_2_APB_MASTER_0_PWRITE;
 wire          GPIO_0_M2F_net_0;
 wire          GPIO_1_M2F_net_0;
-wire          GPIO_2_M2F_net_0;
 wire          GPIO_3_M2F_net_0;
-wire          GPIO_4_M2F_net_0;
 wire          GPIO_5_M2F_net_0;
 wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
@@ -121,11 +124,11 @@ wire          MSS_RESET_N_F2M;
 wire          MSS_RESET_N_M2F_net_0;
 wire          MMUART_0_TXD_M2F_net_1;
 wire          MSS_RESET_N_M2F_net_1;
+wire          CAN_TX_M2F_net_1;
+wire          CAN_TX_EN_N_M2F_net_1;
 wire          GPIO_0_M2F_net_1;
 wire          GPIO_1_M2F_net_1;
-wire          GPIO_2_M2F_net_1;
 wire          GPIO_3_M2F_net_1;
-wire          GPIO_4_M2F_net_1;
 wire          GPIO_5_M2F_net_1;
 wire          GPIO_6_M2F_net_1;
 wire          GPIO_7_M2F_net_1;
@@ -220,16 +223,16 @@ assign MMUART_0_TXD_M2F_net_1           = MMUART_0_TXD_M2F_net_0;
 assign MMUART_0_TXD_M2F                 = MMUART_0_TXD_M2F_net_1;
 assign MSS_RESET_N_M2F_net_1            = MSS_RESET_N_M2F_net_0;
 assign MSS_RESET_N_M2F                  = MSS_RESET_N_M2F_net_1;
+assign CAN_TX_M2F_net_1                 = CAN_TX_M2F_net_0;
+assign CAN_TX_M2F                       = CAN_TX_M2F_net_1;
+assign CAN_TX_EN_N_M2F_net_1            = CAN_TX_EN_N_M2F_net_0;
+assign CAN_TX_EN_N_M2F                  = CAN_TX_EN_N_M2F_net_1;
 assign GPIO_0_M2F_net_1                 = GPIO_0_M2F_net_0;
 assign GPIO_0_M2F                       = GPIO_0_M2F_net_1;
 assign GPIO_1_M2F_net_1                 = GPIO_1_M2F_net_0;
 assign GPIO_1_M2F                       = GPIO_1_M2F_net_1;
-assign GPIO_2_M2F_net_1                 = GPIO_2_M2F_net_0;
-assign GPIO_2_M2F                       = GPIO_2_M2F_net_1;
 assign GPIO_3_M2F_net_1                 = GPIO_3_M2F_net_0;
 assign GPIO_3_M2F                       = GPIO_3_M2F_net_1;
-assign GPIO_4_M2F_net_1                 = GPIO_4_M2F_net_0;
-assign GPIO_4_M2F                       = GPIO_4_M2F_net_1;
 assign GPIO_5_M2F_net_1                 = GPIO_5_M2F_net_0;
 assign GPIO_5_M2F                       = GPIO_5_M2F_net_1;
 assign GPIO_6_M2F_net_1                 = GPIO_6_M2F_net_0;
@@ -266,14 +269,14 @@ assign FIC_2_APB_M_PWDATA[31:0]         = FIC_2_APB_MASTER_0_PWDATA_net_0;
 //--------MSS_010
 MSS_010 #( 
         .ACT_UBITS         ( 56'hFFFFFFFFFFFFFF ),
-        .DDR_CLK_FREQ      ( 100.0 ),
-        .INIT              ( 1438'h00000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000F00000000F000000000000000000000000000000007FFFFFFFB000001007C33C000000006092C0104003FFFFE4000000000000100000000F0F01C000001825FC4010842108421000001FE34001FF8000000400000000020091007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ),
+        .DDR_CLK_FREQ      ( 128.0 ),
+        .INIT              ( 1438'h00000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000300003000000000000000000000000000000000F00000000F000000000000000000000000000000007FFFFFFFB000001007C33C00008000609080208003FFFFE4000000000000100000000F0F01C0000018257C4010842108421000001FE34001FF80000004000000000200D1007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ),
         .MEMORYFILE        ( "ENVM_init.mem" ),
         .RTC_MAIN_XTL_FREQ ( 0.0 ),
         .RTC_MAIN_XTL_MODE ( "" ) )
 MSS_ADLIB_INST(
         // Inputs
-        .CAN_RXBUS_F2H_SCP                       ( VCC_net ), // tied to 1'b1 from definition
+        .CAN_RXBUS_F2H_SCP                       ( CAN_RX_F2M ),
         .CAN_TX_EBL_F2H_SCP                      ( VCC_net ), // tied to 1'b1 from definition
         .CAN_TXBUS_F2H_SCP                       ( VCC_net ), // tied to 1'b1 from definition
         .COLF                                    ( VCC_net ), // tied to 1'b1 from definition
@@ -489,10 +492,10 @@ MSS_ADLIB_INST(
         // Outputs
         .CAN_RXBUS_MGPIO3A_H2F_A                 (  ),
         .CAN_RXBUS_MGPIO3A_H2F_B                 ( GPIO_3_M2F_net_0 ),
-        .CAN_TX_EBL_MGPIO4A_H2F_A                (  ),
-        .CAN_TX_EBL_MGPIO4A_H2F_B                ( GPIO_4_M2F_net_0 ),
-        .CAN_TXBUS_MGPIO2A_H2F_A                 (  ),
-        .CAN_TXBUS_MGPIO2A_H2F_B                 ( GPIO_2_M2F_net_0 ),
+        .CAN_TX_EBL_MGPIO4A_H2F_A                ( CAN_TX_EN_N_M2F_net_0 ),
+        .CAN_TX_EBL_MGPIO4A_H2F_B                (  ),
+        .CAN_TXBUS_MGPIO2A_H2F_A                 ( CAN_TX_M2F_net_0 ),
+        .CAN_TXBUS_MGPIO2A_H2F_B                 (  ),
         .CLK_CONFIG_APB                          ( FIC_2_APB_M_PCLK_0 ),
         .COMMS_INT                               (  ),
         .CONFIG_PRESET_N                         ( FIC_2_APB_M_PRESET_N_0 ),

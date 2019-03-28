@@ -2,7 +2,7 @@
 <device>
   <name>cdh_tsat5_system</name>
   <version>1.0</version>
-  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Thu Feb 07 17:23:01 2019</description>
+  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Thu Mar 28 10:55:58 2019</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
@@ -3709,6 +3709,10 @@
     <peripheral>
       <name>COMBLK</name>
       <baseAddress>0x40016000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CAN</name>
+      <baseAddress>0x40015000</baseAddress>
     </peripheral>
     <peripheral>
       <name>HDMA</name>
