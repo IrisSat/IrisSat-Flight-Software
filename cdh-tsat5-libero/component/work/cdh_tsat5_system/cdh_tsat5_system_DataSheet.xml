@@ -11,8 +11,8 @@
     <hdl-type>Verilog</hdl-type>
     <project-description>
     </project-description>
-    <location>C:/Work/UMSATS/TSAT5/corespi_test/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system</location>
-    <state>GENERATED ( Thu Feb 07 17:23:03 2019 )</state>
+    <location>C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system</location>
+    <state>GENERATED ( Thu Mar 28 10:56:00 2019 )</state>
     <swide-toolchain>SoftConsole workspace has not been generated</swide-toolchain>
   </project-settings>
   <site-map>
@@ -3773,6 +3773,14 @@
           </fullPinName>
           <remapAddress>0x40016000</remapAddress>
           <fullAddressSpace>0x40016000 - 0x40016FFF</fullAddressSpace>
+          <range>0x1000</range>
+        </slave>
+        <slave>
+          <name>CAN</name>
+          <fullPinName>
+          </fullPinName>
+          <remapAddress>0x40015000</remapAddress>
+          <fullAddressSpace>0x40015000 - 0x40015FFF</fullAddressSpace>
           <range>0x1000</range>
         </slave>
         <slave>
