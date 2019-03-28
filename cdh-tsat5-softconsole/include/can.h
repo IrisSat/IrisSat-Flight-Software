@@ -10,7 +10,8 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  Functions for CAN initialization, message reception, and message transmission.
+//  Functions for CAN initialization, message reception, and message transmission. Received messages are read into a Queue, which
+//  can be handled by a dedicated task.
 //
 // History
 // 2019-03-28 by Tamkin Rahman
@@ -54,7 +55,6 @@ typedef enum
 	CAN_BAUD_RATE_500K  = CAN_SPEED_32M_500K,
 	CAN_BAUD_RATE_1000K = CAN_SPEED_32M_1M,
 } CANBaudRate;
-
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // GLOBALS

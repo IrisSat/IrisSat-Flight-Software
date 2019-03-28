@@ -8,7 +8,8 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  Functions for CAN initialization, message reception, and message transmission.
+//  Functions for CAN initialization, message reception, and message transmission. Received messages are read into a Queue, which
+//  can be handled by a dedicated task.
 //
 // History
 // 2019-03-28 by Tamkin Rahman
@@ -22,7 +23,6 @@
 
 #include "can.h"
 
-#include "task.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -43,26 +43,16 @@ QueueHandle_t can_rx_queue;
 
 mss_can_instance_t g_can0;  // MSS CAN object instance.
 
-// Variables for statically generating a queue.
-// static StaticQueue_t can_rx_queue_static;
-// uint8_t queue_storage_area[QUEUE_LENGTH * ITEM_SIZE];
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 int init_CAN(CANBaudRate baudrate)
 {
 	int rc = 1;
+
 	//---------------------------------------------------------------------
 	// Initialize the CAN receive queue.
 	//---------------------------------------------------------------------
-	// Reference: https://www.freertos.org/xQueueCreateStatic.html
-	/*
-	can_rx_queue = xQueueCreateStatic( QUEUE_LENGTH,
-	                                   ITEM_SIZE,
-									   queue_storage_area,
-	                                   &can_rx_queue_static );
-    */
 	can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
 
 	if (can_rx_queue == NULL)
@@ -95,7 +85,8 @@ int init_CAN(CANBaudRate baudrate)
 		MSS_CAN_start(&g_can0);
 
 		NVIC_EnableIRQ(CAN_IRQn); // Enable the CAN interrupt.
-		// Interrupts must be at a priority equal to or lower than the FreeRTOS defined MAX priority.
+		// Interrupts must be at a priority equal to or lower than the FreeRTOS defined MAX priority in order
+		// to use FreeRTOS '_from_ISR' functions.
 		NVIC_SetPriority(CAN_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
 		MSS_CAN_set_int_ebl(&g_can0, CAN_INT_RX_MSG);
 	}
@@ -140,6 +131,7 @@ int CAN_transmit_message(CANMessage_t * message)
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Interrupt handler for the CAN interrupt. Received CAN messages are placed into a Queue.
 __attribute__((__interrupt__)) void CAN_IRQHandler(void)
 {
 	volatile uint32_t status = MSS_CAN_get_int_status(&g_can0);
