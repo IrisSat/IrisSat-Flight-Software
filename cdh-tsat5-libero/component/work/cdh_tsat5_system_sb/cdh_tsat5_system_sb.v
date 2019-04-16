@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Thu Mar 28 10:46:36 2019
+// Created by SmartDesign Tue Apr 16 14:48:30 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -177,16 +177,16 @@ wire   [31:0] PRDATAS16_const_net_0;
 //--------------------------------------------------------------------
 // Bus Interface Nets Declarations - Unequal Pin Widths
 //--------------------------------------------------------------------
+wire   [31:0] CoreAPB3_0_APBmslave0_PADDR;
 wire   [3:0]  CoreAPB3_0_APBmslave0_PADDR_0_3to0;
 wire   [3:0]  CoreAPB3_0_APBmslave0_PADDR_0;
-wire   [31:0] CoreAPB3_0_APBmslave0_PADDR;
-wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA;
 wire   [31:8] CoreAPB3_0_APBmslave0_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_0_APBmslave0_PRDATA_0;
+wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA;
+wire   [31:0] CoreAPB3_0_APBmslave0_PWDATA;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PWDATA_0_7to0;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PWDATA_0;
-wire   [31:0] CoreAPB3_0_APBmslave0_PWDATA;
 //--------------------------------------------------------------------
 // Constant assignments
 //--------------------------------------------------------------------

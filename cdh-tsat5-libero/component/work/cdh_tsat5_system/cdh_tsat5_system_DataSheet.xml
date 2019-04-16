@@ -11,8 +11,8 @@
     <hdl-type>Verilog</hdl-type>
     <project-description>
     </project-description>
-    <location>C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system</location>
-    <state>GENERATED ( Thu Mar 28 10:56:00 2019 )</state>
+    <location>C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system</location>
+    <state>GENERATED ( Tue Apr 16 13:14:36 2019 )</state>
     <swide-toolchain>SoftConsole workspace has not been generated</swide-toolchain>
   </project-settings>
   <site-map>
@@ -3805,6 +3805,14 @@
           </fullPinName>
           <remapAddress>0x40006000</remapAddress>
           <fullAddressSpace>0x40006000 - 0x40006FFF</fullAddressSpace>
+          <range>0x1000</range>
+        </slave>
+        <slave>
+          <name>WATCHDOG</name>
+          <fullPinName>
+          </fullPinName>
+          <remapAddress>0x40005000</remapAddress>
+          <fullAddressSpace>0x40005000 - 0x40005FFF</fullAddressSpace>
           <range>0x1000</range>
         </slave>
         <slave>

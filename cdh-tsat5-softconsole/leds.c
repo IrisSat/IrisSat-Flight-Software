@@ -14,6 +14,8 @@
 // History
 // 2019-01-16 by Tamkin Rahman and Joseph Howarth
 // - Removed UART1 and IoT node code.
+// 2019-04-16 by Tamkin Rahman
+// - On startup, leave on LED0 and LED1 for 2 seconds (to make it easy to see whether a reset occurred).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -102,6 +104,16 @@ void vTaskSpinLEDs(void *pvParameters)
 	static unsigned char ucLEDPos = 1;
 	static signed char direction = 1;
 	const TickType_t xDelay85ms = pdMS_TO_TICKS(85);
+
+	// Leave 2 LED's on for 2 seconds on startup.
+	taskENTER_CRITICAL();
+	{
+		vSetLED(0, LED_ON);
+		vSetLED(1, LED_ON);
+	}
+	taskEXIT_CRITICAL();
+
+	vTaskDelay(pdMS_TO_TICKS(2000));
 
 	for( ;; )
 	{

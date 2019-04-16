@@ -1,26 +1,26 @@
 Microsemi Corporation - Microsemi Libero Software Release v11.9 SP2 (Version 11.9.2.1)
 
-Date      :  Thu Mar 28 10:46:29 2019
-Project   :  C:\Work\UMSATS\TSAT5\mss_can_integration\cdh-tsat5\cdh-tsat5-libero
+Date      :  Tue Apr 16 14:48:24 2019
+Project   :  C:\Work\UMSATS\TSAT5\watchdog_try4\cdh-tsat5\cdh-tsat5-libero
 Component :  cdh_tsat5_system_sb_MSS
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS.v
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS.v
 
 HDL source files for Synopsys SynplifyPro Synthesis tool:
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_syn.v
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_syn.v
 
 HDL source files for Mentor Precision Synthesis tool:
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_pre.v
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_pre.v
 
 Stimulus files for all Simulation tools:
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/SmartFusion2MSS/MSS/1.1.500/peripheral_init.bfm
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/CM3_compile_bfm.tcl
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/test.bfm
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/user.bfm
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/Actel/SmartFusion2MSS/MSS/1.1.500/peripheral_init.bfm
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/CM3_compile_bfm.tcl
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/test.bfm
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/user.bfm
 
 Firmware files for all Software IDE tools:
-    C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/sys_config_mss_clocks.h
+    C:/Work/UMSATS/TSAT5/watchdog_try4/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/sys_config_mss_clocks.h
 

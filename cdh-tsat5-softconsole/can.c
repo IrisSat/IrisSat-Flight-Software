@@ -14,6 +14,8 @@
 // History
 // 2019-03-28 by Tamkin Rahman
 // - Created.
+// 2019-04-16 by Tamkin Rahman
+// - Add a #error for situations where the firmware indicates the wrong clock rate.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -22,6 +24,8 @@
 #include <stdio.h>
 
 #include "can.h"
+
+#include "drivers_config/sys_config/sys_config_mss_clocks.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -35,6 +39,10 @@
 // Definitions of generating the queue.
 #define ITEM_SIZE               sizeof(CANMessage_t)    // Size of a queue item object.
 #define QUEUE_LENGTH            64                      // Max number of items in a queue.
+
+#if (MSS_SYS_APB_1_CLK_FREQ != 32000000u)
+    #error "Error: This module assumes the APB1 clock rate is 32 MHz."
+#endif
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // VARIABLES

@@ -20,11 +20,13 @@
 // - Created.
 // 2019-03-28 by Tamkin Rahman
 // - Incremented minor revision to 3.
+// 2019-04-16 by Tamkin Rahman
+// - Incremented minor revision to 4.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #define CDH_SW_MAJOR_VERSION 0
-#define CDH_SW_MINOR_VERSION 3
+#define CDH_SW_MINOR_VERSION 4
 
-#define CDH_SW_VERSION_STRING "\r\nCDH TSAT5 v0.03\r\n"
+#define CDH_SW_VERSION_STRING "\r\nCDH TSAT5 v0.04\r\n"
 
 #endif /* INCLUDE_VERSION_H_ */
