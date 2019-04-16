@@ -56,50 +56,50 @@ mss_can_instance_t g_can0;  // MSS CAN object instance.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 int init_CAN(CANBaudRate baudrate)
 {
-	int rc = 1;
+    int rc = 1;
 
-	//---------------------------------------------------------------------
-	// Initialize the CAN receive queue.
-	//---------------------------------------------------------------------
-	can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
+    //---------------------------------------------------------------------
+    // Initialize the CAN receive queue.
+    //---------------------------------------------------------------------
+    can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
 
-	if (can_rx_queue == NULL)
-	{
-		rc = 0;
-	}
-	else
-	{
-		//---------------------------------------------------------------------
-		// Initialize the MSS CAN and MSS CAN interrupt
-		//---------------------------------------------------------------------
-		// Set up a CAN filter object to enable reception of all CAN messages.
-		CAN_FILTEROBJECT filter;
-		PCAN_FILTEROBJECT pFilter = &filter;
-		pFilter->ACR.L=0x00000000;
-		pFilter->AMR.L= 0xFFFFFFFF;
-		pFilter->AMCR_D.MASK= 0xFFFF;
-		pFilter->AMCR_D.CODE= 0x00;
+    if (can_rx_queue == NULL)
+    {
+        rc = 0;
+    }
+    else
+    {
+        //---------------------------------------------------------------------
+        // Initialize the MSS CAN and MSS CAN interrupt
+        //---------------------------------------------------------------------
+        // Set up a CAN filter object to enable reception of all CAN messages.
+        CAN_FILTEROBJECT filter;
+        PCAN_FILTEROBJECT pFilter = &filter;
+        pFilter->ACR.L=0x00000000;
+        pFilter->AMR.L= 0xFFFFFFFF;
+        pFilter->AMCR_D.MASK= 0xFFFF;
+        pFilter->AMCR_D.CODE= 0x00;
 
-		MSS_CAN_init(
-				&g_can0,
-				baudrate | CAN_AUTO_RESTART | CAN_LITTLE_ENDIAN,
-				NULL, // NULL indicates that default registers are used.
-				NUM_CAN_RX_MAILBOXES,    // Number of Basic CAN rx mailboxes
-				NUM_CAN_TX_MAILBOXES     // Number of Basic CAN tx mailboxes
-				);
+        MSS_CAN_init(
+                &g_can0,
+                baudrate | CAN_AUTO_RESTART | CAN_LITTLE_ENDIAN,
+                NULL, // NULL indicates that default registers are used.
+                NUM_CAN_RX_MAILBOXES,    // Number of Basic CAN rx mailboxes
+                NUM_CAN_TX_MAILBOXES     // Number of Basic CAN tx mailboxes
+                );
 
-		MSS_CAN_set_mode(&g_can0, CANOP_MODE_NORMAL);
-		MSS_CAN_config_buffer(&g_can0, pFilter);
-		MSS_CAN_start(&g_can0);
+        MSS_CAN_set_mode(&g_can0, CANOP_MODE_NORMAL);
+        MSS_CAN_config_buffer(&g_can0, pFilter);
+        MSS_CAN_start(&g_can0);
 
-		NVIC_EnableIRQ(CAN_IRQn); // Enable the CAN interrupt.
-		// Interrupts must be at a priority equal to or lower than the FreeRTOS defined MAX priority in order
-		// to use FreeRTOS '_from_ISR' functions.
-		NVIC_SetPriority(CAN_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
-		MSS_CAN_set_int_ebl(&g_can0, CAN_INT_RX_MSG);
-	}
+        NVIC_EnableIRQ(CAN_IRQn); // Enable the CAN interrupt.
+        // Interrupts must be at a priority equal to or lower than the FreeRTOS defined MAX priority in order
+        // to use FreeRTOS '_from_ISR' functions.
+        NVIC_SetPriority(CAN_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+        MSS_CAN_set_int_ebl(&g_can0, CAN_INT_RX_MSG);
+    }
 
-	return rc;
+    return rc;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,24 +142,24 @@ int CAN_transmit_message(CANMessage_t * message)
 // Interrupt handler for the CAN interrupt. Received CAN messages are placed into a Queue.
 __attribute__((__interrupt__)) void CAN_IRQHandler(void)
 {
-	volatile uint32_t status = MSS_CAN_get_int_status(&g_can0);
-	static CAN_MSGOBJECT rx_buf;
-	static CANMessage_t q_buf;
+    volatile uint32_t status = MSS_CAN_get_int_status(&g_can0);
+    static CAN_MSGOBJECT rx_buf;
+    static CANMessage_t q_buf;
 
-	if (status & CAN_INT_RX_MSG)
-	{
-		while (CAN_VALID_MSG == MSS_CAN_get_message(&g_can0, &rx_buf))
-		{
-		  q_buf.id = MSS_CAN_get_id(&rx_buf);
-		  q_buf.extended = rx_buf.IDE;
-		  q_buf.dlc = rx_buf.DLC;
-		  for (int ix = 0; ix < q_buf.dlc; ix++)
-		  {
-			  q_buf.data[ix] = rx_buf.DATA[ix];
-		  }
+    if (status & CAN_INT_RX_MSG)
+    {
+        while (CAN_VALID_MSG == MSS_CAN_get_message(&g_can0, &rx_buf))
+        {
+          q_buf.id = MSS_CAN_get_id(&rx_buf);
+          q_buf.extended = rx_buf.IDE;
+          q_buf.dlc = rx_buf.DLC;
+          for (int ix = 0; ix < q_buf.dlc; ix++)
+          {
+              q_buf.data[ix] = rx_buf.DATA[ix];
+          }
 
-		  xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
-		}
-		MSS_CAN_clear_int_status(&g_can0, CAN_INT_RX_MSG); // This is needed to indicate the interrupt was serviced.
-	}
+          xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+        }
+        MSS_CAN_clear_int_status(&g_can0, CAN_INT_RX_MSG); // This is needed to indicate the interrupt was serviced.
+    }
 }
