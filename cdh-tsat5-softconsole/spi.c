@@ -68,6 +68,9 @@ int init_spi()
       // logic analyzer, as depending on the sample rate, it will not pick up the faster clock rates.
       SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE0, PCLK_DIV_256);
     }
+    
+    return rc;
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 SPI_instance_t * get_spi_instance(CoreSPIInstance_t core)
