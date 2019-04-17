@@ -20,6 +20,8 @@
 // - Update test code for SPI, and create a second task for SPI tests.
 // 2019-03-28 by Tamkin Rahman
 // - Add test code for CAN.
+// 2019-04-16 by Tamkin Rahman
+// - Add test code for watchdog.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -121,6 +123,7 @@
 #include "leds.h"
 #include "spi.h"
 #include "uart.h"
+#include "watchdog.h"
 
 
 /* External variables */
@@ -141,6 +144,11 @@ static void vTestSPI(void *pvParameters);
  */
 static void vTestCANTx(void *pvParameters);
 static void vTestCANRx(void *pvParameters);
+
+/*
+ * Test code for Watchdog.
+ */
+static void vTestWD(void *pvParameters);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -191,20 +199,28 @@ int main( void )
                          NULL);
 
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
-    // increasing heap space or managing memory in a smarter manner.
+    // increasing heap space or managing memory in a smarter manner. First step would be looking
+    // at the FreeRTOS configurations and the linker file *.ld.
     status = xTaskCreate(vTestCANTx,
                          "Test CAN Tx",
-						 configMINIMAL_STACK_SIZE,
-						 NULL,
-						 1,
-						 NULL);
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 
     status = xTaskCreate(vTestCANRx,
                          "Test CAN Rx",
-						 configMINIMAL_STACK_SIZE,
-						 NULL,
-						 1,
-						 NULL);
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
+
+    status = xTaskCreate(vTestWD,
+                         "Test WD",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 
     vTaskStartScheduler();
 
@@ -222,6 +238,7 @@ static void prvSetupHardware( void )
      * UART 0 set to 115200 to connect to terminal */
     vInitializeUARTs(MSS_UART_115200_BAUD);
 
+    init_WD();
     init_spi();
     init_CAN(CAN_BAUD_RATE_1000K);
 }
@@ -290,10 +307,37 @@ static void vTestCANRx(void *pvParameters)
     CANMessage_t rx_msg;
     for (;;)
     {
-    	if (xQueueReceive(can_rx_queue, &rx_msg, portMAX_DELAY) == pdTRUE)
-    	{
-    		messages_processed++;
-    	}
+        if (xQueueReceive(can_rx_queue, &rx_msg, portMAX_DELAY) == pdTRUE)
+        {
+            messages_processed++;
+        }
+    }
+}
+
+/*-----------------------------------------------------------*/
+static void vTestWD(void *pvParameters)
+{
+    // In the future, this task could be used as a reset service. For instance, tasks could:
+    // - Check-in to this task. If a task fails to check-in as expected, the watchdog would be left to reset.
+    // - Request a reset.
+
+    // Note that the watchdog is not enabled (by the MSS) for certain situations, such as:
+    // - While debugging.
+    // - Programming.
+    if (timeout_occured_WD())
+    {
+        clear_timeout_WD();
+        // TODO - Log event!
+    }
+    else
+    {
+        // TODO - Log event!
+    }
+
+    for (;;)
+    {
+        service_WD();
+        vTaskDelay(pdMS_TO_TICKS(WD_TASK_PERIOD_ms));
     }
 }
 

@@ -91,7 +91,7 @@
 </row>
 <row>
  <cell>USE_WATCHDOG</cell>
- <cell>0</cell>
+ <cell>1</cell>
 </row>
 </table>
 </data>
@@ -167,27 +167,27 @@
 </header>
 <row>
  <cell>DDRC_ADDR_MAP_BANK_CR</cell>
- <cell>0x0</cell>
+ <cell>0x888</cell>
 </row>
 <row>
  <cell>DDRC_ADDR_MAP_COL_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x333F</cell>
 </row>
 <row>
  <cell>DDRC_ADDR_MAP_COL_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0xFFFF</cell>
 </row>
 <row>
  <cell>DDRC_ADDR_MAP_COL_3_CR</cell>
- <cell>0x0</cell>
+ <cell>0x3300</cell>
 </row>
 <row>
  <cell>DDRC_ADDR_MAP_ROW_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x7777</cell>
 </row>
 <row>
  <cell>DDRC_ADDR_MAP_ROW_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x777</cell>
 </row>
 <row>
  <cell>DDRC_AXI_FABRIC_PRI_ID_CR</cell>
@@ -195,19 +195,19 @@
 </row>
 <row>
  <cell>DDRC_CKE_RSTN_CYCLES_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x4200</cell>
 </row>
 <row>
  <cell>DDRC_CKE_RSTN_CYCLES_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x8</cell>
 </row>
 <row>
  <cell>DDRC_DEBUG_CR</cell>
- <cell>0x0</cell>
+ <cell>0x3300</cell>
 </row>
 <row>
  <cell>DDRC_DFI_CTRLUPD_TIME_INTERVAL_CR</cell>
- <cell>0x1016</cell>
+ <cell>0x309</cell>
 </row>
 <row>
  <cell>DDRC_DFI_MAX_CTRLUPD_TIMING_CR</cell>
@@ -219,7 +219,7 @@
 </row>
 <row>
  <cell>DDRC_DFI_RDDATA_EN_CR</cell>
- <cell>0x0</cell>
+ <cell>0x4</cell>
 </row>
 <row>
  <cell>DDRC_DFI_RD_LVL_CONTROL_1_CR</cell>
@@ -243,7 +243,7 @@
 </row>
 <row>
  <cell>DDRC_DRAM_BANK_ACT_TIMING_CR</cell>
- <cell>0x0</cell>
+ <cell>0x130</cell>
 </row>
 <row>
  <cell>DDRC_DRAM_BANK_TIMING_PARAM_CR</cell>
@@ -255,19 +255,19 @@
 </row>
 <row>
  <cell>DDRC_DRAM_RAS_TIMING_CR</cell>
- <cell>0x0</cell>
+ <cell>0x20</cell>
 </row>
 <row>
  <cell>DDRC_DRAM_RD_WR_LATENCY_CR</cell>
- <cell>0x0</cell>
+ <cell>0x65</cell>
 </row>
 <row>
  <cell>DDRC_DRAM_RD_WR_PRE_CR</cell>
- <cell>0x0</cell>
+ <cell>0x1e5</cell>
 </row>
 <row>
  <cell>DDRC_DRAM_RD_WR_TRNARND_TIME_CR</cell>
- <cell>0x0</cell>
+ <cell>0x178</cell>
 </row>
 <row>
  <cell>DDRC_DRAM_T_PD_CR</cell>
@@ -291,11 +291,11 @@
 </row>
 <row>
  <cell>DDRC_DYN_SOFT_RESET_ALIAS_CR</cell>
- <cell>0x4</cell>
+ <cell>0x1</cell>
 </row>
 <row>
  <cell>DDRC_DYN_SOFT_RESET_CR</cell>
- <cell>0x4</cell>
+ <cell>0x0</cell>
 </row>
 <row>
  <cell>DDRC_ECC_DATA_MASK_CR</cell>
@@ -315,11 +315,11 @@
 </row>
 <row>
  <cell>DDRC_HPR_QUEUE_PARAM_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x80F8</cell>
 </row>
 <row>
  <cell>DDRC_HPR_QUEUE_PARAM_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x7</cell>
 </row>
 <row>
  <cell>DDRC_INIT_1_CR</cell>
@@ -335,11 +335,11 @@
 </row>
 <row>
  <cell>DDRC_INIT_EMR_CR</cell>
- <cell>0x402</cell>
+ <cell>0x2</cell>
 </row>
 <row>
  <cell>DDRC_INIT_MR_CR</cell>
- <cell>0x95A</cell>
+ <cell>0x952</cell>
 </row>
 <row>
  <cell>DDRC_LCB_MASK_1_SR</cell>
@@ -391,11 +391,11 @@
 </row>
 <row>
  <cell>DDRC_LPR_QUEUE_PARAM_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x80F8</cell>
 </row>
 <row>
  <cell>DDRC_LPR_QUEUE_PARAM_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x7</cell>
 </row>
 <row>
  <cell>DDRC_LUE_ADDRESS_1_SR</cell>
@@ -427,7 +427,7 @@
 </row>
 <row>
  <cell>DDRC_MODE_CR</cell>
- <cell>0x0</cell>
+ <cell>0x2</cell>
 </row>
 <row>
  <cell>DDRC_MODE_REG_DATA_CR</cell>
@@ -439,7 +439,7 @@
 </row>
 <row>
  <cell>DDRC_ODT_PARAM_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x4</cell>
 </row>
 <row>
  <cell>DDRC_ODT_PARAM_2_CR</cell>
@@ -447,7 +447,7 @@
 </row>
 <row>
  <cell>DDRC_PERF_PARAM_1_CR</cell>
- <cell>0x83</cell>
+ <cell>0x2080</cell>
 </row>
 <row>
  <cell>DDRC_PERF_PARAM_2_CR</cell>
@@ -459,7 +459,7 @@
 </row>
 <row>
  <cell>DDRC_PWR_SAVE_1_CR</cell>
- <cell>0x40C</cell>
+ <cell>0x40c</cell>
 </row>
 <row>
  <cell>DDRC_PWR_SAVE_2_CR</cell>
@@ -479,7 +479,7 @@
 </row>
 <row>
  <cell>DDRC_WR_QUEUE_PARAM_CR</cell>
- <cell>0x0</cell>
+ <cell>0x200</cell>
 </row>
 <row>
  <cell>DDRC_ZQ_LONG_TIME_CR</cell>
@@ -575,19 +575,19 @@
 </row>
 <row>
  <cell>DM_WIDTH</cell>
- <cell>3</cell>
+ <cell>0</cell>
 </row>
 <row>
  <cell>DQS_WIDTH</cell>
- <cell>3</cell>
+ <cell>0</cell>
 </row>
 <row>
  <cell>DQ_ECC_WIDTH</cell>
- <cell>3</cell>
+ <cell>0</cell>
 </row>
 <row>
  <cell>DQ_WIDTH</cell>
- <cell>31</cell>
+ <cell>7</cell>
 </row>
 <row>
  <cell>FAMILY</cell>
@@ -603,7 +603,7 @@
 </row>
 <row>
  <cell>MEMORY_WIDTH</cell>
- <cell>32</cell>
+ <cell>8</cell>
 </row>
 <row>
  <cell>MODE</cell>
@@ -675,11 +675,11 @@
 </row>
 <row>
  <cell>PHY_CTRL_SLAVE_RATIO_CR</cell>
- <cell>0x0</cell>
+ <cell>0x80</cell>
 </row>
 <row>
  <cell>PHY_DATA_SLICE_IN_USE_CR</cell>
- <cell>0x0</cell>
+ <cell>0x3</cell>
 </row>
 <row>
  <cell>PHY_DIS_CALIB_RST_CR</cell>
@@ -691,7 +691,7 @@
 </row>
 <row>
  <cell>PHY_DLL_LOCK_DIFF_CR</cell>
- <cell>0x0</cell>
+ <cell>0xB</cell>
 </row>
 <row>
  <cell>PHY_DLL_SLAVE_VALUE_1_SR</cell>
@@ -703,11 +703,11 @@
 </row>
 <row>
  <cell>PHY_DQ_OFFSET_1_CR</cell>
- <cell>0x240</cell>
+ <cell>0x0</cell>
 </row>
 <row>
  <cell>PHY_DQ_OFFSET_2_CR</cell>
- <cell>0x4081</cell>
+ <cell>0x0</cell>
 </row>
 <row>
  <cell>PHY_DQ_OFFSET_3_CR</cell>
@@ -735,7 +735,7 @@
 </row>
 <row>
  <cell>PHY_DYN_RESET_CR</cell>
- <cell>0x0</cell>
+ <cell>0x1</cell>
 </row>
 <row>
  <cell>PHY_FIFO_1_SR</cell>
@@ -783,19 +783,19 @@
 </row>
 <row>
  <cell>PHY_FIFO_WE_SLAVE_RATIO_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x80</cell>
 </row>
 <row>
  <cell>PHY_FIFO_WE_SLAVE_RATIO_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x2004</cell>
 </row>
 <row>
  <cell>PHY_FIFO_WE_SLAVE_RATIO_3_CR</cell>
- <cell>0x0</cell>
+ <cell>0x100</cell>
 </row>
 <row>
  <cell>PHY_FIFO_WE_SLAVE_RATIO_4_CR</cell>
- <cell>0x0</cell>
+ <cell>0x8</cell>
 </row>
 <row>
  <cell>PHY_GATELVL_INIT_MODE_CR</cell>
@@ -847,7 +847,7 @@
 </row>
 <row>
  <cell>PHY_RDC_WE_TO_RE_DELAY_CR</cell>
- <cell>0x0</cell>
+ <cell>0x3</cell>
 </row>
 <row>
  <cell>PHY_RDLVL_DQS_RATIO_1_SR</cell>
@@ -895,15 +895,15 @@
 </row>
 <row>
  <cell>PHY_RD_DQS_SLAVE_RATIO_1_CR</cell>
- <cell>0x40</cell>
+ <cell>0x4050</cell>
 </row>
 <row>
  <cell>PHY_RD_DQS_SLAVE_RATIO_2_CR</cell>
- <cell>0x401</cell>
+ <cell>0x501</cell>
 </row>
 <row>
  <cell>PHY_RD_DQS_SLAVE_RATIO_3_CR</cell>
- <cell>0x4010</cell>
+ <cell>0x5014</cell>
 </row>
 <row>
  <cell>PHY_RD_DQS_SLAVE_RATIO_4_CR</cell>
@@ -931,7 +931,7 @@
 </row>
 <row>
  <cell>PHY_USE_FIXED_RE_CR</cell>
- <cell>0x0</cell>
+ <cell>0x1</cell>
 </row>
 <row>
  <cell>PHY_USE_LVL_TRNG_LEVEL_CR</cell>
@@ -939,7 +939,7 @@
 </row>
 <row>
  <cell>PHY_USE_RANK0_DELAYS_CR</cell>
- <cell>0x0</cell>
+ <cell>0x1</cell>
 </row>
 <row>
  <cell>PHY_WRLVL_DQS_RATIO_1_SR</cell>
@@ -1023,15 +1023,15 @@
 </row>
 <row>
  <cell>PHY_WR_DATA_SLAVE_RATIO_1_CR</cell>
- <cell>0x40</cell>
+ <cell>0x50</cell>
 </row>
 <row>
  <cell>PHY_WR_DATA_SLAVE_RATIO_2_CR</cell>
- <cell>0x401</cell>
+ <cell>0x501</cell>
 </row>
 <row>
  <cell>PHY_WR_DATA_SLAVE_RATIO_3_CR</cell>
- <cell>0x401</cell>
+ <cell>0x5010</cell>
 </row>
 <row>
  <cell>PHY_WR_DATA_SLAVE_RATIO_4_CR</cell>
@@ -1039,11 +1039,11 @@
 </row>
 <row>
  <cell>PHY_WR_DQS_SLAVE_DELAY_1_CR</cell>
- <cell>0x0</cell>
+ <cell>0x8</cell>
 </row>
 <row>
  <cell>PHY_WR_DQS_SLAVE_DELAY_2_CR</cell>
- <cell>0x0</cell>
+ <cell>0x18</cell>
 </row>
 <row>
  <cell>PHY_WR_DQS_SLAVE_DELAY_3_CR</cell>
@@ -1063,7 +1063,7 @@
 </row>
 <row>
  <cell>PHY_WR_DQS_SLAVE_FORCE_CR</cell>
- <cell>0x0</cell>
+ <cell>0x5</cell>
 </row>
 <row>
  <cell>PHY_WR_DQS_SLAVE_RATIO_1_CR</cell>
@@ -1083,7 +1083,7 @@
 </row>
 <row>
  <cell>PHY_WR_RD_RL_CR</cell>
- <cell>0x0</cell>
+ <cell>0x43</cell>
 </row>
 </table>
 </data>

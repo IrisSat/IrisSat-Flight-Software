@@ -86,7 +86,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/include}&quot;"/>
 								</option>
-								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1585179544" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" valueType="definedSymbols">
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1585179544" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="MSS_CAN_USER_ISR"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1296248602" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
@@ -166,17 +166,60 @@
 							<builder buildPath="${workspace_loc:/cdh-tsat5-softconsole}/Release" id="ilg.gnuarmeclipse.managedbuild.cross.builder.1246363409" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1221401580" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.669973118" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.1751356556" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/CMSIS}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_gpio}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_hpdma}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_nvm}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_sys_services}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_timer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_uart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers_config/sys_config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal/CortexM3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal/CortexM3/GNU}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/include}&quot;"/>
+								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.701146725" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.2130269091" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
-								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.2025520509" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" valueType="definedSymbols">
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.2025520509" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="MSS_CAN_USER_ISR"/>
 								</option>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.2033788798" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/CMSIS}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_gpio}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_hpdma}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_nvm}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_sys_services}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_timer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers/mss_uart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/drivers_config/sys_config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal/CortexM3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/firmware/hal/CortexM3/GNU}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/include}&quot;"/>
+								</option>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.other.1293962337" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.other" value="--specs=cmsis.specs" valueType="string"/>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.2056134719" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.120986317" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.821957904" name="Cross ARM C Linker" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.gcsections.1326873109" name="Remove unused sections (-Xlinker --gc-sections)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.gcsections" value="true" valueType="boolean"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.scriptfile.926090052" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.scriptfile" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/CMSIS/startup_gcc/production-smartfusion2-execute-in-place.ld}&quot;"/>
+								</option>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.usenewlibnano.2025438132" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.usenewlibnano" value="true" valueType="boolean"/>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input.217966248" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

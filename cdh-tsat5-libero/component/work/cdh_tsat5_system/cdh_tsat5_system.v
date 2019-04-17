@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Thu Mar 28 10:47:23 2019
+// Created by SmartDesign Tue Apr 16 14:17:08 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -75,8 +75,8 @@ wire         GPIO_6_M2F_net_1;
 wire         GPIO_7_M2F_net_1;
 wire         m_mosi_net_1;
 wire         m_sck_net_1;
-wire   [7:0] m_ss_net_1;
 wire         CAN_TX_M2F_net_1;
+wire   [7:0] m_ss_net_1;
 //--------------------------------------------------------------------
 // TiedOff Nets
 //--------------------------------------------------------------------
@@ -106,10 +106,10 @@ assign m_mosi_net_1           = m_mosi_net_0;
 assign m_mosi                 = m_mosi_net_1;
 assign m_sck_net_1            = m_sck_net_0;
 assign m_sck                  = m_sck_net_1;
-assign m_ss_net_1             = m_ss_net_0;
-assign m_ss[7:0]              = m_ss_net_1;
 assign CAN_TX_M2F_net_1       = CAN_TX_M2F_net_0;
 assign CAN_TX_M2F             = CAN_TX_M2F_net_1;
+assign m_ss_net_1             = m_ss_net_0;
+assign m_ss[7:0]              = m_ss_net_1;
 //--------------------------------------------------------------------
 // Component instances
 //--------------------------------------------------------------------
@@ -143,8 +143,8 @@ cdh_tsat5_system_sb cdh_tsat5_system_sb_0(
         .enable_slave     (  ),
         .m_mosi           ( m_mosi_net_0 ),
         .m_sck            ( m_sck_net_0 ),
-        .m_ss             ( m_ss_net_0 ),
-        .s_miso           (  ) 
+        .s_miso           (  ),
+        .m_ss             ( m_ss_net_0 ) 
         );
 
 
