@@ -19,12 +19,16 @@
 // - Remove the use of mutex within spi.c functions. Instead, the user will have access to the mutexes via the header file.
 // 2019-03-28 by Tamkin Rahman
 // - Correct file description.
+// 2019-04-17 by Tamkin Rahman
+// - Allow the user to register a GPIO to use as the slave select to avoid toggling the slave select between byte transfers. Also,
+//   add new functions to allow the user to use a GPIO for the slave select.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "drivers/CoreSPI/core_spi.h"   // Contains the interface for the CoreSPI drivers.
+#include "drivers/mss_gpio/mss_gpio.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 
@@ -75,7 +79,7 @@ SPI_instance_t * get_spi_instance(
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Configure a slave instance.
+//  Configure a slave instance. If a slave is not configured, a default configuration is used.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_configure_slave(
     CoreSPIInstance_t core,             // The SPI core (master) to use.
@@ -87,28 +91,68 @@ void spi_configure_slave(
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Perform a slave select, send a command, write data to a slave, and then disable the slave select. Should only be used within a FreeRTOS thread.
+//  Configure a GPIO for use as a slave select. This will initialize the pin, and the slave select pin to inactive. This is for use with functions with
+//  "_without_toggle" at the end. By default, the CoreSPI driver will toggle the slave select between byte transfers, and so this can be added to register a
+//  GPIO pin to use as the slave select instead.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void spi_transaction_block_write(
-    CoreSPIInstance_t core,
-    SPI_slave_t slave,
-    uint8_t * cmd_buffer,
-    size_t cmd_size,
-    uint8_t * wr_buffer,
-    int wr_size
+void spi_configure_gpio_ss(mss_gpio_id_t pin);
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Description:
+//  Perform a slave select, send a command, write data to a slave, and then disable the slave select. The slave
+//  select is toggled between each byte transfer.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+void spi_transaction_block_write_with_toggle(
+	CoreSPIInstance_t core,  // The SPI core used.
+	SPI_slave_t slave,       // The SPI slave configuration to use.
+	uint8_t * cmd_buffer,    // The buffer containing the command.
+	size_t cmd_size,         // The size of the command buffer.
+	uint8_t * wr_buffer,     // The buffer containing the data to write.
+	size_t wr_size           // The size of the write buffer.
     );
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Perform a slave select, send a command, read data from a slave, and then disable the slave select. Should only be used within a FreeRTOS thread.
+//  Perform a slave select, send a command, read data from a slave, and then disable the slave select. The slave
+//  select is toggled between each byte transfer.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void spi_transaction_block_read(
-    CoreSPIInstance_t core,
-    SPI_slave_t slave,
-    uint8_t * cmd_buffer,
-    size_t cmd_size,
-    uint8_t * rd_buffer,
-    int rd_size
+void spi_transaction_block_read_with_toggle(
+	CoreSPIInstance_t core,  // The SPI core used.
+	SPI_slave_t slave,       // The SPI slave configuration to use.
+	uint8_t * cmd_buffer,    // The buffer containing the command.
+	size_t cmd_size,         // The size of the command buffer.
+	uint8_t * rd_buffer,     // The buffer containing the data to write.
+	size_t rd_size           // The size of the write buffer.
+    );
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Description:
+//  Perform a slave select, send a command, write data to a slave, and then disable the slave select. The slave
+//  select is held low (i.e. not toggled) between each byte transfer.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+void spi_transaction_block_write_without_toggle(
+    CoreSPIInstance_t core,  // The SPI core used.
+    SPI_slave_t slave,       // The SPI slave configuration to use.
+	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
+    uint8_t * cmd_buffer,    // The buffer containing the command.
+    size_t cmd_size,         // The size of the command buffer.
+    uint8_t * wr_buffer,     // The buffer containing the data to write.
+	size_t wr_size           // The size of the write buffer.
+    );
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Description:
+//  Perform a slave select, send a command, read data from a slave, and then disable the slave select. The slave
+//  select is held low (i.e. not toggled) between each byte transfer.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+void spi_transaction_block_read_without_toggle(
+    CoreSPIInstance_t core,  // The SPI core used.
+    SPI_slave_t slave,       // The SPI slave configuration to use.
+	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
+    uint8_t * cmd_buffer,    // The buffer containing the command.
+    size_t cmd_size,         // The size of the command buffer.
+    uint8_t * rd_buffer,     // The buffer containing the data to write.
+	size_t rd_size           // The size of the write buffer.
     );
 
 #endif /* INCLUDE_SPI_H_ */
