@@ -51,16 +51,23 @@ int init_spi()
 {
     int rc = 1;
 
+    for (int ix = 0; ix < NUM_SPI_INSTANCES; ix++)
+    {
+        core_lock[ix] = xSemaphoreCreateMutex();
+        if (core_lock[ix] == NULL)
+        {
+            rc = 0;
+            break; // Break out of this for loop.
+        }
+    }
+
     if (rc)
     {
       // Initialize the core SPI instance. Note that with PCLK_DIV_256, the clock period is ~2 us (i.e. 256 / 144 MHz).
       // With PCLK_DIV_128, the clock period is ~1 us. And so on. Keep this in mind when using a
       // logic analyzer, as depending on the sample rate, it will not pick up the faster clock rates.
-      SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_256);
+      SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE0, PCLK_DIV_256);
     }
-
-    return rc;
-}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 SPI_instance_t * get_spi_instance(CoreSPIInstance_t core)
@@ -77,7 +84,7 @@ void spi_configure_slave(CoreSPIInstance_t core, SPI_slave_t slave, SPI_protocol
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_configure_gpio_ss(mss_gpio_id_t pin)
 {
-	MSS_GPIO_config( pin, MSS_GPIO_OUTPUT_MODE );
+    MSS_GPIO_config( pin, MSS_GPIO_OUTPUT_MODE );
     MSS_GPIO_set_output( pin, SS_DISABLE_GPIO_STATE );
 }
 
