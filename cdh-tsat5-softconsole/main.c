@@ -257,7 +257,7 @@ static void vTestSPI(void *pvParameters)
         if (WAIT_FOR_CORE_MAX_DELAY(CORE_SPI_0))
         {
             // Write a block every second.
-            spi_transaction_block_write(
+            spi_transaction_block_write_with_toggle(
                         CORE_SPI_0,
                         SPI_SLAVE_0,
                         test_cmd,
@@ -266,7 +266,7 @@ static void vTestSPI(void *pvParameters)
                         sizeof(test_wr) / sizeof(test_wr[0])
                     );
 
-            spi_transaction_block_read(
+            spi_transaction_block_read_with_toggle(
                         CORE_SPI_0,
                         SPI_SLAVE_0,
                         test_cmd,
