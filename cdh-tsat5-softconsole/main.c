@@ -21,7 +21,7 @@
 // 2019-03-28 by Tamkin Rahman
 // - Add test code for CAN.
 // 2019-04-16 by Tamkin Rahman
-// - Add test code for watchdog.
+// - Add test code for watchdog and rtc.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -121,6 +121,7 @@
 /* Application includes. */
 #include "can.h"
 #include "leds.h"
+#include "rtc_time.h"
 #include "spi.h"
 #include "uart.h"
 #include "watchdog.h"
@@ -149,6 +150,11 @@ static void vTestCANRx(void *pvParameters);
  * Test code for Watchdog.
  */
 static void vTestWD(void *pvParameters);
+
+/*
+ * Test code for RTC.
+ */
+static void vTestRTC(void *pvParameters);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -222,6 +228,13 @@ int main( void )
                          1,
                          NULL);
 
+    status = xTaskCreate(vTestRTC,
+                         "Test RTC",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -240,6 +253,7 @@ static void prvSetupHardware( void )
 
     init_WD();
     init_spi();
+    init_rtc();
     init_CAN(CAN_BAUD_RATE_1000K);
 }
 
@@ -338,6 +352,49 @@ static void vTestWD(void *pvParameters)
     {
         service_WD();
         vTaskDelay(pdMS_TO_TICKS(WD_TASK_PERIOD_ms));
+    }
+}
+
+/*-----------------------------------------------------------*/
+static void vTestRTC(void *pvParameters)
+{
+	// Test code
+	Calendar_t buffer = {
+			30u, // seconds
+			59u, // minutes
+			23u, // hours
+			31u, // day
+			12u, // month
+			70u, // year (offset by 1900u)
+			1u, // weekday
+			1u, // week (not used), HOWEVER it must be 1 or greater.
+	};
+
+	Calendar_t buffer2;
+
+	if (WAIT_FOR_RTC_CORE_MAX_DELAY())
+	{
+		ds1393_write_time(&buffer);
+		if (!resync_rtc())
+		{
+			while(1){}
+		}
+		RELEASE_RTC_CORE();
+	}
+	else
+	{
+		while(1){}
+	}
+
+    for (;;)
+    {
+    	if (WAIT_FOR_RTC_CORE_MAX_DELAY())
+		{
+			ds1393_read_time(&buffer);
+			read_rtc(&buffer2);
+			RELEASE_RTC_CORE();
+		}
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
 

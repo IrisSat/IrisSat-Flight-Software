@@ -1,8 +1,8 @@
 data HELP_TYPE_DES 2
 data DESIGN cdh_tsat5_system
-data HPATH 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system'
-data CPATH 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/constraint/io'
-data CDIR 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/constraint'
+data HPATH 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system'
+data CPATH 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/constraint/io'
+data CDIR 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/constraint'
 data REGION_DEFCOLOR_EMPTY 2143322112
 data REGION_DEFCOLOR_INCLUSIVE 2147442270
 data REGION_DEFCOLOR_EXCLUSIVE 2143338688
@@ -19,14 +19,16 @@ data VCCI_1.8_VOLTR COM
 data VCCI_2.5_VOLTR COM
 data VCCI_3.3_VOLTR COM
 data FLOW_TYPE NEW
-data AFL 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/COMPILE/cdh_tsat5_system.afl'
-data ADL 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.adl'
-data LOC 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/COMPILE/cdh_tsat5_system.loc'
-data SEG 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/COMPILE/cdh_tsat5_system.seg'
+data AFL 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.afl'
+data ADL 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.adl'
+data LOC 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.loc'
+data SEG 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.seg'
+data NMAT_PDC 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.nmatinit.pdc'
+data SMAT_SEG 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/designer/cdh_tsat5_system/cdh_tsat5_system.seg'
 
-data IO_PDC_0 'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/constraint/io/user.pdc'
-data TARGET_IOPDC  'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/constraint/io/user.pdc'
-data TARGET_FPPDC  'C:/Work/UMSATS/TSAT5/mss_can_integration/cdh-tsat5/cdh-tsat5-libero/constraint/fp/user.pdc'
+data IO_PDC_0 'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/constraint/io/user.pdc'
+data TARGET_IOPDC  'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/constraint/io/user.pdc'
+data TARGET_FPPDC  'C:/Work/UMSATS/TSAT5/external_rtc_integration_try2/cdh-tsat5/cdh-tsat5-libero/constraint/fp/user.pdc'
 data TARGET_DEVICES_FOR_MIGRATION 'PA4M1000_N '
 data RESTRICTPROBEPINS 1
 data RESTRICTSPIPINS 0

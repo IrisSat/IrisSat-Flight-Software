@@ -2,7 +2,7 @@
 <device>
   <name>cdh_tsat5_system</name>
   <version>1.0</version>
-  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Tue Apr 16 13:14:35 2019</description>
+  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Thu Apr 18 15:32:23 2019</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
@@ -3705,6 +3705,10 @@
     <peripheral>
       <name>MSSFIC2TOFABRIC</name>
       <baseAddress>0x40020000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>RTC</name>
+      <baseAddress>0x40017000</baseAddress>
     </peripheral>
     <peripheral>
       <name>COMBLK</name>

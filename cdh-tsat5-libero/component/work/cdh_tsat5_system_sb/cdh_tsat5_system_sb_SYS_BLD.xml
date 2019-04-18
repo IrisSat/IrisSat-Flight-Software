@@ -55,7 +55,7 @@
 </row>
 <row>
  <cell>USE_RTC</cell>
- <cell>0</cell>
+ <cell>1</cell>
 </row>
 <row>
  <cell>USE_SERDESIF0</cell>
@@ -2241,7 +2241,7 @@
 </header>
 <row>
  <cell>CLK_SEL</cell>
- <cell>RTC_CLK_SEL_XTAL</cell>
+ <cell>RTC_CLK_SEL_50MHZ</cell>
 </row>
 <row>
  <cell>FAMILY</cell>
@@ -3336,11 +3336,11 @@
 </row>
 <row>
  <cell>GPIO8_TYPE</cell>
- <cell>CONNECTION_IOA</cell>
+ <cell>CONNECTION_FABRICA</cell>
 </row>
 <row>
  <cell>GPIO8_USAGE</cell>
- <cell>NOT_USED</cell>
+ <cell>USAGE_OUTPUT</cell>
 </row>
 <row>
  <cell>GPIO9_FAB_CAPT</cell>
@@ -3348,11 +3348,11 @@
 </row>
 <row>
  <cell>GPIO9_TYPE</cell>
- <cell>CONNECTION_IOA</cell>
+ <cell>CONNECTION_FABRICA</cell>
 </row>
 <row>
  <cell>GPIO9_USAGE</cell>
- <cell>NOT_USED</cell>
+ <cell>USAGE_OUTPUT</cell>
 </row>
 <row>
  <cell>GPIO10_FAB_CAPT</cell>
@@ -3360,11 +3360,11 @@
 </row>
 <row>
  <cell>GPIO10_TYPE</cell>
- <cell>CONNECTION_IOA</cell>
+ <cell>CONNECTION_FABRICA</cell>
 </row>
 <row>
  <cell>GPIO10_USAGE</cell>
- <cell>NOT_USED</cell>
+ <cell>USAGE_OUTPUT</cell>
 </row>
 <row>
  <cell>GPIO11_FAB_CAPT</cell>
@@ -3372,11 +3372,11 @@
 </row>
 <row>
  <cell>GPIO11_TYPE</cell>
- <cell>CONNECTION_IOA</cell>
+ <cell>CONNECTION_FABRICA</cell>
 </row>
 <row>
  <cell>GPIO11_USAGE</cell>
- <cell>NOT_USED</cell>
+ <cell>USAGE_OUTPUT</cell>
 </row>
 <row>
  <cell>GPIO12_FAB_CAPT</cell>
@@ -3775,6 +3775,26 @@
 </row>
 <row>
  <cell>GPIO_7_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>GPIO_8_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>GPIO_9_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>GPIO_10_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>GPIO_11_M2F</cell>
  <cell>OUT</cell>
  <cell>-</cell>
 </row>
