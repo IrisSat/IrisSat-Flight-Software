@@ -8,7 +8,7 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  User-facing RTC module for reading, writing, and validating the internal and external RTC.
+//  User-facing RTC module for reading, writing, and validating the internal and external RTC. Contains
 //
 // History
 // 2019-04-18 by Tamkin Rahman
@@ -41,7 +41,7 @@
 #define SECONDS_IN_YEAR   (SECONDS_IN_MONTH * MONTHS_IN_YEAR)
 
 // Helper macro used to convert a Calendar_t object to an unsigned long (for comparison operations). Note that it
-// does not correlate one to one into seconds since epoch, because the leap years aren't accounted for.
+// does not correlate one to one into seconds since epoch.
 #define CALENDAR_TO_LONG(time) (time)->second \
                                + (time)->minute * SECONDS_IN_MINUTE \
 							   + (time)->hour   * SECONDS_IN_HOUR \
@@ -51,6 +51,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#ifndef UNIT_TESTING
 void init_rtc()
 {
 	// Initialize the external RTC and the internal RTC, and copy the external RTC date into the internal RTC.
@@ -60,24 +61,25 @@ void init_rtc()
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int resync_rtc()
+ErrCodesRTC_t resync_rtc()
 {
-	int rc = 0;
+	ErrCodesRTC_t rc = TIME_UNKNOWN_ERROR;
 	Calendar_t time;
 	time.week = 1; // Must be at least 1.
 
-	for (int ix = 0; ((ix < RETRY_COUNT) && (!rc)); ix++)
+	for (int ix = 0; ((ix < RETRY_COUNT) && (rc != TIME_SUCCESS)); ix++)
 	{
 		ds1393_read_time(&time);
-		if (time_valid(&time))
-		{
-			rc = 1;
-		}
+		rc = time_valid(&time);
 	}
-	if (rc)
+	if (TIME_SUCCESS == rc)
 	{
 		MSS_RTC_set_calendar_count(&time);
 	}
+    else
+    {
+        rc = TIME_UNKNOWN_ERROR;
+    }
 
 	return rc;
 }
@@ -88,19 +90,43 @@ void set_rtc(Calendar_t * time)
 	ds1393_write_time(time);
 	resync_rtc();
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int time_valid(Calendar_t * time)
+ErrCodesRTC_t time_valid(Calendar_t * time)
 {
-	return (   (time->day >= MIN_DAYS)
-			&& (time->day <= MAX_DAYS)
-			&& (time->second <= MAX_SECONDS)
-			&& (time->minute <= MAX_MINUTES)
-			&& (time->hour <= MAX_HOURS)
-			&& (time->month >= MIN_MONTHS)
-			&& (time->month <= MAX_MONTHS)
-			&& (time->year >= MIN_YEARS)
-			);
+    ErrCodesRTC_t rc = TIME_UNKNOWN_ERROR;
+
+    if (time->second > MAX_SECONDS)
+    {
+        rc = TIME_SECONDS_INVALID;
+    }
+    else if (time->minute > MAX_MINUTES)
+    {
+        rc = TIME_MINUTES_INVALID;
+    }
+    else if (time->hour > MAX_HOURS)
+    {
+        rc = TIME_HOURS_INVALID;
+    }
+	else if ( (time->day < MIN_DAYS) || (time->day > MAX_DAYS) )
+    {
+        rc = TIME_DAYS_INVALID;
+    }
+    else if ((time->month < MIN_MONTHS) || (time->month > MAX_MONTHS))
+    {
+        rc = TIME_MONTHS_INVALID;
+    }
+    else if (time->year > MAX_YEARS)
+    {
+        rc = TIME_YEARS_INVALID;
+    }
+    else
+    {
+        rc = TIME_SUCCESS;
+    }
+
+    return rc;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

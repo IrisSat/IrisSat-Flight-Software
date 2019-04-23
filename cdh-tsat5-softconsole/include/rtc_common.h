@@ -41,8 +41,9 @@
 #define MIN_MONTHS 1u
 #define MAX_MONTHS 12u
 
-#define MIN_YEARS 70u
-#define YEAR_OFFSET 1970u
+#define MIN_YEARS  0u
+#define MAX_YEARS  99u
+#define YEAR_OFFSET 2000u
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

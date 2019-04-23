@@ -360,12 +360,12 @@ static void vTestRTC(void *pvParameters)
 {
 	// Test code
 	Calendar_t buffer = {
-			30u, // seconds
+			59u, // seconds
 			59u, // minutes
 			23u, // hours
-			31u, // day
-			12u, // month
-			70u, // year (offset by 1900u)
+			28u, // day
+			2u, // February
+			19u, // year (2020)
 			1u, // weekday
 			1u, // week (not used), HOWEVER it must be 1 or greater.
 	};
@@ -375,7 +375,7 @@ static void vTestRTC(void *pvParameters)
 	if (WAIT_FOR_RTC_CORE_MAX_DELAY())
 	{
 		ds1393_write_time(&buffer);
-		if (!resync_rtc())
+		if (TIME_SUCCESS != resync_rtc())
 		{
 			while(1){}
 		}

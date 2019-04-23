@@ -36,7 +36,22 @@
 #define read_rtc(buffer) MSS_RTC_get_calendar_count(buffer)
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// DEFINITIONS AND MACROS
+// ENUMERATIONS AND ENUMERATION TYPEDEFS
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+typedef enum
+{
+    TIME_SUCCESS,
+    TIME_SECONDS_INVALID,
+    TIME_MINUTES_INVALID,
+    TIME_HOURS_INVALID,
+    TIME_DAYS_INVALID,
+    TIME_MONTHS_INVALID,
+    TIME_YEARS_INVALID,
+    TIME_UNKNOWN_ERROR
+} ErrCodesRTC_t;
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -49,10 +64,10 @@ void init_rtc();
 //  Write the date from the external RTC to the internal RTC.
 //
 // Returns:
-//   1, on success,
-//   0, on failure (to obtain a valid calendar time)
+//   TIME_SUCCESS, on success,
+//   TIME_UNKNOWN_ERROR, otherwise.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int resync_rtc();
+ErrCodesRTC_t resync_rtc();
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -67,15 +82,22 @@ void set_rtc(
 //  Indicate whether the given calendar time is a valid time.
 //
 // Returns:
-//  1 if the time is valid, 0 otherwise.
+//  TIME_SUCCESS if the time is valid, or else the following errors in order of priority:
+//      TIME_SECONDS_INVALID, if the seconds are invalid,
+//      TIME_MINUTES_INVALID, if the minutes are invalid,
+//      TIME_HOURS_INVALID,   if the hours are invalid,
+//      TIME_DAYS_INVALID,    if the days are invalid,
+//      TIME_MONTHS_INVALID,  if the months are invalid,
+//      TIME_YEARS_INVALID,   if the years are invalid,
+//      TIME_UNKNOWN_ERROR,   otherwise.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int time_valid(
+ErrCodesRTC_t time_valid(
 		Calendar_t * time // Object containing the calendar time to check.
 		);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Compare two calendar times, and check which is later than the other.
+//  Compare two calendar times, and check which is later than the other. The times are assumed to be valid.
 //
 // Returns:
 //  -1, if time1 is earlier than time2
