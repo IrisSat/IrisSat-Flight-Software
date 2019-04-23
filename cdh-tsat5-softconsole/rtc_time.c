@@ -8,7 +8,7 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  User-facing RTC module for reading, writing, and validating the internal and external RTC. Contains
+//  User-facing RTC module for reading, writing, and validating the internal and external RTC.
 //
 // History
 // 2019-04-18 by Tamkin Rahman
@@ -109,7 +109,7 @@ ErrCodesRTC_t time_valid(Calendar_t * time)
     {
         rc = TIME_HOURS_INVALID;
     }
-	else if ( (time->day < MIN_DAYS) || (time->day > MAX_DAYS) )
+	else if ((time->day < MIN_DAYS) || (time->day > MAX_DAYS))
     {
         rc = TIME_DAYS_INVALID;
     }

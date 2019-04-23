@@ -365,7 +365,7 @@ static void vTestRTC(void *pvParameters)
 			23u, // hours
 			28u, // day
 			2u, // February
-			19u, // year (2020)
+			20u, // year (2020)
 			1u, // weekday
 			1u, // week (not used), HOWEVER it must be 1 or greater.
 	};
