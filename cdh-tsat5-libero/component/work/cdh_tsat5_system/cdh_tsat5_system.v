@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Tue Apr 16 14:17:08 2019
+// Created by SmartDesign Thu Apr 18 15:27:04 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -15,11 +15,15 @@ module cdh_tsat5_system(
     // Outputs
     CAN_TX_M2F,
     GPIO_0_M2F,
+    GPIO_10_M2F,
+    GPIO_11_M2F,
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
     GPIO_6_M2F,
     GPIO_7_M2F,
+    GPIO_8_M2F,
+    GPIO_9_M2F,
     MMUART_0_TXD_M2F,
     m_mosi,
     m_sck,
@@ -38,11 +42,15 @@ input        m_miso;
 //--------------------------------------------------------------------
 output       CAN_TX_M2F;
 output       GPIO_0_M2F;
+output       GPIO_10_M2F;
+output       GPIO_11_M2F;
 output       GPIO_1_M2F;
 output       GPIO_3_M2F;
 output       GPIO_5_M2F;
 output       GPIO_6_M2F;
 output       GPIO_7_M2F;
+output       GPIO_8_M2F;
+output       GPIO_9_M2F;
 output       MMUART_0_TXD_M2F;
 output       m_mosi;
 output       m_sck;
@@ -60,6 +68,10 @@ wire         GPIO_3_M2F_net_0;
 wire         GPIO_5_M2F_net_0;
 wire         GPIO_6_M2F_net_0;
 wire         GPIO_7_M2F_net_0;
+wire         GPIO_8_M2F_net_0;
+wire         GPIO_9_M2F_net_0;
+wire         GPIO_10_M2F_net_0;
+wire         GPIO_11_M2F_net_0;
 wire         m_miso;
 wire         m_mosi_net_0;
 wire         m_sck_net_0;
@@ -77,6 +89,10 @@ wire         m_mosi_net_1;
 wire         m_sck_net_1;
 wire         CAN_TX_M2F_net_1;
 wire   [7:0] m_ss_net_1;
+wire         GPIO_8_M2F_net_1;
+wire         GPIO_9_M2F_net_1;
+wire         GPIO_10_M2F_net_1;
+wire         GPIO_11_M2F_net_1;
 //--------------------------------------------------------------------
 // TiedOff Nets
 //--------------------------------------------------------------------
@@ -110,6 +126,14 @@ assign CAN_TX_M2F_net_1       = CAN_TX_M2F_net_0;
 assign CAN_TX_M2F             = CAN_TX_M2F_net_1;
 assign m_ss_net_1             = m_ss_net_0;
 assign m_ss[7:0]              = m_ss_net_1;
+assign GPIO_8_M2F_net_1       = GPIO_8_M2F_net_0;
+assign GPIO_8_M2F             = GPIO_8_M2F_net_1;
+assign GPIO_9_M2F_net_1       = GPIO_9_M2F_net_0;
+assign GPIO_9_M2F             = GPIO_9_M2F_net_1;
+assign GPIO_10_M2F_net_1      = GPIO_10_M2F_net_0;
+assign GPIO_10_M2F            = GPIO_10_M2F_net_1;
+assign GPIO_11_M2F_net_1      = GPIO_11_M2F_net_0;
+assign GPIO_11_M2F            = GPIO_11_M2F_net_1;
 //--------------------------------------------------------------------
 // Component instances
 //--------------------------------------------------------------------
@@ -139,12 +163,16 @@ cdh_tsat5_system_sb cdh_tsat5_system_sb_0(
         .GPIO_5_M2F       ( GPIO_5_M2F_net_0 ),
         .GPIO_6_M2F       ( GPIO_6_M2F_net_0 ),
         .GPIO_7_M2F       ( GPIO_7_M2F_net_0 ),
+        .GPIO_8_M2F       ( GPIO_8_M2F_net_0 ),
+        .GPIO_9_M2F       ( GPIO_9_M2F_net_0 ),
+        .GPIO_10_M2F      ( GPIO_10_M2F_net_0 ),
+        .GPIO_11_M2F      ( GPIO_11_M2F_net_0 ),
         .enable_master    (  ),
         .enable_slave     (  ),
         .m_mosi           ( m_mosi_net_0 ),
         .m_sck            ( m_sck_net_0 ),
-        .s_miso           (  ),
-        .m_ss             ( m_ss_net_0 ) 
+        .m_ss             ( m_ss_net_0 ),
+        .s_miso           (  ) 
         );
 
 

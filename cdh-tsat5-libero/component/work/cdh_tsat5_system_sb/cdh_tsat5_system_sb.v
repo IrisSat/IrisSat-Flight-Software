@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Tue Apr 16 14:48:30 2019
+// Created by SmartDesign Thu Apr 18 15:26:43 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -22,11 +22,15 @@ module cdh_tsat5_system_sb(
     FAB_CCC_GL0,
     FAB_CCC_LOCK,
     GPIO_0_M2F,
+    GPIO_10_M2F,
+    GPIO_11_M2F,
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
     GPIO_6_M2F,
     GPIO_7_M2F,
+    GPIO_8_M2F,
+    GPIO_9_M2F,
     INIT_DONE,
     MMUART_0_TXD_M2F,
     MSS_READY,
@@ -58,11 +62,15 @@ output       CAN_TX_M2F;
 output       FAB_CCC_GL0;
 output       FAB_CCC_LOCK;
 output       GPIO_0_M2F;
+output       GPIO_10_M2F;
+output       GPIO_11_M2F;
 output       GPIO_1_M2F;
 output       GPIO_3_M2F;
 output       GPIO_5_M2F;
 output       GPIO_6_M2F;
 output       GPIO_7_M2F;
+output       GPIO_8_M2F;
+output       GPIO_9_M2F;
 output       INIT_DONE;
 output       MMUART_0_TXD_M2F;
 output       MSS_READY;
@@ -111,6 +119,10 @@ wire          GPIO_3_M2F_net_0;
 wire          GPIO_5_M2F_net_0;
 wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
+wire          GPIO_8_M2F_net_0;
+wire          GPIO_9_M2F_net_0;
+wire          GPIO_10_M2F_net_0;
+wire          GPIO_11_M2F_net_0;
 wire          INIT_DONE_net_0;
 wire          m_miso;
 wire          m_mosi_net_0;
@@ -138,6 +150,10 @@ wire          GPIO_3_M2F_net_1;
 wire          GPIO_5_M2F_net_1;
 wire          GPIO_6_M2F_net_1;
 wire          GPIO_7_M2F_net_1;
+wire          GPIO_8_M2F_net_1;
+wire          GPIO_9_M2F_net_1;
+wire          GPIO_10_M2F_net_1;
+wire          GPIO_11_M2F_net_1;
 wire          enable_master_net_1;
 wire          enable_slave_net_1;
 wire          m_mosi_net_1;
@@ -177,16 +193,16 @@ wire   [31:0] PRDATAS16_const_net_0;
 //--------------------------------------------------------------------
 // Bus Interface Nets Declarations - Unequal Pin Widths
 //--------------------------------------------------------------------
-wire   [31:0] CoreAPB3_0_APBmslave0_PADDR;
 wire   [3:0]  CoreAPB3_0_APBmslave0_PADDR_0_3to0;
 wire   [3:0]  CoreAPB3_0_APBmslave0_PADDR_0;
+wire   [31:0] CoreAPB3_0_APBmslave0_PADDR;
+wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA;
 wire   [31:8] CoreAPB3_0_APBmslave0_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_0_APBmslave0_PRDATA_0;
-wire   [7:0]  CoreAPB3_0_APBmslave0_PRDATA;
-wire   [31:0] CoreAPB3_0_APBmslave0_PWDATA;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PWDATA_0_7to0;
 wire   [7:0]  CoreAPB3_0_APBmslave0_PWDATA_0;
+wire   [31:0] CoreAPB3_0_APBmslave0_PWDATA;
 //--------------------------------------------------------------------
 // Constant assignments
 //--------------------------------------------------------------------
@@ -247,6 +263,14 @@ assign GPIO_6_M2F_net_1       = GPIO_6_M2F_net_0;
 assign GPIO_6_M2F             = GPIO_6_M2F_net_1;
 assign GPIO_7_M2F_net_1       = GPIO_7_M2F_net_0;
 assign GPIO_7_M2F             = GPIO_7_M2F_net_1;
+assign GPIO_8_M2F_net_1       = GPIO_8_M2F_net_0;
+assign GPIO_8_M2F             = GPIO_8_M2F_net_1;
+assign GPIO_9_M2F_net_1       = GPIO_9_M2F_net_0;
+assign GPIO_9_M2F             = GPIO_9_M2F_net_1;
+assign GPIO_10_M2F_net_1      = GPIO_10_M2F_net_0;
+assign GPIO_10_M2F            = GPIO_10_M2F_net_1;
+assign GPIO_11_M2F_net_1      = GPIO_11_M2F_net_0;
+assign GPIO_11_M2F            = GPIO_11_M2F_net_1;
 assign enable_master_net_1    = enable_master_net_0;
 assign enable_master          = enable_master_net_1;
 assign enable_slave_net_1     = enable_slave_net_0;
@@ -314,6 +338,10 @@ cdh_tsat5_system_sb_MSS cdh_tsat5_system_sb_MSS_0(
         .GPIO_5_M2F             ( GPIO_5_M2F_net_0 ),
         .GPIO_6_M2F             ( GPIO_6_M2F_net_0 ),
         .GPIO_7_M2F             ( GPIO_7_M2F_net_0 ),
+        .GPIO_8_M2F             ( GPIO_8_M2F_net_0 ),
+        .GPIO_9_M2F             ( GPIO_9_M2F_net_0 ),
+        .GPIO_10_M2F            ( GPIO_10_M2F_net_0 ),
+        .GPIO_11_M2F            ( GPIO_11_M2F_net_0 ),
         .FIC_0_APB_M_PSEL       ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PSELx ),
         .FIC_0_APB_M_PWRITE     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PWRITE ),
         .FIC_0_APB_M_PENABLE    ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PENABLE ),
