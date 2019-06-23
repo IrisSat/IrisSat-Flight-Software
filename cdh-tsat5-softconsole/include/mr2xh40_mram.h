@@ -1,5 +1,5 @@
-#ifndef RTC_TIME_H_
-#define RTC_TIME_H_
+#ifndef MR2XH40_MRAM_H_
+#define MR2XH40_MRAM_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // UMSATS 2018-2020
 //
@@ -10,104 +10,79 @@
 //  Github: https://github.com/UMSATS/cdh-tsat5
 //
 // File Description:
-//  User-facing RTC module for reading, writing, and validating the internal and external RTC.
+//  Driver for the MR2xH40 MRAM part. Note that this driver expects the Write Protect (/WP) and /Hold pins are pulled high (i.e. inactive).
 //
 // History
-// 2019-04-18 by Tamkin Rahman
+// 2019-04-25 by Tamkin Rahman
 // - Created.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include "board_definitions.h"
-#include "rtc_common.h"
-#include "rtc_ds1393.h"
+#include "spi.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// These should be used to acquire the lock for the RTC SPI core for the "set_rtc" and "resync_rtc" operations
-// in FreeRTOS threads.
-#define WAIT_FOR_RTC_CORE(delay)      WAIT_FOR_CORE(RTC_SPI_CORE, (delay))
-#define WAIT_FOR_RTC_CORE_MAX_DELAY() WAIT_FOR_CORE_MAX_DELAY(RTC_SPI_CORE)
-#define RELEASE_RTC_CORE()            RELEASE_CORE(RTC_SPI_CORE)
+// The MRAM used is a 4Mbit part.
+#define MAX_MRAM_ADDRESS  0x7FFFF
 
-// Use to read from the RTC.
-#define read_rtc(buffer) MSS_RTC_get_calendar_count(buffer)
+// Locations that are empty contain 0xFF.
+#define ERASE_BYTE        0xFF
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// ENUMERATIONS AND ENUMERATION TYPEDEFS
+// STRUCTURES AND STRUCTURE TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-typedef enum
+typedef struct
 {
-    TIME_SUCCESS,
-    TIME_SECONDS_INVALID,
-    TIME_MINUTES_INVALID,
-    TIME_HOURS_INVALID,
-    TIME_DAYS_INVALID,
-    TIME_MONTHS_INVALID,
-    TIME_YEARS_INVALID,
-    TIME_UNKNOWN_ERROR
-} ErrCodesRTC_t;
+    CoreSPIInstance_t core;
+    SPI_slave_t slave;
+    mss_gpio_id_t cs_pin;
+} MRAMInstance_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Initialize the internal and external RTC (without resync). It should only be initialized once the SPI driver has been initialized.
+//  Configures the SPI and GPIO configurations for this MRAM instance. Should be called once, prior to calling other functions.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void init_rtc();
+void mr2xh40_init(
+    MRAMInstance_t * mram  // The MRAM instance to initialize.
+);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Write the date from the external RTC to the internal RTC.
-//
-// Returns:
-//   TIME_SUCCESS, on success,
-//   TIME_UNKNOWN_ERROR, otherwise.
+//  Read data from the specified address into a given buffer. If the read address reaches a value greater than the MAX_MRAM_ADDRESS, then it will rollover
+//  back to 0.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-ErrCodesRTC_t resync_rtc();
+void mr2xh40_read(
+    MRAMInstance_t * mram,  // The MRAM instance to read from.
+    uint32_t address,       // The starting address to read from.
+    uint8_t * rd_buffer,    // The buffer to place the read data into.
+    size_t rd_buffer_size   // The size of the read buffer.
+);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Write the given date to the external RTC, and then resync.
+//  Write data to the specified address from a given buffer. If the write address reaches a value greater than the MAX_MRAM_ADDRESS, then it will rollover
+//  back to 0.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void set_rtc(
-		Calendar_t * time // Object containing the calendar time to write.
-		);
+void mr2xh40_write(
+    MRAMInstance_t * mram,  // The MRAM instance to write to.
+    uint32_t address,       // The starting address to write to.
+    uint8_t * wr_buffer,    // The buffer containing the data to write.
+    size_t wr_buffer_size   // The size of the write buffer.
+);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  Indicate whether the given calendar time is a valid time.
-//
-// Returns:
-//  TIME_SUCCESS if the time is valid, or else the following errors in order of priority:
-//      TIME_SECONDS_INVALID, if the seconds are invalid,
-//      TIME_MINUTES_INVALID, if the minutes are invalid,
-//      TIME_HOURS_INVALID,   if the hours are invalid,
-//      TIME_DAYS_INVALID,    if the days are invalid,
-//      TIME_MONTHS_INVALID,  if the months are invalid,
-//      TIME_YEARS_INVALID,   if the years are invalid,
-//      TIME_UNKNOWN_ERROR,   otherwise.
+//  Read the contents of a status register into a single byte buffer.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-ErrCodesRTC_t time_valid(
-		Calendar_t * time // Object containing the calendar time to check.
-		);
+void mr2xh40_read_status_register(
+    MRAMInstance_t * mram,  // The MRAM instance to read from.
+    uint8_t * buffer        // The 1-byte buffer to place the data into.
+);
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Description:
-//  Compare two calendar times, and check which is later than the other. The times are assumed to be valid.
-//
-// Returns:
-//  -1, if time1 is earlier than time2
-//  0, if time1 is equal to time2
-//  1, if time1 is later than time2
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int compare_time(
-		Calendar_t * time1, // The first calendar time to compare.
-		Calendar_t * time2  // The second calendar time to compare.
-		);
-
-#endif /* RTC_TIME_H_ */
+#endif /* MR2XH40_MRAM_H_ */

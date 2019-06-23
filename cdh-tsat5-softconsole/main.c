@@ -22,6 +22,8 @@
 // - Add test code for CAN.
 // 2019-04-16 by Tamkin Rahman
 // - Add test code for watchdog and rtc.
+// 2019-06-23 by Tamkin Rahman
+// - Add test code for MRAM, and update test code for RTC to remove traps.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -121,6 +123,7 @@
 /* Application includes. */
 #include "can.h"
 #include "leds.h"
+#include "mram.h"
 #include "rtc_time.h"
 #include "spi.h"
 #include "uart.h"
@@ -155,6 +158,11 @@ static void vTestWD(void *pvParameters);
  * Test code for RTC.
  */
 static void vTestRTC(void *pvParameters);
+
+/*
+ * Test code for MRAM.
+ */
+static void vTestMRAM(void *pvParameters);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -235,6 +243,13 @@ int main( void )
                          1,
                          NULL);
 
+    status = xTaskCreate(vTestMRAM,
+                         "Test MRAM",
+						 256,
+                         NULL,
+                         1,
+                         NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -254,6 +269,7 @@ static void prvSetupHardware( void )
     init_WD();
     init_spi();
     init_rtc();
+    init_mram();
     init_CAN(CAN_BAUD_RATE_1000K);
 }
 
@@ -358,43 +374,91 @@ static void vTestWD(void *pvParameters)
 /*-----------------------------------------------------------*/
 static void vTestRTC(void *pvParameters)
 {
-	// Test code
-	Calendar_t buffer = {
-			59u, // seconds
-			59u, // minutes
-			23u, // hours
-			28u, // day
-			2u, // February
-			20u, // year (2020)
-			1u, // weekday
-			1u, // week (not used), HOWEVER it must be 1 or greater.
-	};
+    // Test code
+    static volatile int error_occurred = 0;
 
-	Calendar_t buffer2;
+    static Calendar_t buffer = {
+            59u, // seconds
+            59u, // minutes
+            23u, // hours
+            28u, // day
+            2u, // February
+            20u, // year (2020)
+            1u, // weekday
+            1u, // week (not used), HOWEVER it must be 1 or greater.
+    };
 
-	if (WAIT_FOR_RTC_CORE_MAX_DELAY())
-	{
-		ds1393_write_time(&buffer);
-		if (TIME_SUCCESS != resync_rtc())
-		{
-			while(1){}
-		}
-		RELEASE_RTC_CORE();
-	}
-	else
-	{
-		while(1){}
-	}
+    static Calendar_t buffer2;
+
+    if (WAIT_FOR_RTC_CORE_MAX_DELAY())
+    {
+        ds1393_write_time(&buffer);
+        if (TIME_SUCCESS != resync_rtc())
+        {
+            error_occurred = 1;
+        }
+        RELEASE_RTC_CORE();
+    }
+    else
+    {
+        error_occurred = 1;
+    }
 
     for (;;)
     {
-    	if (WAIT_FOR_RTC_CORE_MAX_DELAY())
-		{
-			ds1393_read_time(&buffer);
-			read_rtc(&buffer2);
-			RELEASE_RTC_CORE();
-		}
+        if (WAIT_FOR_RTC_CORE_MAX_DELAY())
+        {
+            ds1393_read_time(&buffer);
+            read_rtc(&buffer2);
+            RELEASE_RTC_CORE();
+        }
         vTaskDelay(pdMS_TO_TICKS(500));
+    }
+}
+
+/*-----------------------------------------------------------*/
+static void vTestMRAM(void *pvParameters)
+{
+    // Test code that writes to all locations of the MRAM, and then reads it back.
+    static uint8_t write_buffer[0x100];
+    static uint8_t read_buffer1[sizeof(write_buffer)];
+    uint8_t status_reg;
+
+    static volatile int error_occurred = 0;
+
+    for (int ix = 0; ix < sizeof(write_buffer); ix++)
+    {
+        write_buffer[ix] = 0x55;
+    }
+    for(;;)
+    {
+        // Loop through all addresses.
+        for (int ix = 0; ix < MAX_MRAM_ADDRESS; ix += sizeof(write_buffer))
+        {
+           for (int ix = 0; ix < sizeof(write_buffer); ix++)
+           {
+              read_buffer1[ix] = 0xFF;
+           }
+           if (WAIT_FOR_CORE_MAX_DELAY(MRAM0_SPI_CORE))
+           {
+               mr2xh40_write(&mram_instances[MRAM_INSTANCE_0], ix, write_buffer, sizeof(write_buffer));
+               RELEASE_CORE(MRAM0_SPI_CORE);
+           }
+           if (WAIT_FOR_CORE_MAX_DELAY(MRAM0_SPI_CORE))
+           {
+             mr2xh40_read(&mram_instances[MRAM_INSTANCE_0], ix, read_buffer1, sizeof(read_buffer1));
+             RELEASE_CORE(MRAM0_SPI_CORE);
+           }
+           for (int iy = 0; iy < sizeof(write_buffer); iy++)
+           {
+               if (read_buffer1[iy] != write_buffer[iy])
+               {
+            	   error_occurred = 1; // Breakpoint here!
+               }
+           }
+
+           vTaskDelay(pdMS_TO_TICKS(2000)); // Breakpoint here to make sure you are done!
+        }
     }
 }
 

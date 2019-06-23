@@ -2,7 +2,7 @@
 <device>
   <name>cdh_tsat5_system</name>
   <version>1.0</version>
-  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Thu Apr 18 15:32:23 2019</description>
+  <description>CMSIS description for cdh_tsat5_system.  Created by Microsemi SmartDesign on Sun Jun 23 15:22:18 2019</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
