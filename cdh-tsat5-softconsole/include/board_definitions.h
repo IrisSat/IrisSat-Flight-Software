@@ -31,7 +31,10 @@
 #define RTC_SLAVE_CORE SPI_SLAVE_0  // RTC uses MSS_GPIO for SS, so this is not relevant.
 
 #define MRAM0_SPI_CORE   CORE_SPI_0
-#define MRAM0_SLAVE_CORE SPI_SLAVE_0 // MRAM0 uses MSS_GPIO for SS, so this is not relevant.
+#define MRAM0_SLAVE_CORE SPI_SLAVE_1 // MRAM0 uses MSS_GPIO for SS, so this is not relevant.
+
+#define FLASH_SPI_CORE   CORE_SPI_0
+#define FLASH_SLAVE_CORE SPI_SLAVE_2 // FLASH uses MSS_GPIO for SS, so this is not relevant.
 
 // MSS GPIO definitions
 #define LED0          MSS_GPIO_0
