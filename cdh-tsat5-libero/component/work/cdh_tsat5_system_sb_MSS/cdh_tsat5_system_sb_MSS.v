@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Thu Apr 18 15:26:36 2019
+// Created by SmartDesign Sun Jun 23 15:16:41 2019
 // Version: v11.9 SP2 11.9.2.1
 //////////////////////////////////////////////////////////////////////
 
@@ -38,6 +38,7 @@ module cdh_tsat5_system_sb_MSS(
     GPIO_0_M2F,
     GPIO_10_M2F,
     GPIO_11_M2F,
+    GPIO_12_M2F,
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
@@ -84,6 +85,7 @@ output        FIC_2_APB_M_PWRITE;
 output        GPIO_0_M2F;
 output        GPIO_10_M2F;
 output        GPIO_11_M2F;
+output        GPIO_12_M2F;
 output        GPIO_1_M2F;
 output        GPIO_3_M2F;
 output        GPIO_5_M2F;
@@ -127,6 +129,7 @@ wire          GPIO_8_M2F_net_0;
 wire          GPIO_9_M2F_net_0;
 wire          GPIO_10_M2F_net_0;
 wire          GPIO_11_M2F_net_0;
+wire          GPIO_12_M2F_net_0;
 wire          MCCC_CLK_BASE;
 wire          MCCC_CLK_BASE_PLL_LOCK;
 wire          MMUART_0_RXD_F2M;
@@ -148,6 +151,7 @@ wire          GPIO_8_M2F_net_1;
 wire          GPIO_9_M2F_net_1;
 wire          GPIO_10_M2F_net_1;
 wire          GPIO_11_M2F_net_1;
+wire          GPIO_12_M2F_net_1;
 wire          FIC_0_APB_MASTER_PSELx_net_0;
 wire          FIC_0_APB_MASTER_PWRITE_net_0;
 wire          FIC_0_APB_MASTER_PENABLE_net_0;
@@ -263,6 +267,8 @@ assign GPIO_10_M2F_net_1                = GPIO_10_M2F_net_0;
 assign GPIO_10_M2F                      = GPIO_10_M2F_net_1;
 assign GPIO_11_M2F_net_1                = GPIO_11_M2F_net_0;
 assign GPIO_11_M2F                      = GPIO_11_M2F_net_1;
+assign GPIO_12_M2F_net_1                = GPIO_12_M2F_net_0;
+assign GPIO_12_M2F                      = GPIO_12_M2F_net_1;
 assign FIC_0_APB_MASTER_PSELx_net_0     = FIC_0_APB_MASTER_PSELx;
 assign FIC_0_APB_M_PSEL                 = FIC_0_APB_MASTER_PSELx_net_0;
 assign FIC_0_APB_MASTER_PWRITE_net_0    = FIC_0_APB_MASTER_PWRITE;
@@ -629,7 +635,7 @@ MSS_ADLIB_INST(
         .SPI1_SDI_MGPIO11A_H2F_A                 (  ),
         .SPI1_SDI_MGPIO11A_H2F_B                 ( GPIO_11_M2F_net_0 ),
         .SPI1_SDO_MGPIO12A_H2F_A                 (  ),
-        .SPI1_SDO_MGPIO12A_H2F_B                 (  ),
+        .SPI1_SDO_MGPIO12A_H2F_B                 ( GPIO_12_M2F_net_0 ),
         .SPI1_SS0_MGPIO13A_H2F_A                 (  ),
         .SPI1_SS0_MGPIO13A_H2F_B                 (  ),
         .SPI1_SS1_MGPIO14A_H2F_A                 (  ),

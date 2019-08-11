@@ -1,14 +1,14 @@
 Microsemi Corporation - Microsemi Libero Software Release v11.9 SP2 (Version 11.9.2.1)
 
-Date      :  Thu Apr 18 15:27:05 2019
-Project   :  C:\Work\UMSATS\TSAT5\external_rtc_integration\cdh-tsat5\cdh-tsat5-libero
+Date      :  Sun Jun 23 15:17:44 2019
+Project   :  C:\Work\UMSATS\TSAT5\external_mram_integration\cdh-tsat5\cdh-tsat5-libero
 Component :  cdh_tsat5_system
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Work/UMSATS/TSAT5/external_rtc_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system/cdh_tsat5_system.v
+    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system/cdh_tsat5_system.v
 
 Stimulus files for all Simulation tools:
-    C:/Work/UMSATS/TSAT5/external_rtc_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system/subsystem.bfm
+    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system/subsystem.bfm
 

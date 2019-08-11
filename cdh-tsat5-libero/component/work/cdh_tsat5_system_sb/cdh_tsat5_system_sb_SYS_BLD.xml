@@ -3384,11 +3384,11 @@
 </row>
 <row>
  <cell>GPIO12_TYPE</cell>
- <cell>CONNECTION_IOA</cell>
+ <cell>CONNECTION_FABRICA</cell>
 </row>
 <row>
  <cell>GPIO12_USAGE</cell>
- <cell>NOT_USED</cell>
+ <cell>USAGE_OUTPUT</cell>
 </row>
 <row>
  <cell>GPIO13_FAB_CAPT</cell>
@@ -3795,6 +3795,11 @@
 </row>
 <row>
  <cell>GPIO_11_M2F</cell>
+ <cell>OUT</cell>
+ <cell>-</cell>
+</row>
+<row>
+ <cell>GPIO_12_M2F</cell>
  <cell>OUT</cell>
  <cell>-</cell>
 </row>
