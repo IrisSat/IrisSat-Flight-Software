@@ -32,7 +32,7 @@ This project requires SoftConsole 4.0 and Libero 11.9.2.
 12. With the MSR board connected, click "Apply", and then "Debug" to run the software.
 
 ## Licensing
-This project is available under GNU General Public License v3.0 (GPL-3.0-or-later).
+This project is available under the MIT license.
 
 ## Useful links:
 1. Maker Board IoT Demo project: https://www.digikey.com/eewiki/display/microcontroller/Getting+Started+with+the+Microsemi+SmartFusion+2+Maker-Board
