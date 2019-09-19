@@ -1,6 +1,6 @@
 Export Firmware README
 
-Microsemi Corporation - Microsemi Libero Software Release v11.9 SP2 (Version 11.9.2.1)
+Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
 
-Date    :    Sun Jun 23 15:22:19 2019
-Project :    C:\Work\UMSATS\TSAT5\external_mram_integration\cdh-tsat5\cdh-tsat5-libero
+Date    :    Wed Sep  4 15:11:19 2019
+Project :    C:\Users\Joseph Howarth\Documents\MBSat\cdh-tsat5\cdh-tsat5-libero

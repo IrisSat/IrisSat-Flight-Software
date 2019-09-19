@@ -200,50 +200,50 @@ int main( void )
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
 
-    status = xTaskCreate(vTestSPI,
-                         "Test SPI",
-                         1000,
-                         NULL,
-                         1,
-                         NULL);
-
-    status = xTaskCreate(vTestSPI,
-                         "Test SPI2",
-                         1000,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestSPI,
+//                         "Test SPI",
+//                         1000,
+//                         NULL,
+//                         1,
+//                         NULL);
+//
+//    status = xTaskCreate(vTestSPI,
+//                         "Test SPI2",
+//                         1000,
+//                         NULL,
+//                         1,
+//                         NULL);
 
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
     // increasing heap space or managing memory in a smarter manner. First step would be looking
     // at the FreeRTOS configurations and the linker file *.ld.
-    status = xTaskCreate(vTestCANTx,
-                         "Test CAN Tx",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
-
-    status = xTaskCreate(vTestCANRx,
-                         "Test CAN Rx",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
-
-    status = xTaskCreate(vTestWD,
-                         "Test WD",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
-
-    status = xTaskCreate(vTestRTC,
-                         "Test RTC",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestCANTx,
+//                         "Test CAN Tx",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+//
+//    status = xTaskCreate(vTestCANRx,
+//                         "Test CAN Rx",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+//
+//    status = xTaskCreate(vTestWD,
+//                         "Test WD",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+//
+//    status = xTaskCreate(vTestRTC,
+//                         "Test RTC",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
 
     // TR - Not quite sure of the reason, but it appears that when we have a task created for both
     //      vTestRTC and vTestMRAM, the device stops communicating over SPI after the vTestRTC task
@@ -251,12 +251,12 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
-    status = xTaskCreate(vTestMRAM,
-                         "Test MRAM",
-                         256,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestMRAM,
+//                         "Test MRAM",
+//                         256,
+//                         NULL,
+//                         1,
+//                         NULL);
 
     vTaskStartScheduler();
 
