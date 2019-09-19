@@ -26,6 +26,9 @@
 // - Add test code for MRAM
 // - Update test code for RTC to remove traps.
 // - Prevent task switching instead of using mutexes for SPI read/write.
+// 2019-06-09 by Joseph Howarth
+// - Add test code for flash.
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -124,12 +127,14 @@
 
 /* Application includes. */
 #include "can.h"
+#include "flash.h"
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
 #include "spi.h"
 #include "uart.h"
 #include "watchdog.h"
+
 
 
 /* External variables */
@@ -165,6 +170,12 @@ static void vTestRTC(void *pvParameters);
  * Test code for MRAM.
  */
 static void vTestMRAM(void *pvParameters);
+
+/*
+ * Test code for external flash.
+ */
+static void vTestFlash(void *pvParameters);
+
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -217,6 +228,7 @@ int main( void )
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
     // increasing heap space or managing memory in a smarter manner. First step would be looking
     // at the FreeRTOS configurations and the linker file *.ld.
+<<<<<<< HEAD
 //    status = xTaskCreate(vTestCANTx,
 //                         "Test CAN Tx",
 //                         configMINIMAL_STACK_SIZE,
@@ -257,6 +269,14 @@ int main( void )
 //                         NULL,
 //                         1,
 //                         NULL);
+					 
+//	status = xTaskCreate(vTestFlash,
+//                         "Test Flash",
+//                         2000,
+//                         NULL,
+//                         1,
+//                         NULL);
+//
 
     vTaskStartScheduler();
 
@@ -417,6 +437,7 @@ static void vTestRTC(void *pvParameters)
 }
 
 /*-----------------------------------------------------------*/
+
 static void vTestMRAM(void *pvParameters)
 {
     // Test code that writes to all locations of the MRAM, and then reads it back.
@@ -460,7 +481,100 @@ static void vTestMRAM(void *pvParameters)
 
            vTaskDelay(pdMS_TO_TICKS(2000)); // Breakpoint here to make sure you are done!
         }
-    }
+
+static void vTestFlash(void *pvParameters)
+{
+
+	FlashDevice_t flash_device;
+
+	FlashStatus_t result = flash_dev_init(&flash_device,CORE_SPI_0, MSS_GPIO_5, 8, ECC_ON);
+
+	MSS_GPIO_config( MSS_GPIO_3, MSS_GPIO_OUTPUT_MODE );
+
+	if(result != FLASH_OK){
+		while(1);
+	}
+	int done =0;
+	uint8_t data_rx[2048];
+	int i;
+	int pageNum = 0;
+	int blockNum=0;
+	int address=0x0000000;
+	int numBadBlock = 0;
+	int led = 0;
+	int BB[50];
+	uint8_t data_tx[2048];
+
+	// Clear the receive buffer and put a repeating sequence of 0-255 into the
+	// transmit buffer.
+	for(i=0;i<2048;i++){
+		data_tx[i] = i%256;
+		data_rx[i] = 0;
+	}
+
+
+	// Check if we can read the bad block look up table.
+	// There should be one mapping in the table(1 bad block).
+	int num_bad_blocks = 0;
+	result = flash_read_bb_lut(&flash_device,&flash_device.bb_lut,&num_bad_blocks);
+
+	if(result != FLASH_OK || num_bad_blocks != 1){
+		while(1);
+	}
+
+
+	// Erase the block.
+	result = flash_erase_blocks(&flash_device,0,1);
+
+	if(result != FLASH_OK){
+		while(1);
+	}
+
+
+	result = flash_read(&flash_device,address,2048,data_rx);
+
+	if(result != FLASH_OK){
+		while(1);
+	}
+	int j;
+	// Make sure page is erased.
+	for(j=0;j<2048;j++){
+
+		if(data_rx[j] != 0xFF){
+			while(1);
+		}
+	}
+
+	// Save the transmit buffer to flash memory.
+	result = flash_write_(&flash_device,address,2048,data_tx);
+	if(result != FLASH_OK){
+		while(1);
+	}
+
+
+	result = flash_read(&flash_device,address,2048,data_rx);
+
+	if(result != FLASH_OK){
+		while(1);
+	}
+
+	// Make sure the data we read is the same as what was written.
+
+	for(j=0;j<2048;j++){
+
+		if(data_rx[j] != data_tx[j]){
+			while(1);
+		}
+	}
+
+
+	// Erase the block.
+	result = flash_erase_blocks(&flash_device,0,1);
+
+	if(result != FLASH_OK){
+		while(1);
+	}
+
 }
 
 /*-----------------------------------------------------------*/
