@@ -228,7 +228,6 @@ int main( void )
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
     // increasing heap space or managing memory in a smarter manner. First step would be looking
     // at the FreeRTOS configurations and the linker file *.ld.
-<<<<<<< HEAD
 //    status = xTaskCreate(vTestCANTx,
 //                         "Test CAN Tx",
 //                         configMINIMAL_STACK_SIZE,
@@ -481,6 +480,8 @@ static void vTestMRAM(void *pvParameters)
 
            vTaskDelay(pdMS_TO_TICKS(2000)); // Breakpoint here to make sure you are done!
         }
+    }
+}
 
 static void vTestFlash(void *pvParameters)
 {
