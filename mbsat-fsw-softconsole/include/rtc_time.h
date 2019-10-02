@@ -98,6 +98,16 @@ ErrCodesRTC_t time_valid(
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
+//  Convert a Calendar_t object to an unsigned long (for comparison operations).
+// 	Note: conversion does not correlate one to one into seconds since epoch.
+//
+//  Returns:
+//  unsigned long - calendar time converted to seconds
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+unsigned long calendar_to_long(Calendar_t * time);
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Description:
 //  Compare two calendar times, and check which is later than the other. The times are assumed to be valid.
 //
 // Returns:

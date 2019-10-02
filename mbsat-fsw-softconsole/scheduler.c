@@ -31,6 +31,7 @@
 
 // User Libraries
 #include "scheduler.h"
+#include <rtc_time.h>
 #include <request_code.h>
 
 
@@ -111,17 +112,20 @@ void vTaskScheduler(void *pvParameters){
 	task_queue_handler = init_queue(); // Initialize the queue for holding the time tagged tasks
 	const TickType_t queue_timeout_ms = pdMS_TO_TICKS(DEQUEUE_MS_TO_WAIT);
 	static time_tagged_task_t front_task; // Static buffer for holding the front task read from queue.
-	static BaseType_t rslt;
+	static BaseType_t rslt; // Variable to hold result of various functions
 
+	// Get Test data for calendar
 	static mss_rtc_calendar_t *p_rtc_calendar;
 	p_rtc_calendar = malloc(sizeof(mss_rtc_calendar_t));
 	MSS_RTC_get_calendar_count(p_rtc_calendar);
 	schedule_task(test_code_0, *p_rtc_calendar);
 	free(p_rtc_calendar);
 
+	//TODO: Ensure Internal RTC is synchronized with External RTC.
+
 	for( ;; ) {
-		//TODO: Naive Implementation - Search through all tasks in the queue and check if it is time to execute.
-		//TODO: Ensure Internal RTC is synchronized with External RTC.
+		//TODO: Check priority queue for task scheduled for current_time
+
 		rslt = xQueuePeek(task_queue_handler, &front_task, queue_timeout_ms); // Peek at front task in queue.
 
 		if(rslt == errQUEUE_EMPTY){// Queue is empty.
@@ -138,13 +142,16 @@ void vTaskScheduler(void *pvParameters){
 }
 
 int schedule_task(request_code_t req, mss_rtc_calendar_t time){
-	if(task_queue_handler == NULL) { return -1; } // ERROR: queue not yet initialized
+	//TODO: schedule into priority queue, use rtc_time.h>calendar_to_long for priority
+	//if(task_queue_handler == NULL) { return -1; } // ERROR: queue not yet initialized
+	//TODO: check if full
 
-	const TickType_t queue_timeout_ms = pdMS_TO_TICKS(ENQUEUE_MS_TO_WAIT);
-	static time_tagged_task_t pvTask; // private task to be initialized with parameters and copied into Queue.
 
-	pvTask.request_code = req;
-	pvTask.time_tag = time;
+	//static time_tagged_task_t pvTask; // private task to be initialized with parameters and copied into Queue.
 
-	xQueueSendToBack(task_queue_handler, &pvTask, queue_timeout_ms);
+	//pvTask.request_code = req;
+	//pvTask.time_tag = time;
+
+	//xQueueSendToBack(task_queue_handler, &pvTask, queue_timeout_ms);
+	return 0;
 }
