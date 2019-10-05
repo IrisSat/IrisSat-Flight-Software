@@ -140,7 +140,7 @@ extern uint32_t SystemCoreClock;
 /* Run time stats gathering definitions. */
 void vConfigureTimerForRunTimeStats( void );
 uint32_t ulGetRunTimeCounterValue( void );
-#define configGENERATE_RUN_TIME_STATS	1
+#define configGENERATE_RUN_TIME_STATS	0
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() vConfigureTimerForRunTimeStats()
 #define portGET_RUN_TIME_COUNTER_VALUE() ulGetRunTimeCounterValue()
 

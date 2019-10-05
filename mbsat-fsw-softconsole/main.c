@@ -29,6 +29,7 @@
 // 2019-06-09 by Joseph Howarth
 // - Add test code for flash.
 
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -116,6 +117,10 @@
 /* Standard includes. */
 #include <stdio.h>
 
+/* Library includes */
+#include "csp.h"
+#include "csp/interfaces/csp_if_can.h"
+
 /* Kernel includes. */
 #include "FreeRTOS.h"
 #include "queue.h"
@@ -176,6 +181,10 @@ static void vTestMRAM(void *pvParameters);
  */
 static void vTestFlash(void *pvParameters);
 
+/*
+ * Cubesat Space Protocol setup and test code.
+ */
+void initializeCSP();
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -211,6 +220,7 @@ int main( void )
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
 
+    initializeCSP();
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
 //                         1000,
@@ -296,7 +306,7 @@ static void prvSetupHardware( void )
     init_spi();
     init_rtc();
     init_mram();
-    init_CAN(CAN_BAUD_RATE_1000K);
+    init_CAN(CAN_BAUD_RATE_1000K,NULL);
 }
 
 /*-----------------------------------------------------------*/
@@ -575,6 +585,27 @@ static void vTestFlash(void *pvParameters)
 	if(result != FLASH_OK){
 		while(1);
 	}
+
+}
+
+void initializeCSP(){
+
+	struct csp_can_config can_conf = {.ifc = "can0"};
+
+	/* Init buffer system with 1 packets of maximum 10 bytes each */
+	csp_buffer_init(1, 10);
+
+	/* Init CSP with address 1 */
+	csp_init(1);
+
+	/* Init the CAN interface with hardware filtering */
+	csp_can_init(CSP_CAN_MASKED, &can_conf);
+
+	/* Setup default route to CAN interface */
+	csp_route_set(CSP_DEFAULT_ROUTE, can_conf.ifc,CSP_NODE_MAC);
+
+	/* Start router task with 100 word stack, OS task priority 1 */
+	csp_route_start_task(100, 1);
 
 }
 
