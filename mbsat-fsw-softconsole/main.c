@@ -287,6 +287,14 @@ int main( void )
 						 1,
 						 NULL);
 
+    // Task for testing time tagged task queue.
+    status = xTaskCreate(vTestTaskScheduler,
+    					 "Test time tagged task queue",
+						 256,
+						 NULL,
+						 1,
+						 NULL);
+
     vTaskStartScheduler();
 
     return 0;

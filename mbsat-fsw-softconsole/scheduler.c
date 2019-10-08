@@ -24,25 +24,16 @@
 #include <rtc_common.h>
 #include "drivers/mss_rtc/mss_rtc.h"
 
-// FreeRTOS Libraries
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-
 // User Libraries
 #include "scheduler.h"
+#include "priority_queue.h"
 #include <rtc_time.h>
 #include <request_code.h>
-
-
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#define MAX_QUEUE_LENGTH					(10)	// The maximum number of items that the queue can hold at any one time.
 #define SCHEDULER_TASK_DELAY_MS				(2000)	// The delay time of each task cycle in ms.
-#define DEQUEUE_MS_TO_WAIT					(100)	// The maximum amount of time (in ms) the task should remain in the Blocked state to wait to dequeue data.
-#define ENQUEUE_MS_TO_WAIT					(100)	// The maximum amount of time (in ms) the task should remain in the Blocked state to wait to enqueue data.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
@@ -51,16 +42,6 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // STRUCTS AND STRUCT TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Description: Holds a desired execution time along with a request code.
-//
-//	time_tag: the desired future execution time of the request
-//  request_code: the code of the predefined task to execute
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-typedef struct {
-	mss_rtc_calendar_t time_tag;
-	request_code_t request_code;
-} time_tagged_task_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // TYPEDEFS
@@ -69,89 +50,74 @@ typedef struct {
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // VARIABLES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static QueueHandle_t task_queue_handler;
+static Node* priority_queue_handler;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Description:
-//  Initializes the queue for holding tasks.
-//
-// Returns:
-//  On success returns handler to Queue (QueueHandle_t), on failure returns NULL.
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static QueueHandle_t init_queue();
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Description:
-//  Kills process and cleans up resources.
-//
-// Returns:
-//  On success returns 0, on failure returns -1.
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static int clean_up_resources();
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static QueueHandle_t init_queue(){
-	return xQueueCreate(MAX_QUEUE_LENGTH, sizeof(time_tagged_task_t) );
+void init_TaskScheduler(void){
+	//TODO: Ensure Internal RTC is synchronized with External RTC.
+	//set up static variables
+	priority_queue_handler = NULL;
 }
 
-static int clean_up_resources(){
-	if(task_queue_handler != NULL){
-		vQueueDelete(task_queue_handler);
-	}
-
-	return 0;
+time_tagged_task_t* check_queue(mss_rtc_calendar_t time_now){
+	// is empty?
+	// temp = peek()
+	// if temp->time is now
+	//  pop()
+	// 	return temp
+	// else
+	//	return INVALID_REQUEST_CODE
+	return NULL;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void vTaskScheduler(void *pvParameters){
-	task_queue_handler = init_queue(); // Initialize the queue for holding the time tagged tasks
-	const TickType_t queue_timeout_ms = pdMS_TO_TICKS(DEQUEUE_MS_TO_WAIT);
-	static time_tagged_task_t front_task; // Static buffer for holding the front task read from queue.
+void vTestTaskScheduler(void *pvParameters){
+	init_TaskScheduler();
+
 	static BaseType_t rslt; // Variable to hold result of various functions
+
+	// Buffer variable to hold a task
+	static time_tagged_task_t task_buf;
 
 	// Get Test data for calendar
 	static mss_rtc_calendar_t *p_rtc_calendar;
 	p_rtc_calendar = malloc(sizeof(mss_rtc_calendar_t));
-	MSS_RTC_get_calendar_count(p_rtc_calendar);
-	schedule_task(test_code_0, *p_rtc_calendar);
-	free(p_rtc_calendar);
 
-	//TODO: Ensure Internal RTC is synchronized with External RTC.
+	MSS_RTC_get_calendar_count(p_rtc_calendar); // get current time
+
+	// add 60s to current time
+	schedule_task(TEST_CODE_1, *p_rtc_calendar); // create task to be executed in 60s
+	// add 90s to current time
+	schedule_task(TEST_CODE_2, *p_rtc_calendar); // create task to be executed in 90s
+	// add 30s to current time
+	schedule_task(TEST_CODE_0, *p_rtc_calendar); // create task to be executed in 30s
+
 
 	for( ;; ) {
-		//TODO: Check priority queue for task scheduled for current_time
-
-		rslt = xQueuePeek(task_queue_handler, &front_task, queue_timeout_ms); // Peek at front task in queue.
-
-		if(rslt == errQUEUE_EMPTY){// Queue is empty.
-			continue;  // Go back to beginning of loop.
-		}
-		else if(rslt == pdPASS){ // Data successfully read from the queue.
-			continue; // Go back to beginning of loop.
-			// Check if time is current time.
-		}
+		//request = check_queue(mss_rtc_calendar_t time_now)
+		//if(request != invalid request_code)
+		//execute(request);
 		vTaskDelay(pdMS_TO_TICKS(SCHEDULER_TASK_DELAY_MS));
 	}
 
-	clean_up_resources(); // Clean up resources before exiting task.
+	free(p_rtc_calendar);
 }
 
 int schedule_task(request_code_t req, mss_rtc_calendar_t time){
-	//TODO: schedule into priority queue, use rtc_time.h>calendar_to_long for priority
-	//if(task_queue_handler == NULL) { return -1; } // ERROR: queue not yet initialized
-	//TODO: check if full
-
-
+	// construct time_tagged_task_t w/ given values
 	//static time_tagged_task_t pvTask; // private task to be initialized with parameters and copied into Queue.
-
 	//pvTask.request_code = req;
 	//pvTask.time_tag = time;
 
-	//xQueueSendToBack(task_queue_handler, &pvTask, queue_timeout_ms);
-	return 0;
+
+	// Check if pq is empty
+	//		set pq = new Node(data)
+	// else push(data, priority) ***use rtc_time.c>CALENDAR_TO_LONG(time) for priority
+	return 0; // sucess, add error codes for failuers
 }

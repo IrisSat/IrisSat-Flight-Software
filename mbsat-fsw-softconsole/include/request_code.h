@@ -31,8 +31,10 @@
   to specify what predefined requested action to take.
  */
 typedef enum {
-	test_code_0 = 1000,
-	test_code_1 = 1001
+	INVALID_REQUEST_CODE = -1,
+	TEST_CODE_0 = 1000,
+	TEST_CODE_1 = 1001,
+	TEST_CODE_2 = 1002
 } request_code_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
