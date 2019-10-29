@@ -151,7 +151,7 @@ int schedule_task(request_code_t req, mss_rtc_calendar_t time){
 	unsigned long priority = CALENDAR_TO_LONG(&time);
 
 	if(isEmpty(&priority_queue_handler)){ // Check if priority queue is empty
-		priority_queue_handler = newNode((void*) &pvTask, priority); //	set priority queue = new Node(data)
+		priority_queue_handler = newNode((void*) pvTask, priority); //	set priority queue = new Node(data)
 	}
 	else{
 		push(&priority_queue_handler, (void*) pvTask, priority); // just put task into priority queue
