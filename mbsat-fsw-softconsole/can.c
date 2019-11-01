@@ -47,14 +47,14 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // VARIABLES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-QueueHandle_t *can_rx_queue;
-
+QueueHandle_t can_rx_queue;
+QueueHandle_t *csp_rx_queue;
 mss_can_instance_t g_can0;  // MSS CAN object instance.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int init_CAN(CANBaudRate baudrate, QueueHandle_t *can_rx_queue_handle)
+int init_CAN(CANBaudRate baudrate, QueueHandle_t *csp_rx_queue_handle)
 {
     int rc = 1;
 
@@ -62,8 +62,8 @@ int init_CAN(CANBaudRate baudrate, QueueHandle_t *can_rx_queue_handle)
     //---------------------------------------------------------------------
     // Initialize the CAN receive queue.
     //---------------------------------------------------------------------
-    //can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
-    can_rx_queue = *can_rx_queue_handle;
+    can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
+    csp_rx_queue = csp_rx_queue_handle;
     if (can_rx_queue == NULL)
     {
         rc = 0;
@@ -159,7 +159,8 @@ __attribute__((__interrupt__)) void CAN_IRQHandler(void)
               q_buf.data[ix] = rx_buf.DATA[ix];
           }
 
-          xQueueSendToBackFromISR(*can_rx_queue, &q_buf, NULL);
+          xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+          //xQueueSendToBackFromISR(*csp_rx_queue, &q_buf,NULL);
         }
         MSS_CAN_clear_int_status(&g_can0, CAN_INT_RX_MSG); // This is needed to indicate the interrupt was serviced.
     }

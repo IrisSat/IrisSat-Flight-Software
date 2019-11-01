@@ -220,7 +220,7 @@ int main( void )
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
 
-    initializeCSP();
+   // initializeCSP();
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
 //                         1000,
@@ -238,19 +238,19 @@ int main( void )
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
     // increasing heap space or managing memory in a smarter manner. First step would be looking
     // at the FreeRTOS configurations and the linker file *.ld.
-//    status = xTaskCreate(vTestCANTx,
-//                         "Test CAN Tx",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestCANTx,
+                         "Test CAN Tx",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 //
-//    status = xTaskCreate(vTestCANRx,
-//                         "Test CAN Rx",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestCANRx,
+                         "Test CAN Rx",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 //
 //    status = xTaskCreate(vTestWD,
 //                         "Test WD",
