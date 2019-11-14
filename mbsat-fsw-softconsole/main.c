@@ -134,6 +134,8 @@
 #include "spi.h"
 #include "uart.h"
 #include "watchdog.h"
+#include "scheduler.h"
+#include "priority_queue.h"
 
 
 
@@ -276,6 +278,22 @@ int main( void )
 //                         1,
 //                         NULL);
 //
+
+    // Task for testing priority queue data structure.
+    status = xTaskCreate(vTaskTest_Priority_Queue,
+    					 "Test Priority_Queue",
+						 256,
+						 NULL,
+						 1,
+						 NULL);
+
+    // Task for testing time tagged task queue.
+    status = xTaskCreate(vTestTaskScheduler,
+    					 "Test time tagged task queue",
+						 256,
+						 NULL,
+						 1,
+						 NULL);
 
     vTaskStartScheduler();
 
