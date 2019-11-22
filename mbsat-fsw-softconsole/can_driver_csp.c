@@ -1,5 +1,6 @@
 #include "can.h"
 #include "arch/csp_thread.h"
+#include "interfaces/csp_if_can.h"
 
 typedef uint32_t can_id_t;
 
@@ -28,11 +29,10 @@ int can_send(can_id_t id, uint8_t * data, uint8_t dlc);
 
 
 int can_init(uint32_t id, uint32_t mask, struct csp_can_config *conf){
-	QueueHandle_t que;
-	init_CAN(CAN_BAUD_RATE_250K,&que);
+	QueueHandle_t *que = get_csp_can_queue();
+	init_CAN(CAN_BAUD_RATE_250K,que);
 
-
-	return 1;
+	return 0;
 
 }
 

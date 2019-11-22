@@ -114,6 +114,12 @@ static csp_thread_handle_t csp_can_rx_task_h;
 /* RX frame queue */
 static csp_queue_handle_t csp_can_rx_queue;
 
+
+void * get_csp_can_queue(){
+	
+	return csp_can_rx_queue;
+}
+
 /* Identification number */
 static int csp_can_id_init(void)
 {

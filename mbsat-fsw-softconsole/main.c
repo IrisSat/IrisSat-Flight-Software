@@ -140,7 +140,8 @@
 #include "uart.h"
 #include "watchdog.h"
 
-
+#define SERVER
+//#define SERVER
 
 /* External variables */
 extern TaskHandle_t xUART0RxTaskToNotify;
@@ -176,6 +177,9 @@ static void vTestRTC(void *pvParameters);
  */
 static void vTestMRAM(void *pvParameters);
 
+static void vTestCspServer(void * pvParameters);
+static void vTestCspClient(void * pvParameters);
+
 /*
  * Test code for external flash.
  */
@@ -199,10 +203,13 @@ full information - including hardware setup requirements. */
 
 int main( void )
 {
+
+
     BaseType_t status;
 
     /* Prepare the hardware to run this demo. */
     prvSetupHardware();
+
 
     // Create LED spinning task
     status = xTaskCreate(    vTaskSpinLEDs,              // The task function that spins the LEDs
@@ -220,7 +227,7 @@ int main( void )
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
 
-   // initializeCSP();
+   initializeCSP();
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
 //                         1000,
@@ -251,6 +258,27 @@ int main( void )
                          NULL,
                          1,
                          NULL);
+
+#ifdef SERVER
+    status = xTaskCreate(vTestCspServer,
+                         "Test CSP Server",
+                         160,
+                         NULL,
+                         1,
+                         NULL);
+
+#endif
+
+#ifdef CLIENT
+    status = xTaskCreate(vTestCspClient,
+                         "Test CSP Client",
+                         160,
+                         NULL,
+                         1,
+                         NULL);
+
+
+#endif
 //
 //    status = xTaskCreate(vTestWD,
 //                         "Test WD",
@@ -381,6 +409,38 @@ static void vTestCANRx(void *pvParameters)
     }
 }
 
+/*-----------------------------------------------------------*/
+static void vTestCspServer(void * pvParameters){
+
+	csp_conn_t * conn;
+	csp_packet_t * packet;
+	csp_socket_t * socket = csp_socket(0);
+	csp_bind(socket, CSP_ANY);
+	csp_listen(socket,4);
+	while(1) {
+
+			conn = csp_accept(socket, 1000);
+			packet = csp_read(conn,0);
+			//printf(“%S\r\n”, packet->data);
+			csp_buffer_free(packet);
+			csp_close(conn);
+	}
+}
+/*-----------------------------------------------------------*/
+static void vTestCspClient(void * pvParameters){
+
+	while(1){
+	csp_conn_t * conn;
+	csp_packet_t * packet;
+	conn = csp_connect(2,0,4,1000,0);
+	packet = csp_buffer_get(sizeof(csp_packet_t));
+	sprintf(packet->data,"Hello World");
+	packet->length=strlen("Hello World");
+	csp_send(conn,packet,0);
+	csp_close(conn);
+	vTaskDelay(1000);
+	}
+}
 /*-----------------------------------------------------------*/
 static void vTestWD(void *pvParameters)
 {
@@ -590,22 +650,34 @@ static void vTestFlash(void *pvParameters)
 
 void initializeCSP(){
 
-	struct csp_can_config can_conf = {.ifc = "can0"};
+
+
+	struct csp_can_config can_conf;
+	can_conf.bitrate=10000;
+	can_conf.clock_speed=10000;
+	can_conf.ifc = "CAN";
 
 	/* Init buffer system with 1 packets of maximum 10 bytes each */
 	csp_buffer_init(1, 10);
 
 	/* Init CSP with address 1 */
-	csp_init(1);
+#ifdef SERVER
+	csp_init(0);
+#endif
 
+#ifdef CLIENT
+	csp_init(1);
+#endif
 	/* Init the CAN interface with hardware filtering */
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
 
 	/* Setup default route to CAN interface */
-	csp_route_set(CSP_DEFAULT_ROUTE, can_conf.ifc,CSP_NODE_MAC);
+	csp_route_set(CSP_DEFAULT_ROUTE, &csp_if_can,CSP_NODE_MAC);
 
+	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
 	csp_route_start_task(100, 1);
+
 
 }
 
