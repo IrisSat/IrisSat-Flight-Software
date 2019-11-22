@@ -26,28 +26,6 @@
 // Number of times to retry when resyncing.
 #define RETRY_COUNT      3
 
-// The internal RTC runs off of the 50 MHz RC clock.
-#define TICKS_TO_SECONDS 50000000u
-
-// Rough conversions for the helper macro below.
-#define SECONDS_IN_MINUTE 60
-#define MINUTES_IN_HOUR   60
-#define HOURS_IN_DAY      24
-#define DAYS_IN_MONTH     31
-#define MONTHS_IN_YEAR    12
-
-#define SECONDS_IN_HOUR   (SECONDS_IN_MINUTE * MINUTES_IN_HOUR)
-#define SECONDS_IN_MONTH  (SECONDS_IN_HOUR * HOURS_IN_DAY * DAYS_IN_MONTH)
-#define SECONDS_IN_YEAR   (SECONDS_IN_MONTH * MONTHS_IN_YEAR)
-
-// Helper macro used to convert a Calendar_t object to an unsigned long (for comparison operations). Note that it
-// does not correlate one to one into seconds since epoch.
-#define CALENDAR_TO_LONG(time) (time)->second \
-                               + (time)->minute * SECONDS_IN_MINUTE \
-							   + (time)->hour   * SECONDS_IN_HOUR \
-							   + (time)->month  * SECONDS_IN_MONTH \
-							   + (time)->year   * SECONDS_IN_YEAR
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -127,6 +105,10 @@ ErrCodesRTC_t time_valid(Calendar_t * time)
     }
 
     return rc;
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+unsigned long calendar_to_long(Calendar_t * time){
+	return CALENDAR_TO_LONG(time);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
