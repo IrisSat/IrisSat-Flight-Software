@@ -19,6 +19,7 @@
 RemoteSystemsTempFiles/
 
 # Created for builds.
-cdh-tsat5-softconsole/.settings/
-cdh-tsat5-softconsole/[Dd]ebug/
-cdh-tsat5-softconsole/[Rr]elease/
+mbsat-fsw-softconsole/.settings/
+mbsat-fsw-softconsole/[Dd]ebug/
+mbsat-fsw-softconsole/[Dd]ebug Flash/
+mbsat-fsw-softconsole/[Rr]elease/
