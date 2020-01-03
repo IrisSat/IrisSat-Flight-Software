@@ -36,6 +36,9 @@
 #define FLASH_SPI_CORE   CORE_SPI_0
 #define FLASH_SLAVE_CORE SPI_SLAVE_2 // FLASH uses MSS_GPIO for SS, so this is not relevant.
 
+#define ADCS_SPI_CORE   CORE_SPI_0  
+#define ADCS_SLAVE_CORE SPI_SLAVE_3 // ADS uses MSS_GPIO for SS, so this is not relevant.
+
 // MSS GPIO definitions
 #define LED0          MSS_GPIO_0
 #define LED1          MSS_GPIO_1
@@ -51,6 +54,7 @@
 #define FLASH_SS_PIN   MSS_GPIO_10
 #define RADIO_SS_PIN   MSS_GPIO_11
 #define MRAM0_SS_PIN   MSS_GPIO_12
+#define ADCS_SS_PIN    MSS_GPIO_13
 
 
 #endif // BOARD_DEFINITIONS_H
