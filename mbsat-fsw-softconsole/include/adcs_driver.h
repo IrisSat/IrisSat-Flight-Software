@@ -39,7 +39,8 @@
 typedef enum {
 
         ADCS_DRIVER_NO_ERROR,
-        ADCS_ERROR_BAD_ACK
+        ADCS_ERROR_BAD_ACK,
+        ADCS_ERROR_BAD_ID
 
 } AdcsDriverError_t;
 
