@@ -28,6 +28,8 @@
 // - Prevent task switching instead of using mutexes for SPI read/write.
 // 2019-06-09 by Joseph Howarth
 // - Add test code for flash.
+// 2020-01-03 by Joseph Howarth
+// - Add test code for ADCS driver.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -136,6 +138,7 @@
 #include "watchdog.h"
 #include "scheduler.h"
 #include "priority_queue.h"
+#include "adcs_driver.h"
 
 
 
@@ -177,6 +180,11 @@ static void vTestMRAM(void *pvParameters);
  * Test code for external flash.
  */
 static void vTestFlash(void *pvParameters);
+
+/*
+ * Test code for ADCS driver.
+ */
+static void vTestAdcsDriver(void * pvParameters);
 
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
@@ -315,6 +323,7 @@ static void prvSetupHardware( void )
     init_rtc();
     init_mram();
     init_CAN(CAN_BAUD_RATE_1000K);
+    adcs_init_driver();
 }
 
 /*-----------------------------------------------------------*/
@@ -593,6 +602,73 @@ static void vTestFlash(void *pvParameters)
 	if(result != FLASH_OK){
 		while(1);
 	}
+
+}
+
+static void vTestAdcsDriver(void * pvParameters){
+
+
+    uint8_t telemetryData [ADCS_TELEMETRY_TOTAL_SIZE] = {0xFF};
+    uint8_t telemetryData2 [ADCS_MAGNETORQUER_DATA_SIZE] = {0xFF};
+    while(1){
+
+        AdcsDriverError_t result = adcs_power_on();
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_reset();
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_initiate_telemetry();
+        if(!result){
+            while(1);
+        }
+
+
+        result = adcs_read_telemetry(telemetryData);
+        if(!result){
+            while(1);
+        }
+        //Verify the telemetry data here.
+
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X);
+        if(!result){
+            while(1);
+        }
+       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z);
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_X);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_Y);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_Z);
+        if(!result){
+            while(1);
+        }
+
+
+        result = adcs_read_magnetorquer_data(telemetryData2);
+        if(!result){
+            while(1);
+        }
+        //Verify the telemetry data here.
+
+        vTaskDelay(pdMS_TO_TICKS(2500)); // Repeat the test every 2.5 seconds.
+    }
 
 }
 
