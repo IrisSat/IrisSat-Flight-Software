@@ -25,16 +25,16 @@
 
 typedef enum{
 
-    ADCS_POWER_ON  = 0x0800,
-    ADCS_POWER_OFF = 0x0900,
+    ADCS_POWER_OFF  = 0x0800,
+    ADCS_POWER_ON = 0x0900,
     ADSC_INITIATE_TELEMETRY = 0x1000,
     ADCS_READ_TELEMETRY = 0x1100,
-    ADCS_TURN_ON_MANETORQUER_1 = 0x2A00,
-    ADCS_TURN_ON_MANETORQUER_2 = 0x2B00,
-    ADCS_TURN_ON_MANETORQUER_3 = 0x2C00,
-    ADCS_TURN_OFF_MANETORQUER_1 = 0x3A00,    //Dummy value used, this is not currently defined. 
-    ADCS_TURN_OFF_MANETORQUER_2 = 0x3A00,   //Dummy value used, this is not currently defined. 
-    ADCS_TURN_OFF_MANETORQUER_3 = 0x3A00,   //Dummy value used, this is not currently defined. 
+    ADCS_TURN_ON_MAGNETORQUER_1 = 0x2A00,
+    ADCS_TURN_ON_MAGNETORQUER_2 = 0x2B00,
+    ADCS_TURN_ON_MAGNETORQUER_3 = 0x2C00,
+    ADCS_TURN_OFF_MAGNETORQUER_1 = 0x3A00,
+    ADCS_TURN_OFF_MAGNETORQUER_2 = 0x3B00,
+    ADCS_TURN_OFF_MAGNETORQUER_3 = 0x3C00,
     ADCS_RESET = 0xAA00,
     ADCS_READ_MAGNETORQUERS = 0x1A,
     ADCS_READ_GYRO = 0x1B,
@@ -44,6 +44,8 @@ typedef enum{
 
 
 AdcsDriverError_t adcs_init_driver(){
+
+	AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
 
 	spi_configure_slave(ADCS_SPI_CORE, ADCS_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
 	spi_configure_gpio_ss(ADCS_SS_PIN);
@@ -129,7 +131,7 @@ AdcsDriverError_t adcs_read_telemetry(uint8_t * databuffer){
 
 }
 
-AdcsDriverError_t adcs_turn_on_magnetorquer(MagnetorquerID_t id){
+AdcsDriverError_t adcs_turn_on_magnetorquer(MagnetorquerID_t id, uint8_t pwm_duty_cycle){
 
 
     AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
@@ -140,20 +142,20 @@ AdcsDriverError_t adcs_turn_on_magnetorquer(MagnetorquerID_t id){
 
         case MAGNETORQUER_X:
 
-            cmd[0] = (ADCS_TURN_ON_MANETORQUER_1 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_ON_MANETORQUER_1 & 0xFF;
+            cmd[0] = (ADCS_TURN_ON_MAGNETORQUER_1 >> 8) & 0xFF;
+            cmd[1] = pwm_duty_cycle;
         break;
 
         case MAGNETORQUER_Y:
 
-            cmd[0] = (ADCS_TURN_ON_MANETORQUER_2 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_ON_MANETORQUER_2 & 0xFF;
+            cmd[0] = (ADCS_TURN_ON_MAGNETORQUER_2 >> 8) & 0xFF;
+            cmd[1] = pwm_duty_cycle;
         break;
 
         case MAGNETORQUER_Z:
 
-            cmd[0] = (ADCS_TURN_ON_MANETORQUER_3 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_ON_MANETORQUER_3 & 0xFF;
+            cmd[0] = (ADCS_TURN_ON_MAGNETORQUER_3 >> 8) & 0xFF;
+            cmd[1] = pwm_duty_cycle;
         break;
         
         default:
@@ -185,20 +187,20 @@ AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
 
         case MAGNETORQUER_X:
 
-            cmd[0] = (ADCS_TURN_OFF_MANETORQUER_1 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_OFF_MANETORQUER_1 & 0xFF;
+            cmd[0] = (ADCS_TURN_OFF_MAGNETORQUER_1 >> 8) & 0xFF;
+            cmd[1] = ADCS_TURN_OFF_MAGNETORQUER_1 & 0xFF;
         break;
 
         case MAGNETORQUER_Y:
 
-            cmd[0] = (ADCS_TURN_OFF_MANETORQUER_2 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_OFF_MANETORQUER_2 & 0xFF;
+            cmd[0] = (ADCS_TURN_OFF_MAGNETORQUER_2 >> 8) & 0xFF;
+            cmd[1] = ADCS_TURN_OFF_MAGNETORQUER_2 & 0xFF;
         break;
 
         case MAGNETORQUER_Z:
 
-            cmd[0] = (ADCS_TURN_OFF_MANETORQUER_3 >> 8) & 0xFF;
-            cmd[1] = ADCS_TURN_OFF_MANETORQUER_3 & 0xFF;
+            cmd[0] = (ADCS_TURN_OFF_MAGNETORQUER_3 >> 8) & 0xFF;
+            cmd[1] = ADCS_TURN_OFF_MAGNETORQUER_3 & 0xFF;
         break;
         
         default:

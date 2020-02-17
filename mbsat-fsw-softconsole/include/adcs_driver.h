@@ -93,6 +93,7 @@ AdcsDriverError_t adcs_read_telemetry(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 AdcsDriverError_t adcs_turn_on_magnetorquer(
     MagnetorquerID_t id     //Specifies which magnetorquer will be turned on.
+	uint8_t pwm_duty_cycle	//Specifies pwm duty cycle, where 255 = 100%.
 );
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
