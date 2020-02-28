@@ -11,8 +11,8 @@
     <hdl-type>Verilog</hdl-type>
     <project-description>
     </project-description>
-    <location>C:/Users/Joseph Howarth/Documents/MBSat/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system</location>
-    <state>GENERATED ( Thu Nov 14 12:35:35 2019 )</state>
+    <location>C:/Users/Joseph Howarth/Documents/MBSat/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system</location>
+    <state>GENERATED ( Wed Sep  4 15:11:20 2019 )</state>
     <swide-toolchain>SoftConsole workspace has not been generated</swide-toolchain>
   </project-settings>
   <site-map>
@@ -89,50 +89,11 @@
           <name>CORESPI_0_0</name>
           <fullPinName>CORESPI_0_0:APBslave</fullPinName>
           <remapAddress>0x50000000</remapAddress>
-          <combinedAddressSpace>0x50000000 - 0x50000FFF</combinedAddressSpace>
+          <combinedAddressSpace>0x50000000 - 0x4FFFFFFF</combinedAddressSpace>
           <remapAddress>0x30000000</remapAddress>
-          <combinedAddressSpace>0x30000000 - 0x30000FFF</combinedAddressSpace>
-          <range>0x00001000</range>
-          <memoryMap>
-            <name>RegisterMap</name>
-            <addressBlock>
-              <baseAddress>0x0</baseAddress>
-              <range format="long">0x100</range>
-              <width format="long" id="width">8</width>
-              <register>
-                <name>DAT</name>
-                <addressOffset>0x00</addressOffset>
-                <absoluteAddress>0x50000000</absoluteAddress>
-                <size>8</size>
-                <access>R/W</access>
-                <resetValue>0x00</resetValue>
-              </register>
-              <register>
-                <name>CTRL1</name>
-                <addressOffset>0x04</addressOffset>
-                <absoluteAddress>0x50000004</absoluteAddress>
-                <size>8</size>
-                <access>R/W</access>
-                <resetValue>0x00</resetValue>
-              </register>
-              <register>
-                <name>CTRL2</name>
-                <addressOffset>0x08</addressOffset>
-                <absoluteAddress>0x50000008</absoluteAddress>
-                <size>8</size>
-                <access>R/W</access>
-                <resetValue>0x00</resetValue>
-              </register>
-              <register>
-                <name>SLVSEL</name>
-                <addressOffset>0x0C</addressOffset>
-                <absoluteAddress>0x5000000C</absoluteAddress>
-                <size>8</size>
-                <access>R/W</access>
-                <resetValue>0x00</resetValue>
-              </register>
-            </addressBlock>
-          </memoryMap>
+          <combinedAddressSpace>0x30000000 - 0x2FFFFFFF</combinedAddressSpace>
+          <range>
+          </range>
         </slave>
         <slave>
           <name>CACHE_BACKDOOR</name>

@@ -2,11 +2,11 @@
 
 # User I/O Constraints file 
 
-# Version: v12.1 12.600.0.14
+# Version: v11.9 SP2 11.9.2.1
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Thu Nov 14 13:23:00 2019 
+# Date generated: Sun Aug 11 09:25:56 2019 
 
 
 # 
@@ -144,10 +144,4 @@ set_io m_sck           \
 # The I/Os in this section are unplaced or placed but are not locked
 # the other listed attributes have been applied
 # 
-
-
-#
-#Ports using Dedicated Pins
-
-#
 

@@ -496,23 +496,23 @@ PARENT="<project>\component\work\cdh_tsat5_system_sb_MSS\cdh_tsat5_system_sb_MSS
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.edn,syn_edn"
 STATE="utd"
-TIME="1570826178"
-SIZE="293477"
+TIME="1582908106"
+SIZE="293476"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.so,so"
 STATE="utd"
-TIME="1570826179"
-SIZE="286"
+TIME="1582908106"
+SIZE="268"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_sdc.sdc,syn_sdc"
 STATE="utd"
-TIME="1570826178"
+TIME="1582908106"
 SIZE="1116"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_syn.prj,prj"
 STATE="utd"
-TIME="1570826179"
-SIZE="4947"
+TIME="1582908106"
+SIZE="4623"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -758,12 +758,8 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-Reports;Reports;0
-ReportsCurrentItem;Run PROGRAM Action:cdh_tsat5_system_PROGRAM.log
-SmartDesign;cdh_tsat5_system;0
-Constraint Manager;Constraint Manager;0
 StartPage;StartPage;0
-ACTIVEVIEW;Constraint Manager
+ACTIVEVIEW;StartPage
 ENDLIST
 LIST ModuleSubBlockList
 LIST "cdh_tsat5_system::work","component\work\cdh_tsat5_system\cdh_tsat5_system.v","TRUE","FALSE"
