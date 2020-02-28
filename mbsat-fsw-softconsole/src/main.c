@@ -28,6 +28,8 @@
 // - Prevent task switching instead of using mutexes for SPI read/write.
 // 2019-06-09 by Joseph Howarth
 // - Add test code for flash.
+// 2020-01-03 by Joseph Howarth
+// - Add test code for ADCS driver.
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -139,6 +141,9 @@
 #include "spi.h"
 #include "uart.h"
 #include "watchdog.h"
+#include "scheduler.h"
+#include "priority_queue.h"
+#include "adcs_driver.h"
 
 #define SERVER
 //#define SERVER
@@ -189,6 +194,12 @@ static void vTestFlash(void *pvParameters);
  * Cubesat Space Protocol setup and test code.
  */
 void initializeCSP();
+
+/*
+ * Test code for ADCS driver.
+ */
+static void vTestAdcsDriver(void * pvParameters);
+
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -315,6 +326,22 @@ int main( void )
 //                         NULL);
 //
 
+    // Task for testing priority queue data structure.
+    status = xTaskCreate(vTaskTest_Priority_Queue,
+    					 "Test Priority_Queue",
+						 256,
+						 NULL,
+						 1,
+						 NULL);
+
+    // Task for testing time tagged task queue.
+    status = xTaskCreate(vTestTaskScheduler,
+    					 "Test time tagged task queue",
+						 256,
+						 NULL,
+						 1,
+						 NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -335,6 +362,7 @@ static void prvSetupHardware( void )
     init_rtc();
     init_mram();
     init_CAN(CAN_BAUD_RATE_1000K,NULL);
+    adcs_init_driver();
 }
 
 /*-----------------------------------------------------------*/
@@ -678,6 +706,72 @@ void initializeCSP(){
 	/* Start router task with 100 word stack, OS task priority 1 */
 	csp_route_start_task(100, 1);
 
+}
+
+static void vTestAdcsDriver(void * pvParameters){
+
+
+    uint8_t telemetryData [ADCS_TELEMETRY_TOTAL_SIZE] = {0xFF};
+    uint8_t telemetryData2 [ADCS_MAGNETORQUER_DATA_SIZE] = {0xFF};
+    while(1){
+
+        AdcsDriverError_t result = adcs_power_on();
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_reset();
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_initiate_telemetry();
+        if(!result){
+            while(1);
+        }
+
+
+        result = adcs_read_telemetry(telemetryData);
+        if(!result){
+            while(1);
+        }
+        //Verify the telemetry data here.
+
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X);
+        if(!result){
+            while(1);
+        }
+       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z);
+        if(!result){
+            while(1);
+        }
+
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_X);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_Y);
+        if(!result){
+            while(1);
+        }
+        result = adcs_turn_off_magnetorquer(MAGNETORQUER_Z);
+        if(!result){
+            while(1);
+        }
+
+
+        result = adcs_read_magnetorquer_data(telemetryData2);
+        if(!result){
+            while(1);
+        }
+        //Verify the telemetry data here.
+
+        vTaskDelay(pdMS_TO_TICKS(2500)); // Repeat the test every 2.5 seconds.
+    }
 
 }
 

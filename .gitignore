@@ -10,6 +10,8 @@
 # History
 # 2019-01-16 by Tamkin Rahman
 # - Created.
+# 2020-02-17 by Joseph Howarth
+# - Added vscode ignore.
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # SoftConsole 4.0 ignores:
@@ -19,7 +21,10 @@
 RemoteSystemsTempFiles/
 
 # Created for builds.
-mbsat-fsw-softconsole/.settings
+mbsat-fsw-softconsole/.settings/
 mbsat-fsw-softconsole/[Dd]ebug/
+mbsat-fsw-softconsole/[Dd]ebug Flash/
 mbsat-fsw-softconsole/[Rr]elease/
-mbsat-fsw-softconsole/'Debug Flash'/
+
+# For VSCode Editor:
+.vscode/
