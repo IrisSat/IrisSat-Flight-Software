@@ -32,7 +32,7 @@
 #define ADCS_MAGNETORQUER_DATA_SIZE  6
 #define ADCS_GYRO_DATA_SIZE  48
 #define ADCS_SUN_SENSOR_DATA_SIZE   156
-#define ADCS_TELEMERTY_TOTAL_SIZE   (ADCS_MAGNETORQUER_DATA_SIZE + ADCS_GYRO_DATA_SIZE + ADCS_SUN_SENSOR_DATA_SIZE)
+#define ADCS_TELEMETRY_TOTAL_SIZE   (ADCS_MAGNETORQUER_DATA_SIZE + ADCS_GYRO_DATA_SIZE + ADCS_SUN_SENSOR_DATA_SIZE)
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMERATIONS AND ENUMERATION TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ AdcsDriverError_t adcs_read_telemetry(
 //  Sends the command to turn on one of the magnetorquers to the ADCS controller.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 AdcsDriverError_t adcs_turn_on_magnetorquer(
-    MagnetorquerID_t id     //Specifies which magnetorquer will be turned on.
+    MagnetorquerID_t id,     //Specifies which magnetorquer will be turned on.
 	uint8_t pwm_duty_cycle	//Specifies pwm duty cycle, where 255 = 100%.
 );
 

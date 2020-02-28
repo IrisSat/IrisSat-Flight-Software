@@ -123,7 +123,7 @@ AdcsDriverError_t adcs_read_telemetry(uint8_t * databuffer){
     }
     else{
 
-        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_TELEMERTY_TOTAL_SIZE);
+        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_TELEMETRY_TOTAL_SIZE);
     }
 
     return status;

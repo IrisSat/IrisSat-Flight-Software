@@ -633,16 +633,16 @@ static void vTestAdcsDriver(void * pvParameters){
             while(1);
         }
         //Verify the telemetry data here.
-
-        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X);
+        uint8_t pwm_cycle = 128; // This gives a 50% duty cycle.
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X, pwm_cycle);
         if(!result){
             while(1);
         }
-       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y);
+       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y,pwm_cycle);
         if(!result){
             while(1);
         }
-        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z);
+        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z,pwm_cycle);
         if(!result){
             while(1);
         }
