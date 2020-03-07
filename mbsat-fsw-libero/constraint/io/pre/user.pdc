@@ -2,11 +2,11 @@
 
 # User I/O Constraints file 
 
-# Version: v11.9 SP2 11.9.2.1
+# Version: v12.1 12.600.0.14
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Sun Aug 11 09:25:56 2019 
+# Date generated: Wed Mar  4 16:01:35 2020 
 
 
 # 
@@ -25,24 +25,6 @@
 # User Locked I/O settings
 # 
 
-set_io CAN_RX_F2M     \
-    -pinname 92       \
-    -fixed yes        \
-    -DIRECTION INPUT
-
-
-set_io CAN_TX_M2F      \
-    -pinname 94        \
-    -fixed yes         \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_0_M2F      \
-    -pinname 117       \
-    -fixed yes         \
-    -DIRECTION OUTPUT
-
-
 set_io GPIO_10_M2F     \
     -pinname 13        \
     -fixed yes         \
@@ -56,7 +38,7 @@ set_io GPIO_11_M2F     \
 
 
 set_io GPIO_12_M2F     \
-    -pinname 10        \
+    -pinname 92        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
@@ -144,4 +126,15 @@ set_io m_sck           \
 # The I/Os in this section are unplaced or placed but are not locked
 # the other listed attributes have been applied
 # 
+
+
+#
+#Ports using Dedicated Pins
+
+#
+
+set_io DEVRST_N       \
+    -pinname 72       \
+    -DIRECTION INPUT
+
 

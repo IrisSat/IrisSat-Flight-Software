@@ -351,7 +351,7 @@ PARENT="<project>\component\work\cdh_tsat5_system_sb_MSS\cdh_tsat5_system_sb_MSS
 ENDFILE
 VALUE "<project>\component\work\cdh_tsat5_system\cdh_tsat5_system.cxf,actgen_cxf"
 STATE="utd"
-TIME="1573756535"
+TIME="1583358095"
 SIZE="6062"
 ENDFILE
 VALUE "<project>\component\work\cdh_tsat5_system\cdh_tsat5_system.v,hdl"
@@ -442,8 +442,8 @@ SIZE="2662"
 ENDFILE
 VALUE "<project>\constraint\io\user.pdc,io_pdc"
 STATE="utd"
-TIME="1569886875"
-SIZE="2568"
+TIME="1583359295"
+SIZE="2373"
 IS_TARGET="TRUE"
 ENDFILE
 VALUE "<project>\designer\impl1\cdh_tsat5_system.ide_des,ide_des"
@@ -496,23 +496,23 @@ PARENT="<project>\component\work\cdh_tsat5_system_sb_MSS\cdh_tsat5_system_sb_MSS
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.edn,syn_edn"
 STATE="utd"
-TIME="1582908106"
+TIME="1582922397"
 SIZE="293476"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system.so,so"
 STATE="utd"
-TIME="1582908106"
-SIZE="268"
+TIME="1582919385"
+SIZE="286"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_sdc.sdc,syn_sdc"
 STATE="utd"
-TIME="1582908106"
+TIME="1582922397"
 SIZE="1116"
 ENDFILE
 VALUE "<project>\synthesis\cdh_tsat5_system_syn.prj,prj"
 STATE="utd"
-TIME="1582908106"
-SIZE="4623"
+TIME="1582922397"
+SIZE="4947"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -758,8 +758,12 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
+Reports;Reports;0
+ReportsCurrentItem;Run PROGRAM Action:cdh_tsat5_system_PROGRAM.log
 StartPage;StartPage;0
-ACTIVEVIEW;StartPage
+SmartDesign;cdh_tsat5_system;0
+Constraint Manager;Constraint Manager;0
+ACTIVEVIEW;Reports
 ENDLIST
 LIST ModuleSubBlockList
 LIST "cdh_tsat5_system::work","component\work\cdh_tsat5_system\cdh_tsat5_system.v","TRUE","FALSE"

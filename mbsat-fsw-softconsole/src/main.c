@@ -272,12 +272,12 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
-//    status = xTaskCreate(vTestMRAM,
-//                         "Test MRAM",
-//                         256,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestMRAM,
+                         "Test MRAM",
+                         256,
+                         NULL,
+                         1,
+                         NULL);
 					 
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
@@ -287,21 +287,21 @@ int main( void )
 //                         NULL);
 //
 
-    // Task for testing priority queue data structure.
-    status = xTaskCreate(vTaskTest_Priority_Queue,
-    					 "Test Priority_Queue",
-						 256,
-						 NULL,
-						 1,
-						 NULL);
-
-    // Task for testing time tagged task queue.
-    status = xTaskCreate(vTestTaskScheduler,
-    					 "Test time tagged task queue",
-						 256,
-						 NULL,
-						 1,
-						 NULL);
+//    // Task for testing priority queue data structure.
+//    status = xTaskCreate(vTaskTest_Priority_Queue,
+//    					 "Test Priority_Queue",
+//						 256,
+//						 NULL,
+//						 1,
+//						 NULL);
+//
+//    // Task for testing time tagged task queue.
+//    status = xTaskCreate(vTestTaskScheduler,
+//    					 "Test time tagged task queue",
+//						 256,
+//						 NULL,
+//						 1,
+//						 NULL);
 
     vTaskStartScheduler();
 
@@ -467,7 +467,7 @@ static void vTestRTC(void *pvParameters)
 static void vTestMRAM(void *pvParameters)
 {
     // Test code that writes to all locations of the MRAM, and then reads it back.
-    static uint8_t write_buffer[0x100];
+    static uint8_t write_buffer[0x10];
     static uint8_t read_buffer1[sizeof(write_buffer)];
     uint8_t status_reg;
 
