@@ -116,6 +116,7 @@
  */
 
 /* Standard includes. */
+#include <flash_W25.h>
 #include <stdio.h>
 
 /* Kernel includes. */
@@ -129,7 +130,6 @@
 
 /* Application includes. */
 #include "can.h"
-#include "flash.h"
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
