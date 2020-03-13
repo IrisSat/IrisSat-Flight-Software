@@ -17,6 +17,8 @@
 //           64k/32k/4k byte sectors
 //			 512Mb dies.
 // This driver uses 4-byte addressing mode.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include <stdint.h>
 
 typedef enum  {
 
@@ -54,8 +56,13 @@ typedef enum  {
 typedef enum{
 
 	FLASH_OK,
+	FLASH_BUSY,
 	FLASH_ERROR,
-	FLASH_INVALID
+	FLASH_INVALID_ID,
+	FLASH_INVALID_ADDRESS,
+	FLASH_WRITE_ERROR,
+	FLASH_ERASE_ERROR,
+	FLASH_ERROR_ADRESSING_MODE //Error setting the device to 4 bit addressing mode.
 
 } FlashStatus_t;
 
@@ -118,3 +125,6 @@ FlashStatus_t MT25Q_flash_erase_4k(uint32_t addr);
 //  progress. Returns FLASH_BUSY or FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_is_busy();
+
+
+#endif
