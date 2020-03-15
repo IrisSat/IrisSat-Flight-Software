@@ -16,7 +16,10 @@
 #include "flash.h"
 #include "spi.h"
 #include "board_definitions.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
+#define STAT_POLLING_RATE   100
 #define M25Q_ID 0x20
 #define FLASH_STAT_IS_BUSY(x)       (~((x>>7)&0x01))   //Gets the busy bit from status register byte. 1 if busy, 0 if ready.
 #define FLASH_STAT_ERASE_FAILED(x)     ((x>>5)&0x01)   //Gets the erase bit from status register byte. 0 if ok, 1 if failure.
@@ -49,7 +52,11 @@ FlashStatus_t MT25Q_setup_flash(){
         command = FLASH_OP_ENABLE_4_BYTE_MODE;
         spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1,0,0);
 
-        while(MT25Q_flash_is_busy() == FLASH_BUSY)
+        while(MT25Q_flash_is_busy() == FLASH_BUSY){
+            if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+                vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+            }
+        }
         //Verify that 4-byte mode is enabled.
         command = FLASH_OP_READ_STAT_REG;
         uint8_t stat_reg = 0;
@@ -69,13 +76,45 @@ FlashStatus_t MT25Q_setup_flash(){
 //  and will return FLASH_BUSY if the previous operation is not finished. If the write is successful,
 // the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t MT25Q_flash_write_page(uint32_t addr, uint8_t* data,uint32_t size){}
+FlashStatus_t MT25Q_flash_write_page(uint32_t addr, uint8_t* data,uint32_t size){
+
+    FlashStatus_t result = FLASH_OK;
+
+    uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
+    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command), 0, 0);
+
+
+
+    uint8_t wr_command [5] = {FLASH_OP_PROGRAM,
+                            (addr>>24)&0xFF,
+                            (addr>>16)&0xFF,
+                            (addr>>8)&0xFF,
+                            (addr)&0xFF,
+                            };
+
+    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, wr_command, sizeof(wr_command), data, size);
+
+        return result;
+
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  This reads data from the flash memory starting at the given address.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t MT25Q_flash_read(uint32_t addr, uint8_t* data,uint32_t size){}
+FlashStatus_t MT25Q_flash_read(uint32_t addr, uint8_t* data,uint32_t size){
+
+    uint8_t command [5] = {FLASH_OP_READ,
+                            (addr>>24)&0xFF,
+                            (addr>>16)&0xFF,
+                            (addr>>8)&0xFF,
+                            (addr)&0xFF,
+                            };
+
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command, sizeof(command), data, size);
+
+        return FLASH_OK;
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
