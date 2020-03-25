@@ -116,7 +116,7 @@
  */
 
 /* Standard includes. */
-#include <flash_W25.h>
+#include <flash.h>
 #include <stdio.h>
 
 /* Kernel includes. */
@@ -272,19 +272,19 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
-    status = xTaskCreate(vTestMRAM,
-                         "Test MRAM",
-                         256,
-                         NULL,
-                         1,
-                         NULL);
-					 
-//	status = xTaskCreate(vTestFlash,
-//                         "Test Flash",
-//                         2000,
+//    status = xTaskCreate(vTestMRAM,
+//                         "Test MRAM",
+//                         256,
 //                         NULL,
 //                         1,
 //                         NULL);
+
+	status = xTaskCreate(vTestFlash,
+                         "Test Flash",
+                         2000,
+                         NULL,
+                         1,
+                         NULL);
 //
 
 //    // Task for testing priority queue data structure.
@@ -513,96 +513,17 @@ static void vTestMRAM(void *pvParameters)
 static void vTestFlash(void *pvParameters)
 {
 
-	FlashDevice_t flash_device;
+	MSS_GPIO_config( MSS_GPIO_10, MSS_GPIO_OUTPUT_MODE );
+	FlashStatus_t result = MT25Q_setup_flash();
 
-	FlashStatus_t result = flash_dev_init(&flash_device,CORE_SPI_0, MSS_GPIO_5, 8, ECC_ON);
+	if(result != FLASH_OK) while(1){}
 
-	MSS_GPIO_config( MSS_GPIO_3, MSS_GPIO_OUTPUT_MODE );
+	while(1){
 
-	if(result != FLASH_OK){
-		while(1);
+
+	    vTaskSuspend(NULL);
+
 	}
-	int done =0;
-	uint8_t data_rx[2048];
-	int i;
-	int pageNum = 0;
-	int blockNum=0;
-	int address=0x0000000;
-	int numBadBlock = 0;
-	int led = 0;
-	int BB[50];
-	uint8_t data_tx[2048];
-
-	// Clear the receive buffer and put a repeating sequence of 0-255 into the
-	// transmit buffer.
-	for(i=0;i<2048;i++){
-		data_tx[i] = i%256;
-		data_rx[i] = 0;
-	}
-
-
-	// Check if we can read the bad block look up table.
-	// There should be one mapping in the table(1 bad block).
-	int num_bad_blocks = 0;
-	result = flash_read_bb_lut(&flash_device,&flash_device.bb_lut,&num_bad_blocks);
-
-	if(result != FLASH_OK || num_bad_blocks != 1){
-		while(1);
-	}
-
-
-	// Erase the block.
-	result = flash_erase_blocks(&flash_device,0,1);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-
-
-	result = flash_read(&flash_device,address,2048,data_rx);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-	int j;
-	// Make sure page is erased.
-	for(j=0;j<2048;j++){
-
-		if(data_rx[j] != 0xFF){
-			while(1);
-		}
-	}
-
-	// Save the transmit buffer to flash memory.
-	result = flash_write_(&flash_device,address,2048,data_tx);
-	if(result != FLASH_OK){
-		while(1);
-	}
-
-
-	result = flash_read(&flash_device,address,2048,data_rx);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-
-	// Make sure the data we read is the same as what was written.
-
-	for(j=0;j<2048;j++){
-
-		if(data_rx[j] != data_tx[j]){
-			while(1);
-		}
-	}
-
-
-	// Erase the block.
-	result = flash_erase_blocks(&flash_device,0,1);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-
 }
 
 static void vTestAdcsDriver(void * pvParameters){

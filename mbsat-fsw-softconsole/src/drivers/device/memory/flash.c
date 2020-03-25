@@ -21,10 +21,10 @@
 
 #define STAT_POLLING_RATE   100
 #define M25Q_ID 0x20
-#define FLASH_STAT_IS_BUSY(x)       (~((x>>7)&0x01))   //Gets the busy bit from status register byte. 1 if busy, 0 if ready.
-#define FLASH_STAT_ERASE_FAILED(x)     ((x>>5)&0x01)   //Gets the erase bit from status register byte. 0 if ok, 1 if failure.
-#define FLASH_STAT_WRITE_FAILED(x)     ((x>>4)&0x01)   //Gets the write bit from status register byte. 0 if ok, 1 if failure.
-#define FLASH_STAT_GET_ADRESS_MODE(x)  ((x)&0x01)      //Gets the addressing bit from status register byte. 0 if 3-byte, 1 if 4-byte.
+#define FLASH_STAT_IS_BUSY(x)          ((x)&0x01)       //Gets the busy bit from status register byte. 1 if busy, 0 if ready.
+#define FLASH_FLAG_ERASE_FAILED(x)     ((x>>5)&0x01)    //Gets the erase bit from flag register byte. 0 if ok, 1 if failure.
+#define FLASH_FLAG_WRITE_FAILED(x)     ((x>>4)&0x01)    //Gets the write bit from flag register byte. 0 if ok, 1 if failure.
+#define FLASH_FLAG_GET_ADRESS_MODE(x)  ((x)&0x01)       //Gets the addressing bit from flag register byte. 0 if 3-byte, 1 if 4-byte.
 
 
 
@@ -47,6 +47,24 @@ FlashStatus_t MT25Q_setup_flash(){
         result = FLASH_INVALID_ID;
     }
 
+
+    command = FLASH_OP_READ_STAT_REG;
+    uint8_t stat_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1, &stat_reg, 1);
+
+#ifdef FIRST_TIME_PROGRAMMING
+//    uint64_t password = 0;
+//    uint64_t * password_pt =  &password;
+//    command = FLASH_OP_READ_PASSWORD;
+//    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1,(uint8_t *)password_pt , 8);
+//    //Only do this once, when the device is first programmed!
+//    // Make sure the password protection is disabled.
+//    command = FLASH_OP_WRITE_SECTOR_PROTECTION;
+//    uint8_t disable_password [2]= {0xFF,0xFD};//0xFF 1111 1101
+//    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1, disable_password, 2);
+#endif
+
+
     if(result == FLASH_OK){
         //Put the device into 4-byte address mode.
         command = FLASH_OP_ENABLE_4_BYTE_MODE;
@@ -57,12 +75,13 @@ FlashStatus_t MT25Q_setup_flash(){
                 vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
             }
         }
-        //Verify that 4-byte mode is enabled.
-        command = FLASH_OP_READ_STAT_REG;
-        uint8_t stat_reg = 0;
-        spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1, &stat_reg, 1);
 
-        if(FLASH_STAT_GET_ADRESS_MODE(stat_reg) != 1){
+        //Verify that 4-byte mode is enabled.
+        command = FLASH_OP_READ_FLAG_REG;
+        uint8_t flag_reg = 0;
+        spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &command, 1, &flag_reg, 1);
+
+        if(FLASH_FLAG_GET_ADRESS_MODE(flag_reg) != 1){
             result = FLASH_ERROR_ADRESSING_MODE;
         }
     }
