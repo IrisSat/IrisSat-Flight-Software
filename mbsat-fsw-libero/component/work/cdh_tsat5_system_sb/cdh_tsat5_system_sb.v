@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Sun Jun 23 15:16:49 2019
-// Version: v11.9 SP2 11.9.2.1
+// Created by SmartDesign Sun Mar 22 00:20:32 2020
+// Version: v12.1 12.600.0.14
 //////////////////////////////////////////////////////////////////////
 
 `timescale 1ns / 100ps
@@ -11,6 +11,7 @@ module cdh_tsat5_system_sb(
     CAN_RX_F2M,
     DEVRST_N,
     FAB_RESET_N,
+    GPIO_Input,
     MMUART_0_RXD_F2M,
     m_miso,
     s_mosi,
@@ -28,7 +29,6 @@ module cdh_tsat5_system_sb(
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
-    GPIO_6_M2F,
     GPIO_7_M2F,
     GPIO_8_M2F,
     GPIO_9_M2F,
@@ -50,6 +50,7 @@ module cdh_tsat5_system_sb(
 input        CAN_RX_F2M;
 input        DEVRST_N;
 input        FAB_RESET_N;
+input        GPIO_Input;
 input        MMUART_0_RXD_F2M;
 input        m_miso;
 input        s_mosi;
@@ -69,7 +70,6 @@ output       GPIO_12_M2F;
 output       GPIO_1_M2F;
 output       GPIO_3_M2F;
 output       GPIO_5_M2F;
-output       GPIO_6_M2F;
 output       GPIO_7_M2F;
 output       GPIO_8_M2F;
 output       GPIO_9_M2F;
@@ -119,13 +119,13 @@ wire          GPIO_0_M2F_net_0;
 wire          GPIO_1_M2F_net_0;
 wire          GPIO_3_M2F_net_0;
 wire          GPIO_5_M2F_net_0;
-wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
 wire          GPIO_8_M2F_net_0;
 wire          GPIO_9_M2F_net_0;
 wire          GPIO_10_M2F_net_0;
 wire          GPIO_11_M2F_net_0;
 wire          GPIO_12_M2F_net_0;
+wire          GPIO_Input;
 wire          INIT_DONE_net_0;
 wire          m_miso;
 wire          m_mosi_net_0;
@@ -151,7 +151,6 @@ wire          GPIO_0_M2F_net_1;
 wire          GPIO_1_M2F_net_1;
 wire          GPIO_3_M2F_net_1;
 wire          GPIO_5_M2F_net_1;
-wire          GPIO_6_M2F_net_1;
 wire          GPIO_7_M2F_net_1;
 wire          GPIO_8_M2F_net_1;
 wire          GPIO_9_M2F_net_1;
@@ -162,8 +161,8 @@ wire          enable_master_net_1;
 wire          enable_slave_net_1;
 wire          m_mosi_net_1;
 wire          m_sck_net_1;
-wire   [7:0]  m_ss_net_1;
 wire          s_miso_net_1;
+wire   [7:0]  m_ss_net_1;
 wire   [15:0] MSS_INT_F2M_net_0;
 //--------------------------------------------------------------------
 // TiedOff Nets
@@ -263,8 +262,6 @@ assign GPIO_3_M2F_net_1       = GPIO_3_M2F_net_0;
 assign GPIO_3_M2F             = GPIO_3_M2F_net_1;
 assign GPIO_5_M2F_net_1       = GPIO_5_M2F_net_0;
 assign GPIO_5_M2F             = GPIO_5_M2F_net_1;
-assign GPIO_6_M2F_net_1       = GPIO_6_M2F_net_0;
-assign GPIO_6_M2F             = GPIO_6_M2F_net_1;
 assign GPIO_7_M2F_net_1       = GPIO_7_M2F_net_0;
 assign GPIO_7_M2F             = GPIO_7_M2F_net_1;
 assign GPIO_8_M2F_net_1       = GPIO_8_M2F_net_0;
@@ -285,10 +282,10 @@ assign m_mosi_net_1           = m_mosi_net_0;
 assign m_mosi                 = m_mosi_net_1;
 assign m_sck_net_1            = m_sck_net_0;
 assign m_sck                  = m_sck_net_1;
-assign m_ss_net_1             = m_ss_net_0;
-assign m_ss[7:0]              = m_ss_net_1;
 assign s_miso_net_1           = s_miso_net_0;
 assign s_miso                 = s_miso_net_1;
+assign m_ss_net_1             = m_ss_net_0;
+assign m_ss[7:0]              = m_ss_net_1;
 //--------------------------------------------------------------------
 // Concatenation assignments
 //--------------------------------------------------------------------
@@ -333,6 +330,10 @@ cdh_tsat5_system_sb_MSS cdh_tsat5_system_sb_MSS_0(
         .MSS_INT_F2M            ( MSS_INT_F2M_net_0 ),
         .FIC_0_APB_M_PRDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PRDATA ),
         .FIC_2_APB_M_PRDATA     ( FIC_2_APB_M_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
+        .SPI_0_DI_F2M           ( GND_net ),
+        .SPI_0_CLK_F2M          ( GND_net ),
+        .SPI_0_SS0_F2M          ( GND_net ),
+        .GPIO_5_F2M             ( GPIO_Input ),
         // Outputs
         .MMUART_0_TXD_M2F       ( MMUART_0_TXD_M2F_net_0 ),
         .MSS_RESET_N_M2F        ( cdh_tsat5_system_sb_MSS_TMP_0_MSS_RESET_N_M2F ),
@@ -342,8 +343,6 @@ cdh_tsat5_system_sb_MSS cdh_tsat5_system_sb_MSS_0(
         .GPIO_1_M2F             ( GPIO_1_M2F_net_0 ),
         .GPIO_3_M2F             ( GPIO_3_M2F_net_0 ),
         .GPIO_5_M2F             ( GPIO_5_M2F_net_0 ),
-        .GPIO_6_M2F             ( GPIO_6_M2F_net_0 ),
-        .GPIO_7_M2F             ( GPIO_7_M2F_net_0 ),
         .GPIO_8_M2F             ( GPIO_8_M2F_net_0 ),
         .GPIO_9_M2F             ( GPIO_9_M2F_net_0 ),
         .GPIO_10_M2F            ( GPIO_10_M2F_net_0 ),
@@ -360,7 +359,12 @@ cdh_tsat5_system_sb_MSS cdh_tsat5_system_sb_MSS_0(
         .FIC_0_APB_M_PADDR      ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PADDR ),
         .FIC_0_APB_M_PWDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PWDATA ),
         .FIC_2_APB_M_PADDR      (  ),
-        .FIC_2_APB_M_PWDATA     (  ) 
+        .FIC_2_APB_M_PWDATA     (  ),
+        .SPI_0_DO_M2F           (  ),
+        .SPI_0_CLK_M2F          (  ),
+        .SPI_0_SS0_M2F          (  ),
+        .SPI_0_SS0_M2F_OE       (  ),
+        .GPIO_5_M2F_OE          ( GPIO_7_M2F_net_0 ) 
         );
 
 //--------CoreAPB3   -   Actel:DirectCore:CoreAPB3:4.1.100
@@ -406,71 +410,68 @@ CoreAPB3_0(
         // Inputs
         .PRESETN    ( GND_net ), // tied to 1'b0 from definition
         .PCLK       ( GND_net ), // tied to 1'b0 from definition
-        .PADDR      ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PADDR ),
         .PWRITE     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PWRITE ),
         .PENABLE    ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PENABLE ),
-        .PWDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PWDATA ),
         .PSEL       ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PSELx ),
-        .PRDATAS0   ( CoreAPB3_0_APBmslave0_PRDATA_0 ),
         .PREADYS0   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS0  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS1   ( PRDATAS1_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS1   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS1  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS2   ( PRDATAS2_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS2   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS2  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS3   ( PRDATAS3_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS3   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS3  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS4   ( PRDATAS4_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS4   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS4  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS5   ( PRDATAS5_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS5   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS5  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS6   ( PRDATAS6_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS6   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS6  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS7   ( PRDATAS7_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS7   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS7  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS8   ( PRDATAS8_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS8   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS8  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS9   ( PRDATAS9_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS9   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS9  ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS10  ( PRDATAS10_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS10  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS10 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS11  ( PRDATAS11_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS11  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS11 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS12  ( PRDATAS12_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS12  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS12 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS13  ( PRDATAS13_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS13  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS13 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS14  ( PRDATAS14_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS14  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS14 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS15  ( PRDATAS15_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS15  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS15 ( GND_net ), // tied to 1'b0 from definition
-        .PRDATAS16  ( PRDATAS16_const_net_0 ), // tied to 32'h00000000 from definition
         .PREADYS16  ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS16 ( GND_net ), // tied to 1'b0 from definition
+        .PADDR      ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PADDR ),
+        .PWDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PWDATA ),
+        .PRDATAS0   ( CoreAPB3_0_APBmslave0_PRDATA_0 ),
+        .PRDATAS1   ( PRDATAS1_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS2   ( PRDATAS2_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS3   ( PRDATAS3_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS4   ( PRDATAS4_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS5   ( PRDATAS5_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS6   ( PRDATAS6_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS7   ( PRDATAS7_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS8   ( PRDATAS8_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS9   ( PRDATAS9_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS10  ( PRDATAS10_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS11  ( PRDATAS11_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS12  ( PRDATAS12_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS13  ( PRDATAS13_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS14  ( PRDATAS14_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS15  ( PRDATAS15_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS16  ( PRDATAS16_const_net_0 ), // tied to 32'h00000000 from definition
         .IADDR      ( IADDR_const_net_0 ), // tied to 32'h00000000 from definition
         // Outputs
-        .PRDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PRDATA ),
         .PREADY     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PREADY ),
         .PSLVERR    ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PSLVERR ),
-        .PADDRS     ( CoreAPB3_0_APBmslave0_PADDR ),
         .PWRITES    ( CoreAPB3_0_APBmslave0_PWRITE ),
         .PENABLES   ( CoreAPB3_0_APBmslave0_PENABLE ),
-        .PWDATAS    ( CoreAPB3_0_APBmslave0_PWDATA ),
         .PSELS0     ( CoreAPB3_0_APBmslave0_PSELx ),
         .PSELS1     (  ),
         .PSELS2     (  ),
@@ -487,7 +488,10 @@ CoreAPB3_0(
         .PSELS13    (  ),
         .PSELS14    (  ),
         .PSELS15    (  ),
-        .PSELS16    (  ) 
+        .PSELS16    (  ),
+        .PRDATA     ( cdh_tsat5_system_sb_MSS_TMP_0_FIC_0_APB_MASTER_PRDATA ),
+        .PADDRS     ( CoreAPB3_0_APBmslave0_PADDR ),
+        .PWDATAS    ( CoreAPB3_0_APBmslave0_PWDATA ) 
         );
 
 //--------CoreResetP   -   Actel:DirectCore:CoreResetP:7.1.100
@@ -537,16 +541,12 @@ CORERESETP_0(
         .SDIF3_PERST_N                  ( VCC_net ), // tied to 1'b1 from definition
         .SDIF0_PSEL                     ( GND_net ), // tied to 1'b0 from definition
         .SDIF0_PWRITE                   ( VCC_net ), // tied to 1'b1 from definition
-        .SDIF0_PRDATA                   ( SDIF0_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .SDIF1_PSEL                     ( GND_net ), // tied to 1'b0 from definition
         .SDIF1_PWRITE                   ( VCC_net ), // tied to 1'b1 from definition
-        .SDIF1_PRDATA                   ( SDIF1_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .SDIF2_PSEL                     ( GND_net ), // tied to 1'b0 from definition
         .SDIF2_PWRITE                   ( VCC_net ), // tied to 1'b1 from definition
-        .SDIF2_PRDATA                   ( SDIF2_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .SDIF3_PSEL                     ( GND_net ), // tied to 1'b0 from definition
         .SDIF3_PWRITE                   ( VCC_net ), // tied to 1'b1 from definition
-        .SDIF3_PRDATA                   ( SDIF3_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .SOFT_EXT_RESET_OUT             ( GND_net ), // tied to 1'b0 from definition
         .SOFT_RESET_F2M                 ( GND_net ), // tied to 1'b0 from definition
         .SOFT_M3_RESET                  ( GND_net ), // tied to 1'b0 from definition
@@ -562,6 +562,10 @@ CORERESETP_0(
         .SOFT_SDIF2_CORE_RESET          ( GND_net ), // tied to 1'b0 from definition
         .SOFT_SDIF3_PHY_RESET           ( GND_net ), // tied to 1'b0 from definition
         .SOFT_SDIF3_CORE_RESET          ( GND_net ), // tied to 1'b0 from definition
+        .SDIF0_PRDATA                   ( SDIF0_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
+        .SDIF1_PRDATA                   ( SDIF1_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
+        .SDIF2_PRDATA                   ( SDIF2_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
+        .SDIF3_PRDATA                   ( SDIF3_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         // Outputs
         .MSS_HPMS_READY                 ( MSS_READY_net_0 ),
         .DDR_READY                      (  ),
@@ -592,28 +596,28 @@ CORESPI #(
         .USE_SLAVE  ( 0 ) )
 CORESPI_0_0(
         // Inputs
-        .PADDR         ( CoreAPB3_0_APBmslave0_PADDR_0 ),
         .PCLK          ( FAB_CCC_GL0_net_0 ),
         .PENABLE       ( CoreAPB3_0_APBmslave0_PENABLE ),
         .PRESETN       ( MSS_READY_net_0 ),
         .PSEL          ( CoreAPB3_0_APBmslave0_PSELx ),
-        .PWDATA        ( CoreAPB3_0_APBmslave0_PWDATA_0 ),
         .PWRITE        ( CoreAPB3_0_APBmslave0_PWRITE ),
         .m_miso        ( m_miso ),
         .s_mosi        ( s_mosi ),
         .s_sck         ( s_sck ),
         .s_ss          ( s_ss ),
+        .PADDR         ( CoreAPB3_0_APBmslave0_PADDR_0 ),
+        .PWDATA        ( CoreAPB3_0_APBmslave0_PWDATA_0 ),
         // Outputs
-        .PRDATA        ( CoreAPB3_0_APBmslave0_PRDATA ),
         .enable_master ( enable_master_net_0 ),
         .enable_slave  ( enable_slave_net_0 ),
         .interrupt     ( CORESPI_0_0_interrupt ),
         .m_mosi        ( m_mosi_net_0 ),
         .m_sck         ( m_sck_net_0 ),
-        .m_ss          ( m_ss_net_0 ),
         .rx_data_ready ( CORESPI_0_0_rx_data_ready ),
         .s_miso        ( s_miso_net_0 ),
-        .tx_reg_empty  ( CORESPI_0_0_tx_reg_empty ) 
+        .tx_reg_empty  ( CORESPI_0_0_tx_reg_empty ),
+        .PRDATA        ( CoreAPB3_0_APBmslave0_PRDATA ),
+        .m_ss          ( m_ss_net_0 ) 
         );
 
 //--------OR3
