@@ -47,7 +47,7 @@ AdcsDriverError_t adcs_init_driver(){
 
 	AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
 
-	spi_configure_slave(ADCS_SPI_CORE, ADCS_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
+	//spi_configure_slave(ADCS_SPI_CORE, ADCS_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
 	spi_configure_gpio_ss(ADCS_SS_PIN);
 
 }

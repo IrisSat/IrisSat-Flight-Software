@@ -252,12 +252,12 @@ int main( void )
 //                         1,
 //                         NULL);
 //
-//    status = xTaskCreate(vTestWD,
-//                         "Test WD",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestWD,
+                         "Test WD",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 //
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -274,7 +274,7 @@ int main( void )
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
     status = xTaskCreate(vTestMRAM,
                          "Test MRAM",
-                         256,
+                         512,
                          NULL,
                          1,
                          NULL);
@@ -339,9 +339,10 @@ static void vTestSPI(void *pvParameters)
     {
         vTaskSuspendAll();
         // Write a block every second.
-        spi_transaction_block_write_with_toggle(
+        spi_transaction_block_write_without_toggle(
                     CORE_SPI_0,
                     SPI_SLAVE_0,
+					MSS_GPIO_0,
                     test_cmd,
                     sizeof(test_cmd) / sizeof(test_cmd[0]),
                     test_wr,
@@ -351,9 +352,10 @@ static void vTestSPI(void *pvParameters)
 
         taskYIELD();
         vTaskSuspendAll();
-        spi_transaction_block_read_with_toggle(
+        spi_transaction_block_read_without_toggle(
                     CORE_SPI_0,
                     SPI_SLAVE_0,
+					MSS_GPIO_0,
                     test_cmd,
                     sizeof(test_cmd) / sizeof(test_cmd[0]),
                     test_rd,

@@ -38,7 +38,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void ds1393_init()
 {
-	spi_configure_slave(RTC_SPI_CORE, RTC_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_256);
+	//spi_configure_slave(RTC_SPI_CORE, RTC_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_256);
 	spi_configure_gpio_ss(RTC_SS_PIN);
 }
 

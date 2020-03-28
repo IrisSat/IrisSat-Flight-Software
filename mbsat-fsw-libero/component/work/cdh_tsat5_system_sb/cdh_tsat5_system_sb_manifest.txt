@@ -1,16 +1,19 @@
 Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
 
-Date      :  Sun Mar 22 00:20:35 2020
+Date      :  Sat Mar 28 17:50:45 2020
 Project   :  C:\Users\Joseph Howarth\Documents\MBSat\libero_update\ManitobaSat-Flight-Software\mbsat-fsw-libero
 Component :  cdh_tsat5_system_sb
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core_obfuscated/corespi.v
-    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core_obfuscated/corespi_sfr.v
-    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core_obfuscated/spi_master.v
-    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core_obfuscated/spi_slave.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/corespi.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_chanctrl.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_clockmux.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_control.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_fifo.v
+    C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_rf.v
     C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3.v
     C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_iaddr_reg.v
     C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_muxptob3.v

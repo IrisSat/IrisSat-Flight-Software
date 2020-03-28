@@ -1,6 +1,6 @@
 set_component cdh_tsat5_system_sb_CCC_0_FCCC
 # Microsemi Corp.
-# Date: 2020-Mar-22 00:20:29
+# Date: 2020-Mar-28 17:50:41
 #
 
 create_clock -period 20 [ get_pins { CCC_INST/RCOSC_25_50MHZ } ]

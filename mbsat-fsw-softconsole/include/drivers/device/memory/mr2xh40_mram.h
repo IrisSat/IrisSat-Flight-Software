@@ -37,7 +37,7 @@
 typedef struct
 {
     CoreSPIInstance_t core;
-    SPI_slave_t slave;
+    spi_slave_t slave;
     mss_gpio_id_t cs_pin;
 } MRAMInstance_t;
 

@@ -1,6 +1,6 @@
 Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
 
-Date      :  Sat Mar 21 22:46:55 2020
+Date      :  Sat Mar 28 17:50:13 2020
 Project   :  C:\Users\Joseph Howarth\Documents\MBSat\libero_update\ManitobaSat-Flight-Software\mbsat-fsw-libero
 Component :  cdh_tsat5_system_sb_MSS
 Family    :  SmartFusion2
