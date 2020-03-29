@@ -118,6 +118,7 @@
 /* Standard includes. */
 #include <flash.h>
 #include <stdio.h>
+#include <string.h>
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
@@ -514,12 +515,144 @@ static void vTestFlash(void *pvParameters)
 {
 
 	MSS_GPIO_config( MSS_GPIO_10, MSS_GPIO_OUTPUT_MODE );
+	MSS_GPIO_set_output(MSS_GPIO_10,1);
+
 	FlashStatus_t result = MT25Q_setup_flash();
 
 	if(result != FLASH_OK) while(1){}
 
 	while(1){
 
+	    uint8_t data_tx[FLASH_PAGE_SIZE];
+	    uint8_t data_rx[FLASH_PAGE_SIZE] = {0};
+	    uint8_t data_rx2[2*FLASH_PAGE_SIZE] = {0};
+
+	    //A list of addresses used in this test.
+	    uint32_t addr[10] = {0,//First page.
+	                        5*FLASH_PAGE_SIZE, //5th page
+	                        FLASH_SUBSECTOR_SMALL_SIZE-FLASH_PAGE_SIZE,//16th page
+	                        FLASH_SUBSECTOR_SMALL_SIZE,//17th page
+	                        FLASH_SUBSECTOR_LARGE_SIZE,//128th page
+	                        FLASH_SECTOR_SIZE,//256th page
+	                        FLASH_DIE_SIZE,//First page of second die.
+	                        FLASH_SIZE-FLASH_PAGE_SIZE,//Last page
+	                        0x07FF0080,//Halfway through a page
+	                        0x07FF800//Page near the end of memory.
+	                        };
+
+	    //Prepare some data to write to each page.
+        for(int i=0;i<FLASH_PAGE_SIZE;i++){
+            data_tx[i] = i;
+        }
+
+        //Start by erasing the device.
+        FlashStatus_t res = MT25Q_flash_erase_device();
+        if(res != FLASH_OK){
+            while(1){}
+        }
+
+        //Verify that the erase device works properly.
+        //All addresses should have 0xFF as the data.
+	    for(int j=0; j<10;j++){
+
+            MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+
+            for(int i=0;i<FLASH_PAGE_SIZE;i++){
+                if(data_rx[i] != 0xFF) while(1){}
+            }
+            memset(data_rx,0,256);
+	    }
+
+	    //Now verify that writing is working:
+	    //Write to all the addresses on page of data.
+
+        for(int j=0; j<10;j++){
+            //write
+            res =MT25Q_flash_write_page(addr[j], data_tx, FLASH_PAGE_SIZE);
+            if(res != FLASH_OK) while(1){}
+
+            //Read
+            MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+
+            //Verify
+            for(int i=0;i<FLASH_PAGE_SIZE;i++){
+                    if(data_rx[i] != data_tx[i]) while(1){}
+            }
+
+            memset(data_rx,0,256);
+        }
+
+        //Make sure we can read more than one page at a time:
+        MT25Q_flash_read(addr[2], data_rx2, FLASH_PAGE_SIZE*2);
+        for(int i=0;i<FLASH_PAGE_SIZE*2;i++){
+
+            if(data_rx2[i] != data_tx[i%FLASH_PAGE_SIZE])
+                while(1){}
+            }
+
+        //Test the erase functions
+        //4k erase:
+        res = MT25Q_flash_erase_4k(addr[0]);
+        if(res != FLASH_OK) while(1){}
+
+        //Now check that the only the first 4k (16 pages) are 0xFF
+        for(int j=0;j<4;j++){
+
+            MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+
+            for(int i=0;i<FLASH_PAGE_SIZE;i++){
+                if(j == 3){
+                    //This page is not in the first 4k subsector.
+                    if(data_tx[i] != data_rx[i]) while(1){}
+                }
+                else{
+                    if(data_rx[i] != 0xFF) while(1){}
+                }
+            }
+            memset(data_rx,0,256);
+        }
+
+        //32k erase:
+        res = MT25Q_flash_erase_32k(addr[0]);
+                if(res != FLASH_OK) while(1){}
+
+        //Now check that the only the first 32k (128 pages) are 0xFF
+        for(int j=0;j<5;j++){
+
+            MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+
+            for(int i=0;i<FLASH_PAGE_SIZE;i++){
+                if(j == 4){
+                    //This page is not in the first 32k subsector.
+                    if(data_tx[i] != data_rx[i]) while(1){}
+                }
+                else{
+                    if(data_rx[i] != 0xFF) while(1){}
+                }
+            }
+            memset(data_rx,0,256);
+        }
+
+        //64k erase:
+        res = MT25Q_flash_erase_64k(addr[0]);
+                if(res != FLASH_OK) while(1){}
+
+        //Now check that the only the first 64k (256 pages) are 0xFF
+        for(int j=0;j<6;j++){
+
+            MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+
+            for(int i=0;i<FLASH_PAGE_SIZE;i++){
+                if(j == 5){
+                    //This page is not in the first 64k subsector.
+                    if(data_tx[i] != data_rx[i]) while(1){}
+                }
+                else{
+                    if(data_rx[i] != 0xFF) while(1){}
+                }
+            }
+            memset(data_rx,0,256);
+        }
 
 	    vTaskSuspend(NULL);
 

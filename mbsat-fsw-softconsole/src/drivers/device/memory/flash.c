@@ -24,6 +24,7 @@
 #define FLASH_STAT_IS_BUSY(x)          ((x)&0x01)       //Gets the busy bit from status register byte. 1 if busy, 0 if ready.
 #define FLASH_FLAG_ERASE_FAILED(x)     ((x>>5)&0x01)    //Gets the erase bit from flag register byte. 0 if ok, 1 if failure.
 #define FLASH_FLAG_WRITE_FAILED(x)     ((x>>4)&0x01)    //Gets the write bit from flag register byte. 0 if ok, 1 if failure.
+#define FLASH_FLAG_PROTECTION_ERROR(x) ((x>>1)&0x01)    //Gets the protection bit from the flag register. 0 if ok, 1 if failure.
 #define FLASH_FLAG_GET_ADRESS_MODE(x)  ((x)&0x01)       //Gets the addressing bit from flag register byte. 0 if 3-byte, 1 if 4-byte.
 
 
@@ -91,29 +92,50 @@ FlashStatus_t MT25Q_setup_flash(){
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  This writes data to the flash memory starting at the given address. The write
-//  address will wrap around at the page boundary (256 bytes). This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the write is successful,
-// the function will return FLASH_OK.
+//  address will wrap around at the page boundary (256 bytes). This function is blocking.
+// If the write is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_write_page(uint32_t addr, uint8_t* data,uint32_t size){
 
     FlashStatus_t result = FLASH_OK;
 
-    uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
-    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command), 0, 0);
+    if(addr >= FLASH_SIZE) result = FLASH_INVALID_ADDRESS;
+
+    if(result == FLASH_OK){
+        uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command), 0, 0);
 
 
 
-    uint8_t wr_command [5] = {FLASH_OP_PROGRAM,
-                            (addr>>24)&0xFF,
-                            (addr>>16)&0xFF,
-                            (addr>>8)&0xFF,
-                            (addr)&0xFF,
-                            };
+        uint8_t wr_command [5] = {FLASH_OP_PROGRAM,
+                                (addr>>24)&0xFF,
+                                (addr>>16)&0xFF,
+                                (addr>>8)&0xFF,
+                                (addr)&0xFF,
+                                };
 
-    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, wr_command, sizeof(wr_command), data, size);
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, wr_command, sizeof(wr_command), data, size);
 
-        return result;
+        //Make sure write is done.
+        while(MT25Q_flash_is_busy() == FLASH_BUSY){
+            if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+                vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+            }
+        }
+
+        uint8_t check_command = FLASH_OP_READ_FLAG_REG;
+        uint8_t flag_reg = 0;
+        spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+
+        //Check for errors
+        if(FLASH_FLAG_WRITE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
+            result = FLASH_WRITE_ERROR;
+            uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
+            spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
+        }
+    }
+
+    return result;
 
 }
 
@@ -137,8 +159,7 @@ FlashStatus_t MT25Q_flash_read(uint32_t addr, uint8_t* data,uint32_t size){
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the whole memory. This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished.
+//  This erases the whole memory. This function is blocking!
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_device(){
 
@@ -147,20 +168,51 @@ FlashStatus_t MT25Q_flash_erase_device(){
 	uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command),0,0);
 
+	//Erase the first half of the memory.
 	uint8_t command[5] = {FLASH_OP_ERASE_DIE,0,0,0,0};
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command, sizeof(command),0,0);
 
-	uint8_t check_command = FLASH_OP_READ_FLAG_REG;
-	uint8_t flag_reg = 0;
-	spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
-
 	//Wait until the erase is done.
-	while(FLASH_STAT_IS_BUSY(flag_reg)){
-		vTaskDelay(pdMS_TO_TICKS(200));
-		spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
-	}
+    while(MT25Q_flash_is_busy() == FLASH_BUSY){
+        if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+        }
+    }
 
-	if(FLASH_STAT_ERASE_FAILED(flag_reg)){
+    uint8_t check_command = FLASH_OP_READ_FLAG_REG;
+    uint8_t flag_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+
+    //Check for errors
+    if(FLASH_FLAG_ERASE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
+        result = FLASH_ERASE_ERROR;
+        uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
+    }
+
+    //Disable write protect again.
+    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command),0,0);
+    //Erase the second half of memory.
+    uint8_t command2[5] = {FLASH_OP_ERASE_DIE,
+                            ((FLASH_SIZE-1)>>24) & 0xFF,
+                            ((FLASH_SIZE-1)>>16) & 0xFF,
+                            ((FLASH_SIZE-1)>>8) & 0xFF,
+                            ((FLASH_SIZE-1)) & 0xFF};
+    spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command2, sizeof(command2),0,0);
+
+    //Wait until the erase is done.
+    while(MT25Q_flash_is_busy() == FLASH_BUSY){
+        if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+        }
+    }
+
+
+    flag_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+
+    //Check for errors
+	if(FLASH_FLAG_ERASE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
 		result = FLASH_ERASE_ERROR;
 		uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
 		spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
@@ -172,9 +224,8 @@ FlashStatus_t MT25Q_flash_erase_device(){
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 64k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 64k sector containing the given address.This function is blocking!
+//  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_64k(uint32_t addr){
 	FlashStatus_t result = FLASH_OK;
@@ -190,21 +241,23 @@ FlashStatus_t MT25Q_flash_erase_64k(uint32_t addr){
 
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command, sizeof(command),0,0);
 
-	uint8_t check_command = FLASH_OP_READ_FLAG_REG;
-	uint8_t flag_reg = 0;
-	spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+    //Wait until the erase is done.
+    while(MT25Q_flash_is_busy() == FLASH_BUSY){
+        if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+        }
+    }
 
-	//Wait until the erase is done.
-	while(FLASH_STAT_IS_BUSY(flag_reg)){
-		vTaskDelay(pdMS_TO_TICKS(200));
-		spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
-	}
+    uint8_t check_command = FLASH_OP_READ_FLAG_REG;
+    uint8_t flag_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
 
-	if(FLASH_STAT_ERASE_FAILED(flag_reg)){
-		result = FLASH_ERASE_ERROR;
-		uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
-		spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
-	}
+    //Check for errors
+    if(FLASH_FLAG_ERASE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
+        result = FLASH_ERASE_ERROR;
+        uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
+    }
 
 
 	return result;
@@ -213,9 +266,8 @@ FlashStatus_t MT25Q_flash_erase_64k(uint32_t addr){
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 32k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 32k sector containing the given address.This function is blocking!
+//  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_32k(uint32_t addr){
 
@@ -232,21 +284,23 @@ FlashStatus_t MT25Q_flash_erase_32k(uint32_t addr){
 
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command, sizeof(command),0,0);
 
-	uint8_t check_command = FLASH_OP_READ_FLAG_REG;
-	uint8_t flag_reg = 0;
-	spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+    //Wait until the erase is done.
+    while(MT25Q_flash_is_busy() == FLASH_BUSY){
+        if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+        }
+    }
 
-	//Wait until the erase is done.
-	while(FLASH_STAT_IS_BUSY(flag_reg)){
-		vTaskDelay(pdMS_TO_TICKS(200));
-		spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
-	}
+    uint8_t check_command = FLASH_OP_READ_FLAG_REG;
+    uint8_t flag_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
 
-	if(FLASH_STAT_ERASE_FAILED(flag_reg)){
-		result = FLASH_ERASE_ERROR;
-		uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
-		spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
-	}
+    //Check for errors
+    if(FLASH_FLAG_ERASE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
+        result = FLASH_ERASE_ERROR;
+        uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
+    }
 
 
 	return result;
@@ -254,9 +308,8 @@ FlashStatus_t MT25Q_flash_erase_32k(uint32_t addr){
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 4k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 4k sector containing the given address.This function is blocking!
+//  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_4k(uint32_t addr){
 
@@ -273,21 +326,23 @@ FlashStatus_t MT25Q_flash_erase_4k(uint32_t addr){
 
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, command, sizeof(command),0,0);
 
-	uint8_t check_command = FLASH_OP_READ_FLAG_REG;
-	uint8_t flag_reg = 0;
-	spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
+    //Wait until the erase is done.
+    while(MT25Q_flash_is_busy() == FLASH_BUSY){
+        if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
+        }
+    }
 
-	//Wait until the erase is done.
-	while(FLASH_STAT_IS_BUSY(flag_reg)){
-		vTaskDelay(pdMS_TO_TICKS(200));
-		spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
-	}
+    uint8_t check_command = FLASH_OP_READ_FLAG_REG;
+    uint8_t flag_reg = 0;
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &check_command, 1, &flag_reg, 1);
 
-	if(FLASH_STAT_ERASE_FAILED(flag_reg)){
-		result = FLASH_ERASE_ERROR;
-		uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
-		spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
-	}
+    //Check for errors
+    if(FLASH_FLAG_ERASE_FAILED(flag_reg) || FLASH_FLAG_PROTECTION_ERROR(flag_reg)){
+        result = FLASH_ERASE_ERROR;
+        uint8_t clear_flag_command = FLASH_OP_CLEAR_FLAG_REG;
+        spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &clear_flag_command, sizeof(clear_flag_command),0,0);
+    }
 
 
 	return result;

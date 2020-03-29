@@ -20,6 +20,12 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include <stdint.h>
 
+#define FLASH_PAGE_SIZE             256
+#define FLASH_SUBSECTOR_SMALL_SIZE  4096
+#define FLASH_SUBSECTOR_LARGE_SIZE  32768
+#define FLASH_SECTOR_SIZE           65536
+#define FLASH_DIE_SIZE              (0x4000000)
+#define FLASH_SIZE                  (0x8000000)
 typedef enum  {
 
   FLASH_OP_RST_EN = 0x66,
@@ -79,9 +85,8 @@ FlashStatus_t MT25Q_setup_flash();
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  This writes data to the flash memory starting at the given address. The write
-//  address will wrap around at the page boundary (256 bytes). This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the write is successful,
-// the function will return FLASH_OK.
+//  address will wrap around at the page boundary (256 bytes). This function is blocking!
+//  If the write is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_write_page(uint32_t addr, uint8_t* data,uint32_t size);
 
@@ -93,32 +98,28 @@ FlashStatus_t MT25Q_flash_read(uint32_t addr, uint8_t* data,uint32_t size);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the whole memory. This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished.
+//  This erases the whole memory. This function is blocking!
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_device();
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 64k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 64k sector containing the given address.This function is blocking!
+//   If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_64k(uint32_t addr);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 32k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 32k sector containing the given address.This function is blocking!
+//  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_32k(uint32_t addr);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This erases the 4k sector containing the given address.This function is non-blocking,
-//  and will return FLASH_BUSY if the previous operation is not finished. If the erase is successful,
-// the function will return FLASH_OK.
+//  This erases the 4k sector containing the given address.This function is blocking!
+//  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_4k(uint32_t addr);
 

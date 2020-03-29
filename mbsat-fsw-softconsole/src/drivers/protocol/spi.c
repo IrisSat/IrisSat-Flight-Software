@@ -66,7 +66,7 @@ int init_spi()
       // Initialize the core SPI instance. Note that with PCLK_DIV_256, the clock period is ~2 us (i.e. 256 / 144 MHz).
       // With PCLK_DIV_128, the clock period is ~1 us. And so on. Keep this in mind when using a
       // logic analyzer, as depending on the sample rate, it will not pick up the faster clock rates.
-      SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE0, PCLK_DIV_64);
+      SPI_init(&core_spi[CORE_SPI_0], CORESPI_0_0, SPI_MODE_MASTER, SPI_MODE0, PCLK_DIV_256);
     }
     
     return rc;
