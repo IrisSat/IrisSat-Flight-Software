@@ -233,7 +233,7 @@ FlashStatus_t MT25Q_flash_erase_64k(uint32_t addr){
 	uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command),0,0);
 
-	uint8_t command[5] = {	FLASH_OP_ERASE_DIE,
+	uint8_t command[5] = {	FLASH_OP_ERASE_SECTOR_64k,
 							(addr>>24) & 0xFF,
 							(addr>>16) & 0xFF,
 							(addr>>8) & 0xFF,
@@ -276,7 +276,7 @@ FlashStatus_t MT25Q_flash_erase_32k(uint32_t addr){
 	uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command),0,0);
 
-	uint8_t command[5] = {	FLASH_OP_ERASE_DIE,
+	uint8_t command[5] = {	FLASH_OP_ERASE_SECTOR_32k,
 							(addr>>24) & 0xFF,
 							(addr>>16) & 0xFF,
 							(addr>>8) & 0xFF,
@@ -318,7 +318,7 @@ FlashStatus_t MT25Q_flash_erase_4k(uint32_t addr){
 	uint8_t wp_command = FLASH_OP_WRITE_ENABLE;
 	spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, &wp_command, sizeof(wp_command),0,0);
 
-	uint8_t command[5] = {	FLASH_OP_ERASE_DIE,
+	uint8_t command[5] = {	FLASH_OP_ERASE_SECTOR_4k,
 							(addr>>24) & 0xFF,
 							(addr>>16) & 0xFF,
 							(addr>>8) & 0xFF,
