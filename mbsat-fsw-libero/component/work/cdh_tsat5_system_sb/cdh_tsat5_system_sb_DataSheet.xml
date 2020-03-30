@@ -11,8 +11,8 @@
     <hdl-type>Verilog</hdl-type>
     <project-description>
     </project-description>
-    <location>C:/Users/Joseph Howarth/Documents/MBSat/libero_update/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb</location>
-    <state>GENERATED ( Sat Mar 28 18:01:33 2020 )</state>
+    <location>C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb</location>
+    <state>GENERATED ( Mon Mar 30 00:09:17 2020 )</state>
     <swide-toolchain>SoftConsole workspace has not been generated</swide-toolchain>
   </project-settings>
   <site-map>
@@ -89,10 +89,19 @@
           <name>CORESPI_0_0</name>
           <fullPinName>CORESPI_0_0:APB_bif</fullPinName>
           <remapAddress>0x50000000</remapAddress>
-          <combinedAddressSpace>0x50000000 - 0x50000FFF</combinedAddressSpace>
+          <combinedAddressSpace>0x50000000 - 0x5000FFFF</combinedAddressSpace>
           <remapAddress>0x30000000</remapAddress>
-          <combinedAddressSpace>0x30000000 - 0x30000FFF</combinedAddressSpace>
-          <range>0x00001000</range>
+          <combinedAddressSpace>0x30000000 - 0x3000FFFF</combinedAddressSpace>
+          <range>0x00010000</range>
+        </slave>
+        <slave>
+          <name>CORESPI1_1_0</name>
+          <fullPinName>CORESPI1_1_0:APB_bif</fullPinName>
+          <remapAddress>0x50010000</remapAddress>
+          <combinedAddressSpace>0x50010000 - 0x5001FFFF</combinedAddressSpace>
+          <remapAddress>0x30010000</remapAddress>
+          <combinedAddressSpace>0x30010000 - 0x3001FFFF</combinedAddressSpace>
+          <range>0x00010000</range>
         </slave>
         <slave>
           <name>CACHE_BACKDOOR</name>

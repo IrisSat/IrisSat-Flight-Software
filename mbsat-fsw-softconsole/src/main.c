@@ -279,12 +279,12 @@ int main( void )
                          1,
                          NULL);
 					 
-//	status = xTaskCreate(vTestFlash,
-//                         "Test Flash",
-//                         2000,
-//                         NULL,
-//                         1,
-//                         NULL);
+	status = xTaskCreate(vTestFlash,
+                         "Test Flash",
+                         2000,
+                         NULL,
+                         1,
+                         NULL);
 //
 
 //    // Task for testing priority queue data structure.

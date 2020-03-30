@@ -2,7 +2,7 @@
 <device>
   <name>cdh_tsat5_system_sb</name>
   <version>1.0</version>
-  <description>CMSIS description for cdh_tsat5_system_sb.  Created by Microsemi SmartDesign on Sat Mar 28 18:01:30 2020</description>
+  <description>CMSIS description for cdh_tsat5_system_sb.  Created by Microsemi SmartDesign on Mon Mar 30 00:09:15 2020</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
@@ -37,6 +37,10 @@
     <peripheral>
       <name>CORESPI_0_0</name>
       <baseAddress>0x50000000%0x30000000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI1_1_0</name>
+      <baseAddress>0x50010000%0x30010000</baseAddress>
     </peripheral>
     <peripheral>
       <name>CACHE_BACKDOOR</name>

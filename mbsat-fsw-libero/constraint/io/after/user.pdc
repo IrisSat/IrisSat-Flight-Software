@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Sat Mar 28 17:56:39 2020 
+# Date generated: Mon Mar 30 00:21:23 2020 
 
 
 # 
@@ -73,26 +73,50 @@ set_io POWER_ON_RESET_N  \
     -DIRECTION OUTPUT
 
 
+set_io SPISCLKO        \
+    -pinname 81        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io SPISDI         \
+    -pinname 93       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io SPISDO          \
+    -pinname 83        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io {SPISS[0]}      \
+    -pinname 82        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
 set_io m_miso         \
-    -pinname 22       \
+    -pinname 92       \
     -fixed yes        \
     -DIRECTION INPUT
 
 
 set_io m_mosi          \
-    -pinname 21        \
+    -pinname 22        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
 
 set_io m_sck           \
-    -pinname 16        \
+    -pinname 94        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
 
 set_io {m_ss[0]}       \
-    -pinname 92        \
+    -pinname 21        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
