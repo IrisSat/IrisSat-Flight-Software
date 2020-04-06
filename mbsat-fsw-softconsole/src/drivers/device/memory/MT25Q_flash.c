@@ -13,9 +13,8 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#include "flash.h"
-#include "spi.h"
-#include "board_definitions.h"
+#include "flash_common.h"
+#include "MT25Q_flash.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -178,7 +177,7 @@ FlashStatus_t MT25Q_flash_erase_device(MT25Q_Device_t * dev){
         dev->spi_write(&wp_command, sizeof(wp_command),0,0);
 
         //Erase a die.
-        uint8_t command2[5] = {MT25Q_OP_ERASE_DIE,
+        uint8_t command[5] = {MT25Q_OP_ERASE_DIE,
                             (((dev->size - 1) >> 24) * i)& 0xFF,
                             (((dev->size - 1) >> 16) * i)& 0xFF,
                             (((dev->size - 1) >> 8)  * i)& 0xFF,

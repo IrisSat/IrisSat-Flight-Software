@@ -274,7 +274,7 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
-<<<<<<< HEAD
+
 //    status = xTaskCreate(vTestMRAM,
 //                         "Test MRAM",
 //                         512,
@@ -541,6 +541,9 @@ static void vTestFlash(void *pvParameters)
 	uint8_t data_tx[device->page_size];
 	uint8_t data_rx[device->page_size];
 	uint8_t data_rx2[device->page_size];
+	memset(data_tx,0,device->page_size);
+	memset(data_rx,0,device->page_size);
+	memset(data_rx2,0,2*device->page_size);
 
 	            //A list of addresses used in this test.
 	            uint32_t addr[6] = {0,//First page.
@@ -613,7 +616,7 @@ static void vTestFlash(void *pvParameters)
 	                flash_read(device,addr[j], data_rx, device->page_size);
 
 	                for(int i=0;i<device->page_size;i++){
-	                    if(j == 0){
+	                    if(j <3){
 	                    	if(data_rx[i] != 0xFF) while(1){}
 	                    }
 	                    else{

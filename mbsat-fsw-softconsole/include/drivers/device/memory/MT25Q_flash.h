@@ -17,13 +17,14 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include <stdint.h>
-#include "flash_interface.h"
+#include "flash_common.h"
 
 #define MT25Q_PAGE_SIZE             (256)
 #define MT25Q_SUBSECTOR_SMALL_SIZE  (4096)
 #define MT25Q_SUBSECTOR_LARGE_SIZE  (32768)
 #define MT25Q_SECTOR_SIZE           (65536)
 #define MT25Q_DIE_SIZE              (0x4000000)
+
 
 typedef enum  {
 
@@ -122,11 +123,5 @@ FlashStatus_t MT25Q_flash_erase_32k(MT25Q_Device_t * dev,uint32_t addr);
 //  If the erase is successful, the function will return FLASH_OK.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_flash_erase_4k(MT25Q_Device_t * dev,uint32_t addr);
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Description:
-//  This returns a structure with information about the device.
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashInfo_t MT25Q_get_info(MT25Q_Device_t * dev);
 
 #endif
