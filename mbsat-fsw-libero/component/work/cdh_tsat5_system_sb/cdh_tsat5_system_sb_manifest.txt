@@ -1,41 +1,34 @@
-Microsemi Corporation - Microsemi Libero Software Release v11.9 SP2 (Version 11.9.2.1)
+Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
 
-Date      :  Sun Jun 23 15:16:51 2019
-Project   :  C:\Work\UMSATS\TSAT5\external_mram_integration\cdh-tsat5\cdh-tsat5-libero
+Date      :  Mon Mar 30 00:06:52 2020
+Project   :  C:\Users\Files\MBSAT\Test4\ManitobaSat-Flight-Software\mbsat-fsw-libero
 Component :  cdh_tsat5_system_sb
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core/corespi.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core/corespi_sfr.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core/spi_master.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CORESPI/3.0.156/rtl/vlog/core/spi_slave.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_iaddr_reg.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_muxptob3.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CoreResetP/7.1.100/rtl/vlog/core/coreresetp.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/DirectCore/CoreResetP/7.1.100/rtl/vlog/core/coreresetp_pcie_hotreset.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb/CCC_0/cdh_tsat5_system_sb_CCC_0_FCCC.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb/FABOSC_0/cdh_tsat5_system_sb_FABOSC_0_OSC.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb/cdh_tsat5_system_sb.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/corespi.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_chanctrl.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_clockmux.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_control.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_fifo.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_rf.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_iaddr_reg.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreAPB3/4.1.100/rtl/vlog/core_obfuscated/coreapb3_muxptob3.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreResetP/7.1.100/rtl/vlog/core/coreresetp.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/DirectCore/CoreResetP/7.1.100/rtl/vlog/core/coreresetp_pcie_hotreset.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb/CCC_0/cdh_tsat5_system_sb_CCC_0_FCCC.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb/FABOSC_0/cdh_tsat5_system_sb_FABOSC_0_OSC.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb/cdh_tsat5_system_sb.v
 
 HDL source files for Synopsys SynplifyPro Synthesis tool:
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_syn.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps.v
 
 HDL source files for Mentor Precision Synthesis tool:
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps_pre.v
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/cdh_tsat5_system_sb_MSS_pre.v
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps_pre.v
 
 Stimulus files for all Simulation tools:
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/Actel/SmartFusion2MSS/MSS/1.1.500/peripheral_init.bfm
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb/subsystem.bfm
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/CM3_compile_bfm.tcl
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/test.bfm
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/user.bfm
-
-Firmware files for all Software IDE tools:
-    C:/Work/UMSATS/TSAT5/external_mram_integration/cdh-tsat5/cdh-tsat5-libero/component/work/cdh_tsat5_system_sb_MSS/sys_config_mss_clocks.h
+    C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/component/work/cdh_tsat5_system_sb/subsystem.bfm
 

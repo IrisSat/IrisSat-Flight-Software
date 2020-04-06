@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Sun Jun 23 15:16:41 2019
-// Version: v11.9 SP2 11.9.2.1
+// Created by SmartDesign Sat Mar 28 17:50:12 2020
+// Version: v12.1 12.600.0.14
 //////////////////////////////////////////////////////////////////////
 
 `timescale 1ns / 100ps
@@ -15,6 +15,7 @@ module cdh_tsat5_system_sb_MSS(
     FIC_2_APB_M_PRDATA,
     FIC_2_APB_M_PREADY,
     FIC_2_APB_M_PSLVERR,
+    GPIO_5_F2M,
     MCCC_CLK_BASE,
     MCCC_CLK_BASE_PLL_LOCK,
     MMUART_0_RXD_F2M,
@@ -42,8 +43,7 @@ module cdh_tsat5_system_sb_MSS(
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
-    GPIO_6_M2F,
-    GPIO_7_M2F,
+    GPIO_5_M2F_OE,
     GPIO_8_M2F,
     GPIO_9_M2F,
     MMUART_0_TXD_M2F,
@@ -60,6 +60,7 @@ input         FIC_0_APB_M_PSLVERR;
 input  [31:0] FIC_2_APB_M_PRDATA;
 input         FIC_2_APB_M_PREADY;
 input         FIC_2_APB_M_PSLVERR;
+input         GPIO_5_F2M;
 input         MCCC_CLK_BASE;
 input         MCCC_CLK_BASE_PLL_LOCK;
 input         MMUART_0_RXD_F2M;
@@ -89,8 +90,7 @@ output        GPIO_12_M2F;
 output        GPIO_1_M2F;
 output        GPIO_3_M2F;
 output        GPIO_5_M2F;
-output        GPIO_6_M2F;
-output        GPIO_7_M2F;
+output        GPIO_5_M2F_OE;
 output        GPIO_8_M2F;
 output        GPIO_9_M2F;
 output        MMUART_0_TXD_M2F;
@@ -122,9 +122,9 @@ wire          FIC_2_APB_MASTER_0_PWRITE;
 wire          GPIO_0_M2F_net_0;
 wire          GPIO_1_M2F_net_0;
 wire          GPIO_3_M2F_net_0;
+wire          GPIO_5_F2M;
 wire          GPIO_5_M2F_net_0;
-wire          GPIO_6_M2F_net_0;
-wire          GPIO_7_M2F_net_0;
+wire          GPIO_5_M2F_OE_net_0;
 wire          GPIO_8_M2F_net_0;
 wire          GPIO_9_M2F_net_0;
 wire          GPIO_10_M2F_net_0;
@@ -145,8 +145,6 @@ wire          GPIO_0_M2F_net_1;
 wire          GPIO_1_M2F_net_1;
 wire          GPIO_3_M2F_net_1;
 wire          GPIO_5_M2F_net_1;
-wire          GPIO_6_M2F_net_1;
-wire          GPIO_7_M2F_net_1;
 wire          GPIO_8_M2F_net_1;
 wire          GPIO_9_M2F_net_1;
 wire          GPIO_10_M2F_net_1;
@@ -160,6 +158,7 @@ wire          FIC_2_APB_M_PCLK_0_net_0;
 wire          FIC_2_APB_MASTER_0_PWRITE_net_0;
 wire          FIC_2_APB_MASTER_0_PENABLE_net_0;
 wire          FIC_2_APB_MASTER_0_PSELx_net_0;
+wire          GPIO_5_M2F_OE_net_1;
 wire   [31:0] FIC_0_APB_MASTER_PADDR_net_0;
 wire   [31:0] FIC_0_APB_MASTER_PWDATA_net_0;
 wire   [15:2] FIC_2_APB_MASTER_0_PADDR_net_0;
@@ -255,10 +254,6 @@ assign GPIO_3_M2F_net_1                 = GPIO_3_M2F_net_0;
 assign GPIO_3_M2F                       = GPIO_3_M2F_net_1;
 assign GPIO_5_M2F_net_1                 = GPIO_5_M2F_net_0;
 assign GPIO_5_M2F                       = GPIO_5_M2F_net_1;
-assign GPIO_6_M2F_net_1                 = GPIO_6_M2F_net_0;
-assign GPIO_6_M2F                       = GPIO_6_M2F_net_1;
-assign GPIO_7_M2F_net_1                 = GPIO_7_M2F_net_0;
-assign GPIO_7_M2F                       = GPIO_7_M2F_net_1;
 assign GPIO_8_M2F_net_1                 = GPIO_8_M2F_net_0;
 assign GPIO_8_M2F                       = GPIO_8_M2F_net_1;
 assign GPIO_9_M2F_net_1                 = GPIO_9_M2F_net_0;
@@ -285,6 +280,8 @@ assign FIC_2_APB_MASTER_0_PENABLE_net_0 = FIC_2_APB_MASTER_0_PENABLE;
 assign FIC_2_APB_M_PENABLE              = FIC_2_APB_MASTER_0_PENABLE_net_0;
 assign FIC_2_APB_MASTER_0_PSELx_net_0   = FIC_2_APB_MASTER_0_PSELx;
 assign FIC_2_APB_M_PSEL                 = FIC_2_APB_MASTER_0_PSELx_net_0;
+assign GPIO_5_M2F_OE_net_1              = GPIO_5_M2F_OE_net_0;
+assign GPIO_5_M2F_OE                    = GPIO_5_M2F_OE_net_1;
 assign FIC_0_APB_MASTER_PADDR_net_0     = FIC_0_APB_MASTER_PADDR;
 assign FIC_0_APB_M_PADDR[31:0]          = FIC_0_APB_MASTER_PADDR_net_0;
 assign FIC_0_APB_MASTER_PWDATA_net_0    = FIC_0_APB_MASTER_PWDATA;
@@ -377,7 +374,7 @@ MSS_ADLIB_INST(
         .MGPIO31B_F2H_GPIN                       ( VCC_net ), // tied to 1'b1 from definition
         .MGPIO3A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
         .MGPIO4A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
-        .MGPIO5A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
+        .MGPIO5A_F2H_GPIN                        ( GPIO_5_F2M ),
         .MGPIO6A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
         .MGPIO7A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
         .MGPIO8A_F2H_GPIN                        ( VCC_net ), // tied to 1'b1 from definition
@@ -615,12 +612,12 @@ MSS_ADLIB_INST(
         .SMBSUS_NO0                              (  ),
         .SMBSUS_NO1                              (  ),
         .SPI0_CLK_OUT                            (  ),
-        .SPI0_SDI_MGPIO5A_H2F_A                  (  ),
+        .SPI0_SDI_MGPIO5A_H2F_A                  ( GPIO_5_M2F_OE_net_0 ),
         .SPI0_SDI_MGPIO5A_H2F_B                  ( GPIO_5_M2F_net_0 ),
         .SPI0_SDO_MGPIO6A_H2F_A                  (  ),
-        .SPI0_SDO_MGPIO6A_H2F_B                  ( GPIO_6_M2F_net_0 ),
+        .SPI0_SDO_MGPIO6A_H2F_B                  (  ),
         .SPI0_SS0_MGPIO7A_H2F_A                  (  ),
-        .SPI0_SS0_MGPIO7A_H2F_B                  ( GPIO_7_M2F_net_0 ),
+        .SPI0_SS0_MGPIO7A_H2F_B                  (  ),
         .SPI0_SS1_MGPIO8A_H2F_A                  (  ),
         .SPI0_SS1_MGPIO8A_H2F_B                  ( GPIO_8_M2F_net_0 ),
         .SPI0_SS2_MGPIO9A_H2F_A                  (  ),

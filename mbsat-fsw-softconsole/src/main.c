@@ -130,7 +130,7 @@
 
 /* Application includes. */
 #include "can.h"
-#include "flash.h"
+#include "flash_common.h"
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
@@ -198,6 +198,7 @@ void vApplicationTickHook( void );
 /*-----------------------------------------------------------*/
 /* See the documentation page for this demo on the FreeRTOS.org web site for
 full information - including hardware setup requirements. */
+
 
 int main( void )
 {
@@ -273,17 +274,18 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
+<<<<<<< HEAD
 //    status = xTaskCreate(vTestMRAM,
 //                         "Test MRAM",
 //                         512,
 //                         NULL,
 //                         1,
 //                         NULL);
-
+				 
 	status = xTaskCreate(vTestFlash,
                          "Test Flash",
                          2000,
-                         NULL,
+                         (void *)flash_devices[FLASH_DEVICE_1],
                          1,
                          NULL);
 //
@@ -309,6 +311,13 @@ int main( void )
     return 0;
 }
 
+void spi_write_data_flash(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buffer,uint16_t wr_size){
+	 spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, cmd_buffer, cmd_size,wr_buffer,wr_size);
+}
+void spi_read_data_flash(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *rd_buffer,uint16_t rd_size){
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, cmd_buffer, cmd_size, rd_buffer, rd_size);
+}
+
 /*-----------------------------------------------------------*/
 static void prvSetupHardware( void )
 {
@@ -325,6 +334,8 @@ static void prvSetupHardware( void )
     init_mram();
     init_CAN(CAN_BAUD_RATE_1000K);
     adcs_init_driver();
+
+
 }
 
 /*-----------------------------------------------------------*/
@@ -516,158 +527,105 @@ static void vTestMRAM(void *pvParameters)
 static void vTestFlash(void *pvParameters)
 {
 
+	FlashDev_t * device = (FlashDev_t *) pvParameters;
 
-        FlashStatus_t result = MT25Q_setup_flash();
+	FlashStatus_t result = flash_device_init(device);
 
-        if(result != FLASH_OK) while(1){}
+	if(result != FLASH_OK){
+		while(1);
+	}
 
-        while(1){
 
-            uint8_t data_tx[FLASH_PAGE_SIZE];
-            uint8_t data_rx[FLASH_PAGE_SIZE] = {0};
-            uint8_t data_rx2[2*FLASH_PAGE_SIZE] = {0};
+	while(1){
 
-            //A list of addresses used in this test.
-            uint32_t addr[10] = {0,//First page.
-                                5*FLASH_PAGE_SIZE, //5th page
-                                FLASH_SUBSECTOR_SMALL_SIZE-FLASH_PAGE_SIZE,//16th page
-                                FLASH_SUBSECTOR_SMALL_SIZE,//17th page
-                                FLASH_SUBSECTOR_LARGE_SIZE,//128th page
-                                FLASH_SECTOR_SIZE,//256th page
-                                FLASH_DIE_SIZE,//First page of second die.
-                                FLASH_SIZE-FLASH_PAGE_SIZE,//Last page
-                                0x07FF0080,//Halfway through a page
-                                0x07FF800//Page near the end of memory.
-                                };
+	uint8_t data_tx[device->page_size];
+	uint8_t data_rx[device->page_size];
+	uint8_t data_rx2[device->page_size];
 
-            //Prepare some data to write to each page.
-            for(int i=0;i<FLASH_PAGE_SIZE;i++){
-                data_tx[i] = i;
-            }
+	            //A list of addresses used in this test.
+	            uint32_t addr[6] = {0,//First page.
+	                                5*device->page_size, //5th page
+									6*device->page_size,
+									device->erase_size,
+									device->device_size - device->page_size,
+									device->device_size -2*(device->page_size)
+	                                };
 
-            //Start by erasing the device.
-            FlashStatus_t res = MT25Q_flash_erase_device();
-            if(res != FLASH_OK){
-                while(1){}
-            }
+	            //Prepare some data to write to each page.
+	            for(int i=0;i<device->page_size;i++){
+	                data_tx[i] = i;
+	            }
 
-            //Verify that the erase device works properly.
-            //All addresses should have 0xFF as the data.
-            for(int j=0; j<10;j++){
+	            //Start by erasing the device.
+	            FlashStatus_t res = flash_erase_device(device);
+	            if(res != FLASH_OK){
+	                while(1){}
+	            }
 
-                MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+	            //Verify that the erase device works properly.
+	            //All addresses should have 0xFF as the data.
+	            for(int j=0; j<6;j++){
 
-                for(int i=0;i<FLASH_PAGE_SIZE;i++){
-                    if(data_rx[i] != 0xFF) while(1){}
-                }
-                memset(data_rx,0,256);
-            }
+	                flash_read(device,addr[j], data_rx, device->page_size);
 
-            //Now verify that writing is working:
-            //Write to all the addresses on page of data.
+	                for(int i=0;i<device->page_size;i++){
+	                    if(data_rx[i] != 0xFF) while(1){}
+	                }
+	                memset(data_rx,0,256);
+	            }
 
-            for(int j=0; j<10;j++){
-                //write
-                res =MT25Q_flash_write_page(addr[j], data_tx, FLASH_PAGE_SIZE);
-                if(res != FLASH_OK) while(1){}
+	            //Now verify that writing is working:
+	            //Write to all the addresses on page of data.
 
-                //Read
-                MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+	            for(int j=0; j<6;j++){
+	                //write
+	                res =flash_write(device,addr[j], data_tx, device->page_size);
+	                if(res != FLASH_OK) while(1){}
 
-                //Verify
-                for(int i=0;i<FLASH_PAGE_SIZE;i++){
+	                //Read
+	                flash_read(device,addr[j], data_rx, device->page_size);
 
-                       if(j!=8){
-                        if(data_rx[i] != data_tx[i]) while(1){}
-                       }
-                       else{
-                           if(i<128){
-                               if(data_rx[i] != data_tx[i])   while(1){}
-                           }
-                           else {
-                               if (data_rx[i] !=0xFF)  while(1){}
-                           }
-                       }
-                }
+	                //Verify
+	                for(int i=0;i<device->page_size;i++){
 
-                memset(data_rx,0,256);
-            }
+						if(data_rx[i] != data_tx[i]) while(1){}
+	                }
 
-            //Make sure we can read more than one page at a time:
-            MT25Q_flash_read(addr[2], data_rx2, FLASH_PAGE_SIZE*2);
-            for(int i=0;i<FLASH_PAGE_SIZE*2;i++){
+	                memset(data_rx,0,256);
+	            }
 
-                if(data_rx2[i] != data_tx[i%FLASH_PAGE_SIZE])
-                    while(1){}
-                }
+	            //Make sure we can read more than one page at a time:
+	            flash_read(device,addr[1], data_rx2, device->page_size*2);
+	            for(int i=0;i<device->page_size*2;i++){
 
-            //Test the erase functions
-            //4k erase:
-            res = MT25Q_flash_erase_4k(addr[0]);
-            if(res != FLASH_OK) while(1){}
+	                if(data_rx2[i] != data_tx[i%device->page_size])
+	                    while(1){}
+	                }
 
-            //Now check that the only the first 4k (16 pages) are 0xFF
-            for(int j=0;j<4;j++){
+	            //Test the one of the erase functions
 
-                MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
+	            res = flash_erase(device,addr[0]);
+	            if(res != FLASH_OK) while(1){}
 
-                for(int i=0;i<FLASH_PAGE_SIZE;i++){
-                    if(j == 3){
-                        //This page is not in the first 4k subsector.
-                        if(data_tx[i] != data_rx[i]) while(1){}
-                    }
-                    else{
-                        if(data_rx[i] != 0xFF) while(1){}
-                    }
-                }
-                memset(data_rx,0,256);
-            }
+	            //Now check that the only the first address is 0.
+	            for(int j=0;j<6;j++){
 
-            //32k erase:
-            res = MT25Q_flash_erase_32k(addr[0]);
-                    if(res != FLASH_OK) while(1){}
+	                flash_read(device,addr[j], data_rx, device->page_size);
 
-            //Now check that the only the first 32k (128 pages) are 0xFF
-            for(int j=0;j<5;j++){
+	                for(int i=0;i<device->page_size;i++){
+	                    if(j == 0){
+	                    	if(data_rx[i] != 0xFF) while(1){}
+	                    }
+	                    else{
+	                        if(data_tx[i] != data_rx[i]) while(1){}
+	                    }
+	                }
+	                memset(data_rx,0,256);
+	            }
 
-                MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
 
-                for(int i=0;i<FLASH_PAGE_SIZE;i++){
-                    if(j == 4){
-                        //This page is not in the first 32k subsector.
-                        if(data_tx[i] != data_rx[i]) while(1){}
-                    }
-                    else{
-                        if(data_rx[i] != 0xFF) while(1){}
-                    }
-                }
-                memset(data_rx,0,256);
-            }
-
-            //64k erase:
-            res = MT25Q_flash_erase_64k(addr[0]);
-                    if(res != FLASH_OK) while(1){}
-
-            //Now check that the only the first 64k (256 pages) are 0xFF
-            for(int j=0;j<6;j++){
-
-                MT25Q_flash_read(addr[j], data_rx, FLASH_PAGE_SIZE);
-
-                for(int i=0;i<FLASH_PAGE_SIZE;i++){
-                    if(j == 5){
-                        //This page is not in the first 64k subsector.
-                        if(data_tx[i] != data_rx[i]) while(1){}
-                    }
-                    else{
-                        if(data_rx[i] != 0xFF) while(1){}
-                    }
-                }
-                memset(data_rx,0,256);
-            }
-
-            vTaskSuspend(NULL);
-
-        }
+	            vTaskSuspend(NULL);
+	}
 }
 
 static void vTestAdcsDriver(void * pvParameters){

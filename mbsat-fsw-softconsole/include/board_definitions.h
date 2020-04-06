@@ -30,7 +30,7 @@
 #define RTC_SPI_CORE   CORE_SPI_0
 #define RTC_SLAVE_CORE SPI_SLAVE_0  // RTC uses MSS_GPIO for SS, so this is not relevant.
 
-#define MRAM0_SPI_CORE   CORE_SPI_0
+#define MRAM0_SPI_CORE   CORE_SPI_1
 #define MRAM0_SLAVE_CORE SPI_SLAVE_0 // MRAM0 uses MSS_GPIO for SS, so this is not relevant.
 
 #define FLASH_SPI_CORE   CORE_SPI_0
