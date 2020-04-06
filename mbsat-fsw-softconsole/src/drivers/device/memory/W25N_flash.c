@@ -12,6 +12,8 @@
 // History
 // 2019-04-17 by Joseph Howarth
 // - Created.
+// 2020-03-31 by Joseph Howarth
+// - Updated to use flash interface.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*
  * Copyright (c) 2014-2018 Cesanta Software Limited
@@ -36,7 +38,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-#include "flash.h"
+#include "W25n_flash.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -76,7 +78,7 @@
 // Returns:
 //  Returns true if successful, false if not..
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_map_page(FlashDevice_t *dd, size_t off, uint16_t *page_num, uint16_t *page_off);
+static bool w25n_map_page(W25NDevice_t *dd, size_t off, uint16_t *page_num, uint16_t *page_off);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -113,7 +115,7 @@ static size_t MIN(size_t arg1, size_t arg2);
 // Returns:
 //  Returns true if successful, false if not.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_map_page_ex(FlashDevice_t *dd, size_t off, uint16_t *page_num,uint16_t *page_off, uint8_t bb_reserve);
+static bool w25n_map_page_ex(W25NDevice_t *dd, size_t off, uint16_t *page_num,uint16_t *page_off, uint8_t bb_reserve);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -129,7 +131,7 @@ static bool flash_map_page_ex(FlashDevice_t *dd, size_t off, uint16_t *page_num,
 // Returns:
 //  Enter description of return values (if any).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_page_data_read(FlashDevice_t *dd,uint16_t page_num);
+FlashStatus_t w25n_page_data_read(W25NDevice_t *dd,uint16_t page_num);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -156,7 +158,7 @@ FlashStatus_t flash_page_data_read(FlashDevice_t *dd,uint16_t page_num);
 //  Enter description of return values (if any).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-static bool flash_op_arg_rx(FlashDevice_t *dd, FlashOperation_t op,size_t arg_len, uint32_t arg, int dummy_len,size_t rx_len, void *rx_data);
+static bool w25n_op_arg_rx(W25NDevice_t *dd, W25NOperation_t op,size_t arg_len, uint32_t arg, int dummy_len,size_t rx_len, void *rx_data);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -177,7 +179,7 @@ static bool flash_op_arg_rx(FlashDevice_t *dd, FlashOperation_t op,size_t arg_le
 // Returns:
 //  Enter description of return values (if any).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_op_arg(FlashDevice_t *dd, FlashOperation_t op,size_t arg_len, uint32_t arg);
+static bool w25n_op_arg(W25NDevice_t *dd, W25NOperation_t op,size_t arg_len, uint32_t arg);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -195,7 +197,7 @@ static bool flash_op_arg(FlashDevice_t *dd, FlashOperation_t op,size_t arg_len, 
 // Returns:
 //  The value of the status register.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static uint8_t flash_read_reg(FlashDevice_t *dd,FlashReg_t reg);
+static uint8_t w25n_read_reg(W25NDevice_t *dd,W25NReg_t reg);
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -214,7 +216,7 @@ static uint8_t flash_read_reg(FlashDevice_t *dd,FlashReg_t reg);
 // Returns:
 //  True if successful, false if not.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_write_reg(FlashDevice_t *dd, FlashReg_t reg,uint8_t value);
+static bool w25n_write_reg(W25NDevice_t *dd, W25NReg_t reg,uint8_t value);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -230,7 +232,7 @@ static bool flash_write_reg(FlashDevice_t *dd, FlashReg_t reg,uint8_t value);
 // Returns:
 //  Enter description of return values (if any).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_simple_op(FlashDevice_t *dd, FlashOperation_t op);
+static bool w25n_simple_op(W25NDevice_t *dd, W25NOperation_t op);
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -254,7 +256,7 @@ static bool flash_simple_op(FlashDevice_t *dd, FlashOperation_t op);
 // Returns:
 //  Enter description of return values (if any).
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_simple_rx_op(FlashDevice_t *dd, FlashOperation_t op, int dummy_len, size_t rx_len, void *rx_data);
+static bool w25n_simple_rx_op(W25NDevice_t *dd, W25NOperation_t op, int dummy_len, size_t rx_len, void *rx_data);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -278,16 +280,16 @@ static bool flash_simple_rx_op(FlashDevice_t *dd, FlashOperation_t op, int dummy
 // Returns:
 //  Always returns true.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-static bool flash_txn(FlashDevice_t *dd, size_t tx_len,const void *tx_data, int dummy_len, size_t rx_len,void *rx_data);
+static bool w25n_txn(W25NDevice_t *dd, size_t tx_len,const void *tx_data, int dummy_len, size_t rx_len,void *rx_data);
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-static bool flash_map_page(FlashDevice_t *dd, size_t off, uint16_t *page_num, uint16_t *page_off) {
+static bool w25n_map_page(W25NDevice_t *dd, size_t off, uint16_t *page_num, uint16_t *page_off) {
 
-	return flash_map_page_ex(dd, off, page_num, page_off,dd->bb_reserve);
+	return w25n_map_page_ex(dd, off, page_num, page_off,dd->bb_reserve);
 
 }
 
@@ -307,20 +309,20 @@ static size_t MIN(size_t arg1, size_t arg2){
 	return ans;
 }
 
-static bool flash_map_page_ex(FlashDevice_t *dd, size_t off,uint16_t *page_num,uint16_t *page_off, uint8_t bb_reserve) {
+static bool w25n_map_page_ex(W25NDevice_t *dd, size_t off,uint16_t *page_num,uint16_t *page_off, uint8_t bb_reserve) {
 
   bool res = false;
-  size_t die_size = FLASH_DIE_SIZE;
+  size_t die_size = W25N_DIE_SIZE;
 
 
-  die_size -= ((size_t) bb_reserve) * FLASH_BLOCK_SIZE;
+  die_size -= ((size_t) bb_reserve) * W25N_BLOCK_SIZE;
   if(off>die_size){
 	  res = false;
   }
   else{
-	  *page_num = off / FLASH_PAGE_SIZE;
+	  *page_num = off / W25N_PAGE_SIZE;
 
-	  if (page_off != NULL) *page_off = off % FLASH_PAGE_SIZE;
+	  if (page_off != NULL) *page_off = off % W25N_PAGE_SIZE;
 
 	  res = true;
   }
@@ -328,7 +330,7 @@ static bool flash_map_page_ex(FlashDevice_t *dd, size_t off,uint16_t *page_num,u
   return res;
 }
 
-static bool flash_op_arg_rx(FlashDevice_t *dd, FlashOperation_t op,size_t arg_len, uint32_t arg, int dummy_len,size_t rx_len, void *rx_data) {
+static bool w25n_op_arg_rx(W25NDevice_t *dd, W25NOperation_t op,size_t arg_len, uint32_t arg, int dummy_len,size_t rx_len, void *rx_data) {
 
 	uint8_t buf[5] = {op};
   size_t tx_len;
@@ -354,37 +356,37 @@ static bool flash_op_arg_rx(FlashDevice_t *dd, FlashOperation_t op,size_t arg_le
     default:
       return false;
   }
-  return flash_txn(dd, tx_len, buf, dummy_len, rx_len, rx_data);
+  return w25n_txn(dd, tx_len, buf, dummy_len, rx_len, rx_data);
 }
 
-static bool flash_op_arg(FlashDevice_t *dd, FlashOperation_t op,size_t arg_len, uint32_t arg) {
+static bool w25n_op_arg(W25NDevice_t *dd, W25NOperation_t op,size_t arg_len, uint32_t arg) {
 
-	return flash_op_arg_rx(dd, op, arg_len, arg, 0, 0, NULL);
+	return w25n_op_arg_rx(dd, op, arg_len, arg, 0, 0, NULL);
 }
 
-FlashStatus_t flash_page_data_read(FlashDevice_t *dd,uint16_t page_num) {
+FlashStatus_t w25n_page_data_read(W25NDevice_t *dd,uint16_t page_num) {
 
 	uint8_t st;
 
-	if (!flash_op_arg(dd, FLASH_OP_PAGE_DATA_READ, 1 + 2, page_num)) {
+	if (!w25n_op_arg(dd, W25N_OP_PAGE_DATA_READ, 1 + 2, page_num)) {
 		return FLASH_ERROR;
 	}
 
-	while ((st = flash_read_reg(dd, FLASH_REG_STAT)) & FLASH_REG_STAT_BUSY) {
+	while ((st = w25n_read_reg(dd, W25N_REG_STAT)) & W25N_REG_STAT_BUSY) {
 	}
 
 	if (dd->ecc_chk) {
 
-		st = flash_read_reg(dd, FLASH_REG_STAT);
+		st = w25n_read_reg(dd, W25N_REG_STAT);
 
-		if (st & (FLASH_REG_STAT_ECC1 | FLASH_REG_STAT_ECC0)) {
+		if (st & (W25N_REG_STAT_ECC1 | W25N_REG_STAT_ECC0)) {
 
-			bool hard = (st & FLASH_REG_STAT_ECC1);
+			bool hard = (st & W25N_REG_STAT_ECC1);
 
 			if (hard){
-				return FLASH_READ_ERROR_MULTI;
+				return FLASH_ERROR_ECC;
 			}else{
-				return FLASH_READ_ERROR_SINGLE;
+				return FLASH_ERROR_ECC;
 			}
 		}
 	}
@@ -392,20 +394,20 @@ FlashStatus_t flash_page_data_read(FlashDevice_t *dd,uint16_t page_num) {
 	return FLASH_OK;
 }
 
-static uint8_t flash_read_reg(FlashDevice_t *dd,FlashReg_t reg) {
+static uint8_t w25n_read_reg(W25NDevice_t *dd,W25NReg_t reg) {
 
   uint8_t reg_addr = reg, reg_value = 0;
-  flash_op_arg_rx(dd, FLASH_OP_READ_REG, 1, reg_addr, 0, 1, &reg_value);
+  w25n_op_arg_rx(dd, W25N_OP_READ_REG, 1, reg_addr, 0, 1, &reg_value);
 
   return reg_value;
 }
 
-static bool flash_write_reg(FlashDevice_t *dd, FlashReg_t reg,uint8_t value) {
+static bool w25n_write_reg(W25NDevice_t *dd, W25NReg_t reg,uint8_t value) {
 
-  return flash_op_arg(dd, FLASH_OP_WRITE_REG, 2,(((uint32_t) reg) << 8 | value));
+  return w25n_op_arg(dd, W25N_OP_WRITE_REG, 2,(((uint32_t) reg) << 8 | value));
 }
 
-static bool flash_txn(FlashDevice_t *dd, size_t tx_len,const void *tx_data, int dummy_len, size_t rx_len,void *rx_data) {
+static bool w25n_txn(W25NDevice_t *dd, size_t tx_len,const void *tx_data, int dummy_len, size_t rx_len,void *rx_data) {
 
 
 	size_t total_len_tx = tx_len+dummy_len;
@@ -427,22 +429,22 @@ static bool flash_txn(FlashDevice_t *dd, size_t tx_len,const void *tx_data, int 
 		p++;
 	}
 
-	spi_transaction_block_read_without_toggle(dd->spi,SPI_SLAVE_0, dd->ss_port_id,command_buffer,total_len_tx,rx_data,rx_len);
+	dd->spi_read(command_buffer,total_len_tx,rx_data,rx_len);
 
   return true;
 }
 
-static bool flash_simple_rx_op(FlashDevice_t *dd, FlashOperation_t op,
+static bool w25n_simple_rx_op(W25NDevice_t *dd, W25NOperation_t op,
                                 int dummy_len, size_t rx_len, void *rx_data) {
-  return flash_txn(dd, 1, &op, dummy_len, rx_len, rx_data);
+  return w25n_txn(dd, 1, &op, dummy_len, rx_len, rx_data);
 }
 
-static bool flash_simple_op(FlashDevice_t *dd, FlashOperation_t op) {
-  return flash_txn(dd, 1, &op, 0, 0, NULL);
+static bool w25n_simple_op(W25NDevice_t *dd, W25NOperation_t op) {
+  return w25n_txn(dd, 1, &op, 0, 0, NULL);
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FlashStatus_t flash_read(FlashDevice_t *dev, size_t address, size_t len, void *dst) {
+FlashStatus_t w25n_read(W25NDevice_t *dev, size_t address, size_t len, void *dst) {
 
   FlashStatus_t res = FLASH_ERROR;
   FlashStatus_t res2 = FLASH_ERROR;
@@ -457,18 +459,18 @@ FlashStatus_t flash_read(FlashDevice_t *dev, size_t address, size_t len, void *d
 
   while (len > 0) {
 
-    if (!flash_map_page(dev, address, &page_num, &page_off)) {
-      res = FLASH_INVALID;
+    if (!w25n_map_page(dev, address, &page_num, &page_off)) {
+      res = FLASH_INVALID_ADDRESS;
       goto out;
     }
-    size_t rd_len = MIN(len, FLASH_PAGE_SIZE - page_off);
+    size_t rd_len = MIN(len, W25N_PAGE_SIZE - page_off);
 
 
-    if ((res2 = flash_page_data_read(dev, page_num))) {
+    if ((res2 = w25n_page_data_read(dev, page_num))) {
       res = res2;
       goto out;
     }
-    if (!flash_op_arg_rx(dev, FLASH_OP_READ, 2, page_off, 1, rd_len, dp)) {
+    if (!w25n_op_arg_rx(dev, W25N_OP_READ, 2, page_off, 1, rd_len, dp)) {
       goto out;
     }
     address += rd_len;
@@ -481,7 +483,7 @@ out:
   return res;
 }
 
-FlashStatus_t flash_write_(FlashDevice_t *dd,size_t address, size_t len,const void *src) {
+FlashStatus_t w25n_write(W25NDevice_t *dd,size_t address, size_t len,const void *src) {
 
 
   FlashStatus_t res = FLASH_ERROR;
@@ -495,24 +497,24 @@ FlashStatus_t flash_write_(FlashDevice_t *dd,size_t address, size_t len,const vo
   uint16_t page_num, page_off;
 
   while (len > 0) {
-    if (!flash_map_page(dd, address, &page_num, &page_off)) {
-      res = FLASH_INVALID;
+    if (!w25n_map_page(dd, address, &page_num, &page_off)) {
+      res = FLASH_INVALID_ADDRESS;
       goto out;
     }
     uint8_t txn_buf[3 + 128], st;
-    size_t wr_len = MIN(len, FLASH_PAGE_SIZE - page_off);
+    size_t wr_len = MIN(len, W25N_PAGE_SIZE - page_off);
 
     /* When modifying part of a page, read it first to ensure correct ECC. */
-    if (wr_len != FLASH_PAGE_SIZE) {
-      if ((res2 = flash_page_data_read(dd, page_num)) != 0) {
+    if (wr_len != W25N_PAGE_SIZE) {
+      if ((res2 = w25n_page_data_read(dd, page_num)) != 0) {
         res = res2;
         goto out;
       }
-      txn_buf[0] = FLASH_OP_PROG_RAND_DATA_LOAD;
+      txn_buf[0] = W25N_OP_PROG_RAND_DATA_LOAD;
     } else {
-      txn_buf[0] = FLASH_OP_PROG_DATA_LOAD;
+      txn_buf[0] = W25N_OP_PROG_DATA_LOAD;
     }
-    if (!flash_simple_op(dd, FLASH_OP_WRITE_ENABLE)) goto out;
+    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) goto out;
 
     for (size_t txn_off = 0, txn_len = 0; txn_off < wr_len; txn_off += txn_len) {
 
@@ -523,14 +525,14 @@ FlashStatus_t flash_write_(FlashDevice_t *dd,size_t address, size_t len,const vo
 
       memcpy(txn_buf + 3, dp, txn_len);
 
-      if (!flash_txn(dd, 3 + txn_len, txn_buf, 0, 0, NULL)) goto out;
-      txn_buf[0] = FLASH_OP_PROG_RAND_DATA_LOAD;
+      if (!w25n_txn(dd, 3 + txn_len, txn_buf, 0, 0, NULL)) goto out;
+      txn_buf[0] = W25N_OP_PROG_RAND_DATA_LOAD;
       dp += txn_len;
     }
-    if (!flash_op_arg(dd, FLASH_OP_PROG_EXECUTE, 1 + 2, page_num)) goto out;
-    while ((st = flash_read_reg(dd, FLASH_REG_STAT)) & FLASH_REG_STAT_BUSY) {
+    if (!w25n_op_arg(dd, W25N_OP_PROG_EXECUTE, 1 + 2, page_num)) goto out;
+    while ((st = w25n_read_reg(dd, W25N_REG_STAT)) & W25N_REG_STAT_BUSY) {
     }
-    if (st & FLASH_REG_STAT_PFAIL) {
+    if (st & W25N_REG_STAT_PFAIL) {
 
       /* TODO(rojer): On-the-fly remapping of bad blocks. */
       goto out;
@@ -546,30 +548,30 @@ out:
   return res;
 }
 
-FlashStatus_t flash_erase_blocks(FlashDevice_t *dd, size_t block_num, size_t num_blocks) {
+FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_blocks) {
 
  FlashStatus_t res = FLASH_ERROR;
 
-  const size_t total_blocks = FLASH_DIE_SIZE/FLASH_BLOCK_SIZE - dd->bb_reserve;
+  const size_t total_blocks = W25N_DIE_SIZE/W25N_BLOCK_SIZE - dd->bb_reserve;
 
   //Check that the block number is valid.
   if(block_num < 0 || block_num > total_blocks){
 
-	    res = FLASH_INVALID;
+	    res = FLASH_INVALID_ADDRESS;
 	    goto out;
   }
 
   if( num_blocks> (total_blocks-block_num)){
 
-	    res = FLASH_INVALID;
+	    res = FLASH_INVALID_ADDRESS;
 	    goto out;
   }
 
-  size_t off = block_num * FLASH_BLOCK_SIZE;
-  size_t len = num_blocks * FLASH_BLOCK_SIZE;
+  size_t off = block_num * W25N_BLOCK_SIZE;
+  size_t len = num_blocks * W25N_BLOCK_SIZE;
 
-    if (off % FLASH_BLOCK_SIZE != 0 || len % FLASH_BLOCK_SIZE != 0) {
-      res = FLASH_INVALID;
+    if (off % W25N_BLOCK_SIZE != 0 || len % W25N_BLOCK_SIZE != 0) {
+      res = FLASH_INVALID_ADDRESS;
       goto out;
     }
 
@@ -577,22 +579,22 @@ FlashStatus_t flash_erase_blocks(FlashDevice_t *dd, size_t block_num, size_t num
   uint16_t page_off;
 
   while (len > 0) {
-    if (!flash_map_page(dd, off, &page_num, &page_off)) {
-      res = FLASH_INVALID;
+    if (!w25n_map_page(dd, off, &page_num, &page_off)) {
+      res = FLASH_INVALID_ADDRESS;
       goto out;
     }
 
-    if (!flash_simple_op(dd, FLASH_OP_WRITE_ENABLE)) goto out;
-    if (!flash_op_arg(dd, FLASH_OP_BLOCK_ERASE, 1 + 2, page_num)) goto out;
+    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) goto out;
+    if (!w25n_op_arg(dd, W25N_OP_BLOCK_ERASE, 1 + 2, page_num)) goto out;
     uint8_t st;
-    while ((st = flash_read_reg(dd, FLASH_REG_STAT)) & FLASH_REG_STAT_BUSY) {
+    while ((st = w25n_read_reg(dd, W25N_REG_STAT)) & W25N_REG_STAT_BUSY) {
     }
-    if (st & FLASH_REG_STAT_EFAIL) {
+    if (st & W25N_REG_STAT_EFAIL) {
        /* TODO(rojer): On-the-fly remapping of bad blocks. */
       goto out;
     }
-    off += FLASH_BLOCK_SIZE;
-    len -= FLASH_BLOCK_SIZE;
+    off += W25N_BLOCK_SIZE;
+    len -= W25N_BLOCK_SIZE;
   }
   res = FLASH_OK;
 out:
@@ -600,21 +602,20 @@ out:
 }
 
 
-FlashStatus_t flash_dev_init(FlashDevice_t * dev,CoreSPIInstance_t spi, mss_gpio_id_t ss_pin, uint8_t bb_reserve, EccCheck_t ecc_check){
+FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck_t ecc_check){
 
 	FlashStatus_t result = FLASH_ERROR;
 
-	dev->size = FLASH_DIE_SIZE;
-	dev->ss_port_id = ss_pin;
-	dev->spi = spi;
+	dev->size = W25N_DIE_SIZE;
+
 	dev->ecc_chk = ecc_check;
 	dev->bb_reserve = bb_reserve;
 
-	FlashOperation_t command = FLASH_OP_READ_JEDEC_ID;
+	W25NOperation_t command = W25N_OP_READ_JEDEC_ID;
 	uint8_t id_buffer[3];
 
-	flash_txn(dev,1,&command,1,3,id_buffer);
-	if(id_buffer[0] == FLASH_ID_1 && id_buffer[1] == FLASH_ID_2 && id_buffer[2] == FLASH_ID_3){
+	w25n_txn(dev,1,&command,1,3,id_buffer);
+	if(id_buffer[0] == W25N_ID_1 && id_buffer[1] == W25N_ID_2 && id_buffer[2] == W25N_ID_3){
 
 		result = FLASH_OK;
 	}
@@ -623,14 +624,14 @@ FlashStatus_t flash_dev_init(FlashDevice_t * dev,CoreSPIInstance_t spi, mss_gpio
 	 uint8_t cfg0;
 	 for (uint8_t i = 0; i < 1; i++) {
 
-	   flash_write_reg(dev, FLASH_REG_PROT, 0);
-	   flash_write_reg(dev, FLASH_REG_CONF,
-	                     cfg0 | FLASH_REG_CONF_ECCE | FLASH_REG_CONF_BUF);
+	   w25n_write_reg(dev, W25N_REG_PROT, 0);
+	   w25n_write_reg(dev, W25N_REG_CONF,
+	                     cfg0 | W25N_REG_CONF_ECCE | W25N_REG_CONF_BUF);
 
 	 }
 
 	 if (dev->bb_reserve > 0) {
-	   dev->size -= ((size_t) 1 * dev->bb_reserve * FLASH_BLOCK_SIZE);
+	   dev->size -= ((size_t) 1 * dev->bb_reserve * W25N_BLOCK_SIZE);
 	 }
 
 
@@ -641,16 +642,16 @@ FlashStatus_t flash_dev_init(FlashDevice_t * dev,CoreSPIInstance_t spi, mss_gpio
 
 }
 
-FlashStatus_t flash_read_bb_lut(FlashDevice_t *dd,
-                               FlashBadBlockLUT_t *lut, int *num_bb) {
+FlashStatus_t w25n_read_bb_lut(W25NDevice_t *dd,
+                               W25NBadBlockLUT_t *lut, int *num_bb) {
   FlashStatus_t res = FLASH_ERROR;
-  uint8_t tmp[FLASH_BB_LUT_SIZE * 4];
-  if (!flash_op_arg_rx(dd, FLASH_OP_BBM_READ_LUT, 0, 0, 1, sizeof(tmp),
+  uint8_t tmp[W25N_BB_LUT_SIZE * 4];
+  if (!w25n_op_arg_rx(dd, W25N_OP_BBM_READ_LUT, 0, 0, 1, sizeof(tmp),
                         tmp)) {
     goto out;
   }
-  for (int i = 0, j = 0; j < (int) FLASH_BB_LUT_SIZE; i++, j += 4) {
-    FlashBadBlockEntry_t *e = &lut->e[i];
+  for (int i = 0, j = 0; j < (int) W25N_BB_LUT_SIZE; i++, j += 4) {
+    W25NBadBlockEntry_t *e = &lut->e[i];
     e->enable = !!(tmp[j] & 0x80);
     e->invalid = !!(tmp[j] & 0x40);
     e->lba = (((uint16_t)(tmp[j] & 3)) << 8) | tmp[j + 1];
@@ -663,19 +664,19 @@ out:
 }
 
 
-FlashStatus_t flash_remap_block(FlashDevice_t *dd, size_t bad_off,
+FlashStatus_t w25n_remap_block(W25NDevice_t *dd, size_t bad_off,
                         size_t good_off) {
   FlashStatus_t res = false;
 
   uint8_t bdn;
   uint16_t bpn, lba, pba;
-  FlashBadBlockLUT_t *lut;
-  if (!flash_map_page_ex(dd, bad_off, &bpn, NULL, false)) {
+  W25NBadBlockLUT_t *lut;
+  if (!w25n_map_page_ex(dd, bad_off, &bpn, NULL, false)) {
     goto out;
   }
   uint8_t gdn;
   uint16_t gpn;
-  if (!flash_map_page_ex(dd, good_off,  &gpn, NULL, false)) {
+  if (!w25n_map_page_ex(dd, good_off,  &gpn, NULL, false)) {
     goto out;
   }
   if (bdn != gdn) goto out; /* Cannot remap between different dies. */
@@ -687,27 +688,27 @@ FlashStatus_t flash_remap_block(FlashDevice_t *dd, size_t bad_off,
    */
 
   lut = &dd->bb_lut;
-  for (int i = 0; i < (int) FLASH_BB_LUT_SIZE; i++) {
+  for (int i = 0; i < (int) W25N_BB_LUT_SIZE; i++) {
     if (lut->e[i].lba == lba) {
     	//Mapping already exists.;
       goto out;
     }
   }
 
-  if (flash_read_reg(dd, FLASH_REG_STAT) & FLASH_REG_STAT_LUTF) {
+  if (w25n_read_reg(dd, W25N_REG_STAT) & W25N_REG_STAT_LUTF) {
 	 //BB lookup table is full.
     goto out;
   }
   {
     uint8_t tx_data[5] = {
-        FLASH_OP_BBM_SWAP_BLOCKS, (lba >> 8) & 0xff, (lba & 0xff),
+        W25N_OP_BBM_SWAP_BLOCKS, (lba >> 8) & 0xff, (lba & 0xff),
         (pba >> 8) & 0xff, (pba & 0xff),
     };
-    if (!flash_simple_op(dd, FLASH_OP_WRITE_ENABLE)) goto out;
-    if (flash_txn(dd, sizeof(tx_data), tx_data, 0, 0, NULL)) goto out;
+    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) goto out;
+    if (w25n_txn(dd, sizeof(tx_data), tx_data, 0, 0, NULL)) goto out;
   }
 
-  if (!flash_read_bb_lut(dd, lut, NULL)) goto out;
+  if (!w25n_read_bb_lut(dd, lut, NULL)) goto out;
   res = FLASH_OK;
 out:
 

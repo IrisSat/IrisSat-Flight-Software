@@ -1,5 +1,5 @@
-#ifndef FLASH_H
-#define FLASH_H
+#ifndef W25N_FLASH_H
+#define W25N_FLASH_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // UMSATS 2018-2020
 //
@@ -14,6 +14,8 @@
 // History
 // 2019-04-17 by Joseph Howarth
 // - Created.
+// 2020-03-31 by Joseph Howarth
+// - Updated to use flash interface.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -37,36 +39,35 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include <flash_common.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include "spi.h"
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-#define FLASH_PAGE_SIZE 2048U
-#define FLASH_BLOCK_SIZE (64 * FLASH_PAGE_SIZE)
-#define FLASH_DIE_SIZE (1024 * FLASH_BLOCK_SIZE)
+#define W25N_PAGE_SIZE 2048U
+#define W25N_BLOCK_SIZE (64 * W25N_PAGE_SIZE)
+#define W25N_DIE_SIZE (1024 * W25N_BLOCK_SIZE)
 
-#define FLASH_REG_CONF_BUF (1 << 3)
-#define FLASH_REG_CONF_ECCE (1 << 4)
+#define W25N_REG_CONF_BUF (1 << 3)
+#define W25N_REG_CONF_ECCE (1 << 4)
 
-#define FLASH_REG_STAT_BUSY (1 << 0)
-#define FLASH_REG_STAT_WEL (1 << 1)
-#define FLASH_REG_STAT_EFAIL (1 << 2)
-#define FLASH_REG_STAT_PFAIL (1 << 3)
-#define FLASH_REG_STAT_ECC0 (1 << 4)
-#define FLASH_REG_STAT_ECC1 (1 << 5)
-#define FLASH_REG_STAT_LUTF (1 << 6)
+#define W25N_REG_STAT_BUSY (1 << 0)
+#define W25N_REG_STAT_WEL (1 << 1)
+#define W25N_REG_STAT_EFAIL (1 << 2)
+#define W25N_REG_STAT_PFAIL (1 << 3)
+#define W25N_REG_STAT_ECC0 (1 << 4)
+#define W25N_REG_STAT_ECC1 (1 << 5)
+#define W25N_REG_STAT_LUTF (1 << 6)
 
-#define FLASH_ID_1	0xEF
-#define FLASH_ID_2	0xAA
-#define FLASH_ID_3	0x21
+#define W25N_ID_1	0xEF
+#define W25N_ID_2	0xAA
+#define W25N_ID_3	0x21
 
-#define FLASH_BB_LUT_SIZE 20
+#define W25N_BB_LUT_SIZE 20
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
@@ -74,48 +75,39 @@
 
 typedef enum  {
 
-  FLASH_OP_RST = 0xff,
-  W25MXX_OP_DIE_SELECT = 0xc2,
-  FLASH_OP_READ_JEDEC_ID = 0x9f,
-  FLASH_OP_READ_REG = 0x05,
-  FLASH_OP_WRITE_REG = 0x01,
-  FLASH_OP_WRITE_ENABLE = 0x06,
-  FLASH_OP_WRITE_DISABLE = 0x04,
-  FLASH_OP_BBM_SWAP_BLOCKS = 0xa1,
-  FLASH_OP_BBM_READ_LUT = 0xa5,
-  FLASH_OP_BBM_READ_LAST_ECC_FAIL_ADDR = 0xa9,
-  FLASH_OP_PROG_DATA_LOAD = 0x02,
-  FLASH_OP_PROG_RAND_DATA_LOAD = 0x84,
-  FLASH_OP_PROG_EXECUTE = 0x10,
-  FLASH_OP_BLOCK_ERASE = 0xd8,
-  FLASH_OP_PAGE_DATA_READ = 0x13,
-  FLASH_OP_READ = 0x03,
+  W25N_OP_RST = 0xff,
+  W25NXX_OP_DIE_SELECT = 0xc2,
+  W25N_OP_READ_JEDEC_ID = 0x9f,
+  W25N_OP_READ_REG = 0x05,
+  W25N_OP_WRITE_REG = 0x01,
+  W25N_OP_WRITE_ENABLE = 0x06,
+  W25N_OP_WRITE_DISABLE = 0x04,
+  W25N_OP_BBM_SWAP_BLOCKS = 0xa1,
+  W25N_OP_BBM_READ_LUT = 0xa5,
+  W25N_OP_BBM_READ_LAST_ECC_FAIL_ADDR = 0xa9,
+  W25N_OP_PROG_DATA_LOAD = 0x02,
+  W25N_OP_PROG_RAND_DATA_LOAD = 0x84,
+  W25N_OP_PROG_EXECUTE = 0x10,
+  W25N_OP_BLOCK_ERASE = 0xd8,
+  W25N_OP_PAGE_DATA_READ = 0x13,
+  W25N_OP_READ = 0x03,
 
-} FlashOperation_t;
+} W25NOperation_t;
 
 typedef enum  {
 
-  FLASH_REG_PROT = 0xa0, /* Protection register */
-  FLASH_REG_CONF = 0xb0, /* Configuration register */
-  FLASH_REG_STAT = 0xc0, /* Status register */
+  W25N_REG_PROT = 0xa0, /* Protection register */
+  W25N_REG_CONF = 0xb0, /* Configuration register */
+  W25N_REG_STAT = 0xc0, /* Status register */
 
-} FlashReg_t;
+} W25NReg_t;
 
-typedef enum{
-
-	FLASH_OK,
-	FLASH_ERROR,
-	FLASH_INVALID,
-	FLASH_READ_ERROR_SINGLE,
-	FLASH_READ_ERROR_MULTI
-
-} FlashStatus_t;
 
 typedef enum{
 
 	ECC_OFF,
 	ECC_ON
-} EccCheck_t;
+} W25NEccCheck_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // STRUCTS AND STRUCT TYPEDEFS
@@ -126,27 +118,27 @@ typedef struct  {
   uint32_t enable : 1;
   uint16_t lba : 10;
   uint16_t pba;
-} FlashBadBlockEntry_t;
+} W25NBadBlockEntry_t;
 
 typedef struct  {
 
-  FlashBadBlockEntry_t e[FLASH_BB_LUT_SIZE];
+  W25NBadBlockEntry_t e[W25N_BB_LUT_SIZE];
 
-} FlashBadBlockLUT_t;
+} W25NBadBlockLUT_t;
 
 typedef struct  {
 
-  CoreSPIInstance_t spi;
-  mss_gpio_id_t ss_port_id;	/* Slave select GPIO pin */
+  void (*spi_write)(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buffer,uint16_t wr_size);
+  void (*spi_read)(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *rd_buffer,uint16_t rd_size);
 
   size_t size;
-  FlashBadBlockLUT_t bb_lut;
+  W25NBadBlockLUT_t bb_lut;
   uint32_t bb_reserve : 8; /* # of blocks to reserve at the end of each die. */
   uint32_t ecc_chk : 1;    /* Check ECC when reading. */
 
 
 
-}FlashDevice_t;
+}W25NDevice_t;
 
 
 
@@ -187,7 +179,7 @@ typedef struct  {
 //  Returns FLASH_OK if the flash memory id is successfully read.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Add part in detect(), where the die is put into buffered read, unprotect and read bb lut.
-FlashStatus_t flash_dev_init(FlashDevice_t * dev,CoreSPIInstance_t spi, mss_gpio_id_t ss_pin, uint8_t bb_reserve, EccCheck_t ecc_check);
+FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck_t ecc_check);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -210,7 +202,7 @@ FlashStatus_t flash_dev_init(FlashDevice_t * dev,CoreSPIInstance_t spi, mss_gpio
 //	Returns FLASH_INVALID if an improper address is used.
 //	Returns FLASH_ERROR if there is a different error.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_write_(FlashDevice_t *dd,size_t address, size_t len,const void *src);
+FlashStatus_t w25n_write(W25NDevice_t *dd,size_t address, size_t len,const void *src);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -233,7 +225,7 @@ FlashStatus_t flash_write_(FlashDevice_t *dd,size_t address, size_t len,const vo
 //	Returns FLASH_INVALID if an improper address is used.
 //	Returns FLASH_ERROR if there is a different error.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_read(FlashDevice_t *dev, size_t address, size_t len, void *dst);
+FlashStatus_t w25n_read(W25NDevice_t *dev, size_t address, size_t len, void *dst);
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -255,7 +247,7 @@ FlashStatus_t flash_read(FlashDevice_t *dev, size_t address, size_t len, void *d
 //	Returns FLASH_INVALID if an improper address is used.
 //	Returns FLASH_ERROR if there is a different error.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_erase_blocks(FlashDevice_t *dd, size_t block_num, size_t num_blocks);
+FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_blocks);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -275,7 +267,7 @@ FlashStatus_t flash_erase_blocks(FlashDevice_t *dd, size_t block_num, size_t num
 //  Returns FLASH OK if the read is successful.
 //	Returns FLASH_ERROR if there is an error.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_read_bb_lut(FlashDevice_t *dd,FlashBadBlockLUT_t *lut, int *num_bb);
+FlashStatus_t w25n_read_bb_lut(W25NDevice_t *dd,W25NBadBlockLUT_t *lut, int *num_bb);
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -296,6 +288,24 @@ FlashStatus_t flash_read_bb_lut(FlashDevice_t *dd,FlashBadBlockLUT_t *lut, int *
 //  Returns FLASH OK if the read is successful.
 //	Returns FLASH_ERROR if there is an error.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-FlashStatus_t flash_remap_block(FlashDevice_t *dd, size_t bad_off,size_t good_off);
+FlashStatus_t w25n_remap_block(W25NDevice_t *dd, size_t bad_off,size_t good_off);
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Description:
+//  This erases the whole device.
+//
+// Parameters:
+//
+//	dev:			This should be a pointer to a FLASH_dev struct, which will be
+//					used to refer to the device.
+//
+//
+//
+// Returns:
+//  Returns FLASH OK if the read is successful.
+//	Returns FLASH_ERROR if there is an error.
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+FlashStatus_t w25n_erase_device(W25NDevice_t *dd);
+//TODO: Implement this function!.
 
 #endif // FLASH_H

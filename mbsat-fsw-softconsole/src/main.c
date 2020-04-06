@@ -117,6 +117,7 @@
 
 /* Standard includes. */
 #include <stdio.h>
+#include <string.h>
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
@@ -129,7 +130,7 @@
 
 /* Application includes. */
 #include "can.h"
-#include "flash.h"
+#include "flash_common.h"
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
@@ -197,6 +198,7 @@ void vApplicationTickHook( void );
 /*-----------------------------------------------------------*/
 /* See the documentation page for this demo on the FreeRTOS.org web site for
 full information - including hardware setup requirements. */
+
 
 int main( void )
 {
@@ -282,7 +284,7 @@ int main( void )
 	status = xTaskCreate(vTestFlash,
                          "Test Flash",
                          2000,
-                         NULL,
+                         (void *)flash_devices[FLASH_DEVICE_1],
                          1,
                          NULL);
 //
@@ -308,6 +310,13 @@ int main( void )
     return 0;
 }
 
+void spi_write_data_flash(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buffer,uint16_t wr_size){
+	 spi_transaction_block_write_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, cmd_buffer, cmd_size,wr_buffer,wr_size);
+}
+void spi_read_data_flash(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *rd_buffer,uint16_t rd_size){
+    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, cmd_buffer, cmd_size, rd_buffer, rd_size);
+}
+
 /*-----------------------------------------------------------*/
 static void prvSetupHardware( void )
 {
@@ -324,6 +333,8 @@ static void prvSetupHardware( void )
     init_mram();
     init_CAN(CAN_BAUD_RATE_1000K);
     adcs_init_driver();
+
+
 }
 
 /*-----------------------------------------------------------*/
@@ -515,96 +526,105 @@ static void vTestMRAM(void *pvParameters)
 static void vTestFlash(void *pvParameters)
 {
 
-	FlashDevice_t flash_device;
+	FlashDev_t * device = (FlashDev_t *) pvParameters;
 
-	FlashStatus_t result = flash_dev_init(&flash_device,CORE_SPI_0, MSS_GPIO_5, 8, ECC_ON);
-
-	MSS_GPIO_config( MSS_GPIO_3, MSS_GPIO_OUTPUT_MODE );
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-	int done =0;
-	uint8_t data_rx[2048];
-	int i;
-	int pageNum = 0;
-	int blockNum=0;
-	int address=0x0000000;
-	int numBadBlock = 0;
-	int led = 0;
-	int BB[50];
-	uint8_t data_tx[2048];
-
-	// Clear the receive buffer and put a repeating sequence of 0-255 into the
-	// transmit buffer.
-	for(i=0;i<2048;i++){
-		data_tx[i] = i%256;
-		data_rx[i] = 0;
-	}
-
-
-	// Check if we can read the bad block look up table.
-	// There should be one mapping in the table(1 bad block).
-	int num_bad_blocks = 0;
-	result = flash_read_bb_lut(&flash_device,&flash_device.bb_lut,&num_bad_blocks);
-
-	if(result != FLASH_OK || num_bad_blocks != 1){
-		while(1);
-	}
-
-
-	// Erase the block.
-	result = flash_erase_blocks(&flash_device,0,1);
+	FlashStatus_t result = flash_device_init(device);
 
 	if(result != FLASH_OK){
 		while(1);
 	}
 
 
-	result = flash_read(&flash_device,address,2048,data_rx);
+	while(1){
 
-	if(result != FLASH_OK){
-		while(1);
+	uint8_t data_tx[device->page_size];
+	uint8_t data_rx[device->page_size];
+	uint8_t data_rx2[device->page_size];
+
+	            //A list of addresses used in this test.
+	            uint32_t addr[6] = {0,//First page.
+	                                5*device->page_size, //5th page
+									6*device->page_size,
+									device->erase_size,
+									device->device_size - device->page_size,
+									device->device_size -2*(device->page_size)
+	                                };
+
+	            //Prepare some data to write to each page.
+	            for(int i=0;i<device->page_size;i++){
+	                data_tx[i] = i;
+	            }
+
+	            //Start by erasing the device.
+	            FlashStatus_t res = flash_erase_device(device);
+	            if(res != FLASH_OK){
+	                while(1){}
+	            }
+
+	            //Verify that the erase device works properly.
+	            //All addresses should have 0xFF as the data.
+	            for(int j=0; j<6;j++){
+
+	                flash_read(device,addr[j], data_rx, device->page_size);
+
+	                for(int i=0;i<device->page_size;i++){
+	                    if(data_rx[i] != 0xFF) while(1){}
+	                }
+	                memset(data_rx,0,256);
+	            }
+
+	            //Now verify that writing is working:
+	            //Write to all the addresses on page of data.
+
+	            for(int j=0; j<6;j++){
+	                //write
+	                res =flash_write(device,addr[j], data_tx, device->page_size);
+	                if(res != FLASH_OK) while(1){}
+
+	                //Read
+	                flash_read(device,addr[j], data_rx, device->page_size);
+
+	                //Verify
+	                for(int i=0;i<device->page_size;i++){
+
+						if(data_rx[i] != data_tx[i]) while(1){}
+	                }
+
+	                memset(data_rx,0,256);
+	            }
+
+	            //Make sure we can read more than one page at a time:
+	            flash_read(device,addr[1], data_rx2, device->page_size*2);
+	            for(int i=0;i<device->page_size*2;i++){
+
+	                if(data_rx2[i] != data_tx[i%device->page_size])
+	                    while(1){}
+	                }
+
+	            //Test the one of the erase functions
+
+	            res = flash_erase(device,addr[0]);
+	            if(res != FLASH_OK) while(1){}
+
+	            //Now check that the only the first address is 0.
+	            for(int j=0;j<6;j++){
+
+	                flash_read(device,addr[j], data_rx, device->page_size);
+
+	                for(int i=0;i<device->page_size;i++){
+	                    if(j == 0){
+	                    	if(data_rx[i] != 0xFF) while(1){}
+	                    }
+	                    else{
+	                        if(data_tx[i] != data_rx[i]) while(1){}
+	                    }
+	                }
+	                memset(data_rx,0,256);
+	            }
+
+
+	            vTaskSuspend(NULL);
 	}
-	int j;
-	// Make sure page is erased.
-	for(j=0;j<2048;j++){
-
-		if(data_rx[j] != 0xFF){
-			while(1);
-		}
-	}
-
-	// Save the transmit buffer to flash memory.
-	result = flash_write_(&flash_device,address,2048,data_tx);
-	if(result != FLASH_OK){
-		while(1);
-	}
-
-
-	result = flash_read(&flash_device,address,2048,data_rx);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-
-	// Make sure the data we read is the same as what was written.
-
-	for(j=0;j<2048;j++){
-
-		if(data_rx[j] != data_tx[j]){
-			while(1);
-		}
-	}
-
-
-	// Erase the block.
-	result = flash_erase_blocks(&flash_device,0,1);
-
-	if(result != FLASH_OK){
-		while(1);
-	}
-
 }
 
 static void vTestAdcsDriver(void * pvParameters){
