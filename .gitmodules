@@ -1,0 +1,3 @@
+[submodule "mbsat-fsw-softconsole/Libraries/littlefs"]
+	path = mbsat-fsw-softconsole/Libraries/littlefs
+	url = https://github.com/joehowarth17/littlefs.git
