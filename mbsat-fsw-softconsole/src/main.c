@@ -140,7 +140,7 @@
 #include "scheduler.h"
 #include "priority_queue.h"
 #include "adcs_driver.h"
-
+#include "lfs.h"
 
 
 /* External variables */
@@ -187,6 +187,10 @@ static void vTestFlash(void *pvParameters);
  */
 static void vTestAdcsDriver(void * pvParameters);
 
+/*
+ * Test code for file system.
+ */
+static vTestFS(void * pvParams);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -256,6 +260,13 @@ int main( void )
 //
     status = xTaskCreate(vTestWD,
                          "Test WD",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
+
+    status = xTaskCreate(vTestFS,
+                         "Test FS",
                          configMINIMAL_STACK_SIZE,
                          NULL,
                          1,
@@ -696,6 +707,50 @@ static void vTestAdcsDriver(void * pvParameters){
         vTaskDelay(pdMS_TO_TICKS(2500)); // Repeat the test every 2.5 seconds.
     }
 
+}
+
+static vTestFS(void * pvParams){
+	lfs_file_t file;
+
+	//Mount the file system.
+	int err = fs_mount();
+
+    // reformat if we can't mount the filesystem
+    // this should only happen on the first boot
+    if (err) {
+        fs_format();
+        fs_mount();
+    }
+
+    int result = 1;
+
+	while(1){
+
+	    uint32_t boot_count = 0;
+	    result = fs_file_open( &file, "boot_count", LFS_O_RDWR | LFS_O_CREAT);
+	    if(result < 0) while(1){}
+
+	    result = fs_file_read( &file, &boot_count, sizeof(boot_count));
+	    if(result < 0) while(1){}
+
+	    // update boot count
+	    boot_count += 1;
+	    result = fs_file_rewind( &file);
+	    if(result < 0) while(1){}
+
+	    result = fs_file_write( &file, &boot_count, sizeof(boot_count));
+	    if(result < 0) while(1){}
+
+	    // remember the storage is not updated until the file is closed successfully
+	    result = fs_file_close( &file);
+	    if(result < 0) while(1){}
+
+	    // release any resources we were using
+	    result = fs_unmount();
+	    if(result < 0) while(1){}
+
+	    vTaskSuspend(NULL);
+	}
 }
 
 /*-----------------------------------------------------------*/
