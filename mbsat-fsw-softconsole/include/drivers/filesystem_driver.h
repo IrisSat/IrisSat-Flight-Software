@@ -51,7 +51,8 @@ typedef enum{
     FS_ERR_NOMEM       ,  // No more memory available
     FS_ERR_NOATTR      ,  // No data/attr available
     FS_ERR_NAMETOOLONG ,  // File name too long
-
+	FS_ERR_LOCK		   ,  // Error creating mutex.
+	FS_ERR_OPENFILES   ,  //Too many open files.
 } FilesystemError_t;
 
 
@@ -150,18 +151,6 @@ int fs_removeattr( const char *path, uint8_t type);
 //
 // Returns a negative error code on failure.
 int fs_file_open( lfs_file_t *file, const char *path, int flags);
-
-// Open a file with extra configuration
-//
-// The mode that the file is opened in is determined by the flags, which
-// are values from the enum lfs_open_flags that are bitwise-ored together.
-//
-// The config struct provides additional config options per file as described
-// above. The config struct must be allocated while the file is open, and the
-// config struct must be zeroed for defaults and backwards compatibility.
-//
-// Returns a negative error code on failure.
-int fs_file_opencfg( lfs_file_t *file, const char *path, int flags, const struct lfs_file_config *config);
 
 // Close a file
 //

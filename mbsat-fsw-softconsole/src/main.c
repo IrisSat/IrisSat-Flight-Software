@@ -140,7 +140,7 @@
 #include "scheduler.h"
 #include "priority_queue.h"
 #include "adcs_driver.h"
-#include "lfs.h"
+#include "filesystem_driver.h"
 
 
 /* External variables */
@@ -190,7 +190,7 @@ static void vTestAdcsDriver(void * pvParameters);
 /*
  * Test code for file system.
  */
-static vTestFS(void * pvParams);
+static void vTestFS(void * pvParams);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -267,11 +267,11 @@ int main( void )
 
     status = xTaskCreate(vTestFS,
                          "Test FS",
-                         configMINIMAL_STACK_SIZE,
+                         1000,
                          NULL,
                          1,
                          NULL);
-//
+
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
 //                         configMINIMAL_STACK_SIZE,
@@ -292,13 +292,13 @@ int main( void )
 //                         NULL,
 //                         1,
 //                         NULL);
-				 
-	status = xTaskCreate(vTestFlash,
-                         "Test Flash",
-                         2000,
-                         (void *)flash_devices[FLASH_DEVICE_1],
-                         1,
-                         NULL);
+//
+//	status = xTaskCreate(vTestFlash,
+//                         "Test Flash",
+//                         2000,
+//                         (void *)flash_devices[FLASH_DEVICE_1],
+//                         1,
+//                         NULL);
 //
 
 //    // Task for testing priority queue data structure.
@@ -709,9 +709,13 @@ static void vTestAdcsDriver(void * pvParameters){
 
 }
 
-static vTestFS(void * pvParams){
-	lfs_file_t file;
+static void vTestFS(void * pvParams){
+	lfs_file_t file = {0}; //Set to 0 because debugger tries to read fields of struct one of which is a pointer, but since this is on free rtos heap, initial value is a5a5a5a5.
 
+	FilesystemError_t stat = fs_init();
+	if(stat != FS_OK){
+		while(1){}
+	}
 	//Mount the file system.
 	int err = fs_mount();
 
