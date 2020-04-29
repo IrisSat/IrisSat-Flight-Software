@@ -256,19 +256,19 @@ int main( void )
     // TODO - Starting to run out of heap space for these tasks... should start thinking about
     // increasing heap space or managing memory in a smarter manner. First step would be looking
     // at the FreeRTOS configurations and the linker file *.ld.
-    status = xTaskCreate(vTestCANTx,
-                         "Test CAN Tx",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
-//
-    status = xTaskCreate(vTestCANRx,
-                         "Test CAN Rx",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestCANTx,
+//                         "Test CAN Tx",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+////
+//    status = xTaskCreate(vTestCANRx,
+//                         "Test CAN Rx",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
 
 #ifdef SERVER
     status = xTaskCreate(vTestCspServer,
@@ -326,21 +326,21 @@ int main( void )
 //                         NULL);
 //
 
-    // Task for testing priority queue data structure.
-    status = xTaskCreate(vTaskTest_Priority_Queue,
-    					 "Test Priority_Queue",
-						 256,
-						 NULL,
-						 1,
-						 NULL);
-
-    // Task for testing time tagged task queue.
-    status = xTaskCreate(vTestTaskScheduler,
-    					 "Test time tagged task queue",
-						 256,
-						 NULL,
-						 1,
-						 NULL);
+//    // Task for testing priority queue data structure.
+//    status = xTaskCreate(vTaskTest_Priority_Queue,
+//    					 "Test Priority_Queue",
+//						 256,
+//						 NULL,
+//						 1,
+//						 NULL);
+//
+//    // Task for testing time tagged task queue.
+//    status = xTaskCreate(vTestTaskScheduler,
+//    					 "Test time tagged task queue",
+//						 256,
+//						 NULL,
+//						 1,
+//						 NULL);
 
     vTaskStartScheduler();
 
@@ -361,7 +361,7 @@ static void prvSetupHardware( void )
     init_spi();
     init_rtc();
     init_mram();
-    init_CAN(CAN_BAUD_RATE_1000K,NULL);
+    //init_CAN(CAN_BAUD_RATE_250K,NULL);
     adcs_init_driver();
 }
 
@@ -440,18 +440,21 @@ static void vTestCANRx(void *pvParameters)
 /*-----------------------------------------------------------*/
 static void vTestCspServer(void * pvParameters){
 
-	csp_conn_t * conn;
-	csp_packet_t * packet;
+	csp_conn_t * conn = NULL;
+	csp_packet_t * packet= NULL;
 	csp_socket_t * socket = csp_socket(0);
 	csp_bind(socket, CSP_ANY);
 	csp_listen(socket,4);
+
 	while(1) {
 
 			conn = csp_accept(socket, 1000);
+			if(conn){
 			packet = csp_read(conn,0);
 			//printf(“%S\r\n”, packet->data);
 			csp_buffer_free(packet);
 			csp_close(conn);
+			}
 	}
 }
 /*-----------------------------------------------------------*/
@@ -681,12 +684,12 @@ void initializeCSP(){
 
 
 	struct csp_can_config can_conf;
-	can_conf.bitrate=10000;
-	can_conf.clock_speed=10000;
+	can_conf.bitrate=250000;
+	can_conf.clock_speed=250000;
 	can_conf.ifc = "CAN";
 
-	/* Init buffer system with 1 packets of maximum 10 bytes each */
-	csp_buffer_init(1, 10);
+	/* Init buffer system with 5 packets of maximum 50 bytes each */
+	csp_buffer_init(5, 50);
 
 	/* Init CSP with address 1 */
 #ifdef SERVER
@@ -700,7 +703,7 @@ void initializeCSP(){
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
 
 	/* Setup default route to CAN interface */
-	csp_route_set(CSP_DEFAULT_ROUTE, &csp_if_can,CSP_NODE_MAC);
+	csp_rtable_set(16,0, &csp_if_can,0);
 
 	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
@@ -711,7 +714,7 @@ void initializeCSP(){
 static void vTestAdcsDriver(void * pvParameters){
 
 
-    uint8_t telemetryData [ADCS_TELEMETRY_TOTAL_SIZE] = {0xFF};
+    uint8_t telemetryData [ADCS_TELEMERTY_TOTAL_SIZE] = {0xFF};
     uint8_t telemetryData2 [ADCS_MAGNETORQUER_DATA_SIZE] = {0xFF};
     while(1){
 
@@ -737,18 +740,18 @@ static void vTestAdcsDriver(void * pvParameters){
         }
         //Verify the telemetry data here.
 
-        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X);
-        if(!result){
-            while(1);
-        }
-       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y);
-        if(!result){
-            while(1);
-        }
-        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z);
-        if(!result){
-            while(1);
-        }
+//        result = adcs_turn_on_magnetorquer(MAGNETORQUER_X);
+//        if(!result){
+//            while(1);
+//        }
+//       result = adcs_turn_on_magnetorquer(MAGNETORQUER_Y);
+//        if(!result){
+//            while(1);
+//        }
+//        result = adcs_turn_on_magnetorquer(MAGNETORQUER_Z);
+//        if(!result){
+//            while(1);
+//        }
 
         result = adcs_turn_off_magnetorquer(MAGNETORQUER_X);
         if(!result){

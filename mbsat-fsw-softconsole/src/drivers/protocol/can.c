@@ -48,7 +48,7 @@
 // VARIABLES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 QueueHandle_t can_rx_queue;
-QueueHandle_t *csp_rx_queue;
+QueueHandle_t csp_rx_queue;
 mss_can_instance_t g_can0;  // MSS CAN object instance.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,6 +143,9 @@ int CAN_transmit_message(CANMessage_t * message)
 // Interrupt handler for the CAN interrupt. Received CAN messages are placed into a Queue.
 __attribute__((__interrupt__)) void CAN_IRQHandler(void)
 {
+
+	//TODO: figure out how to know if a frame is for csp or not.
+	// Probably need to look at all possible csp can id to filter out.
     volatile uint32_t status = MSS_CAN_get_int_status(&g_can0);
     static CAN_MSGOBJECT rx_buf;
     static CANMessage_t q_buf;
@@ -159,8 +162,11 @@ __attribute__((__interrupt__)) void CAN_IRQHandler(void)
               q_buf.data[ix] = rx_buf.DATA[ix];
           }
 
-          xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
-          //xQueueSendToBackFromISR(*csp_rx_queue, &q_buf,NULL);
+          //xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+          BaseType_t res = xQueueSendToBackFromISR(csp_rx_queue, &q_buf,NULL);
+          if(res != pdPASS){
+        	  q_buf.id = 0;
+          }
         }
         MSS_CAN_clear_int_status(&g_can0, CAN_INT_RX_MSG); // This is needed to indicate the interrupt was serviced.
     }

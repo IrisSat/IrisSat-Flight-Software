@@ -60,7 +60,7 @@ typedef enum
 // GLOBALS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 extern QueueHandle_t can_rx_queue; // Global queue containing received CAN messages.
-extern QueueHandle_t * csp_rx_queue; // Global queue containing received CAN messages, for CSP.
+extern QueueHandle_t  csp_rx_queue; // Global queue containing received CAN messages, for CSP.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
