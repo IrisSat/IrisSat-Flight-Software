@@ -32,9 +32,9 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 13. Under the "Startup" tab, make sure that "Pre-run/Restart reset" is not checked.
 14. With the MSR board connected, click "Apply", and then "Debug" to run the software.
 
-##Software Dependancies:
+## Software Dependancies:
 
-###Cubesat Space Protocol (CSP)
+### Cubesat Space Protocol (CSP)
 
 This library is provides a communication protocol stack following the TCP/IP model. The MBSat flight software uses the CSP library for communication with the communication system on the satellite.
 
