@@ -16,6 +16,8 @@
 // History
 // 2019-03-28 by Tamkin Rahman
 // - Created.
+//	2020-04-29 by Joseph Howarth
+//	- Changed CANMessage_t to remove extended identifier since all messages are extended.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,9 +42,14 @@
 typedef struct
 {
     uint32_t id;                         // Message ID.
-    uint8_t  extended;                   // 1 if extended, 0 otherwise.
     uint8_t  dlc;                        // Data length code (i.e. number of bytes).
-    uint8_t  data[MAX_CAN_DATA_LENGTH];  // Array containing the data bytes (up to 8).
+
+	/**< Frame Data - 0 to 8 bytes */
+	union __attribute__((aligned(8))) {
+		uint8_t data[8];
+		uint16_t data16[4];
+		uint32_t data32[2];
+	};
 } CANMessage_t;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

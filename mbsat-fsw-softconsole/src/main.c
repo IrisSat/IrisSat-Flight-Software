@@ -238,7 +238,7 @@ int main( void )
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
 
-   initializeCSP();
+
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
 //                         1000,
@@ -409,7 +409,6 @@ static void vTestCANTx(void *pvParameters)
     const TickType_t delay = pdMS_TO_TICKS(100);
     CANMessage_t msg = {
                         0x321,
-                        1,
                         8,
                         {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08}
                      };
@@ -440,6 +439,28 @@ static void vTestCANRx(void *pvParameters)
 /*-----------------------------------------------------------*/
 static void vTestCspServer(void * pvParameters){
 
+	struct csp_can_config can_conf;
+	can_conf.bitrate=250000;
+	can_conf.clock_speed=250000;
+	can_conf.ifc = "CAN";
+
+	/* Init buffer system with 5 packets of maximum 256 bytes each */
+	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
+
+	/* Init CSP with address 0 */
+	csp_init(0);
+
+	/* Init the CAN interface with hardware filtering */
+	csp_can_init(CSP_CAN_MASKED, &can_conf);
+
+	/* Setup default route to CAN interface */
+	csp_rtable_set(CSP_DEFAULT_ROUTE,0, &csp_if_can,CSP_NODE_MAC);
+
+	size_t freSpace = xPortGetFreeHeapSize();
+	/* Start router task with 100 word stack, OS task priority 1 */
+	csp_route_start_task(100, 1);
+
+
 	csp_conn_t * conn = NULL;
 	csp_packet_t * packet= NULL;
 	csp_socket_t * socket = csp_socket(0);
@@ -450,26 +471,48 @@ static void vTestCspServer(void * pvParameters){
 
 			conn = csp_accept(socket, 1000);
 			if(conn){
-			packet = csp_read(conn,0);
-			//printf(“%S\r\n”, packet->data);
-			csp_buffer_free(packet);
-			csp_close(conn);
+				packet = csp_read(conn,0);
+				//printf(“%S\r\n”, packet->data);
+				csp_buffer_free(packet);
+				csp_close(conn);
 			}
 	}
 }
 /*-----------------------------------------------------------*/
 static void vTestCspClient(void * pvParameters){
 
+	struct csp_can_config can_conf;
+	can_conf.bitrate=250000;
+	can_conf.clock_speed=250000;
+	can_conf.ifc = "CAN";
+
+	/* Init buffer system with 5 packets of maximum 256 bytes each */
+	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
+
+	/* Init CSP with address 1 */
+	csp_init(1);
+
+	/* Init the CAN interface with hardware filtering */
+	csp_can_init(CSP_CAN_MASKED, &can_conf);
+
+	/* Setup address 0 to route to CAN interface */
+	csp_rtable_set(0,0, &csp_if_can,0);
+
+	size_t freSpace = xPortGetFreeHeapSize();
+	/* Start router task with 100 word stack, OS task priority 1 */
+	csp_route_start_task(100, 1);
+
+
 	while(1){
-	csp_conn_t * conn;
-	csp_packet_t * packet;
-	conn = csp_connect(2,0,4,1000,0);
-	packet = csp_buffer_get(sizeof(csp_packet_t));
-	sprintf(packet->data,"Hello World");
-	packet->length=strlen("Hello World");
-	csp_send(conn,packet,0);
-	csp_close(conn);
-	vTaskDelay(1000);
+		csp_conn_t * conn;
+		csp_packet_t * packet;
+		conn = csp_connect(2,0,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
+		packet = csp_buffer_get(sizeof("Hello World")); // Get a buffer large enough to fit our data. Max size is 256.
+		sprintf(packet->data,"Hello World");
+		packet->length=strlen("Hello World");
+		csp_send(conn,packet,0);
+		csp_close(conn);
+		vTaskDelay(1000);
 	}
 }
 /*-----------------------------------------------------------*/
@@ -683,31 +726,7 @@ void initializeCSP(){
 
 
 
-	struct csp_can_config can_conf;
-	can_conf.bitrate=250000;
-	can_conf.clock_speed=250000;
-	can_conf.ifc = "CAN";
 
-	/* Init buffer system with 5 packets of maximum 50 bytes each */
-	csp_buffer_init(5, 50);
-
-	/* Init CSP with address 1 */
-#ifdef SERVER
-	csp_init(0);
-#endif
-
-#ifdef CLIENT
-	csp_init(1);
-#endif
-	/* Init the CAN interface with hardware filtering */
-	csp_can_init(CSP_CAN_MASKED, &can_conf);
-
-	/* Setup default route to CAN interface */
-	csp_rtable_set(16,0, &csp_if_can,0);
-
-	size_t freSpace = xPortGetFreeHeapSize();
-	/* Start router task with 100 word stack, OS task priority 1 */
-	csp_route_start_task(100, 1);
 
 }
 

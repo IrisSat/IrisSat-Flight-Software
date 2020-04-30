@@ -48,7 +48,7 @@ int can_send(can_id_t id, uint8_t * data, uint8_t dlc){
 	#define CAN_EFF_FLAG  1
 	/* Copy identifier */
 	frame.id = id | CAN_EFF_FLAG; //Use Extended Frame Format flag.
-	frame.extended = 1;
+
 
 	/* Copy data to frame */
 	for (i = 0; i < dlc; i++)
