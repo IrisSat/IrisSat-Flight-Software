@@ -1,15 +1,15 @@
 //--------------------------------------------------------------------
-// Created by Microsemi SmartDesign Mon Mar 30 00:06:50 2020
+// Created by Microsemi SmartDesign Fri May  1 16:22:33 2020
 // Parameters for CoreResetP
 //--------------------------------------------------------------------
 
 
 parameter DDR_WAIT = 200;
-parameter DEVICE_090 = 
+parameter DEVICE_090 = 0;
 parameter DEVICE_VOLTAGE = 2;
 parameter ENABLE_SOFT_RESETS = 0;
 parameter EXT_RESET_CFG = 0;
-parameter FDDR_IN_USE = 0;
+parameter FDDR_IN_USE = 1;
 parameter MDDR_IN_USE = 0;
 parameter SDIF0_IN_USE = 0;
 parameter SDIF0_PCIE = 0;

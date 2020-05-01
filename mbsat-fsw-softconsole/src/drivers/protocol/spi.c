@@ -29,7 +29,7 @@
 
 #include <string.h>	//For memcpy.
 
-#include "cdh_tsat5_system_sb_hw_platform.h" // Contains the address of the CORE_SPI instance for the driver.
+#include "MSS_C0_hw_platform.h" // Contains the address of the CORE_SPI instance for the driver.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -48,8 +48,8 @@ spi_instance_t core_spi[NUM_SPI_INSTANCES]; // Initialized by CoreSPI initializa
 SemaphoreHandle_t core_lock[NUM_SPI_INSTANCES]; // Semaphores for the mutex locks. Seems to be that for short operations (e.g. even 80 ms), a mutex is good: http://www.openrtos.net/FreeRTOS_Support_Forum_Archive/December_2014/freertos_FreeRTOS_FatFs_Works_only_with_taskENTER_CRITICAL_5dc853ffj.html
 
 //The base address for each CoreSPI peripheral.
-addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_0_0,
-                                                CORESPI1_1_0 };
+addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_C0_0,
+                                                CORESPI_C1_0 };
 //The length of each CoreSPI fifo.
 uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8};

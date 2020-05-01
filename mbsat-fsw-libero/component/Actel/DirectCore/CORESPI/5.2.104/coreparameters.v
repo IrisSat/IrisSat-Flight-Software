@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// Created by Microsemi SmartDesign Mon Mar 30 00:06:50 2020
+// Created by Microsemi SmartDesign Fri May  1 16:41:11 2020
 // Parameters for CORESPI
 //--------------------------------------------------------------------
 
@@ -16,4 +16,4 @@ parameter CFG_TI_JMB_FRAMES = 0;
 parameter CFG_TI_NSC_CUSTOM = 0;
 parameter CFG_TI_NSC_FRC = 0;
 parameter HDL_license = "U";
-parameter testbench = "None";
+parameter testbench = "User";
