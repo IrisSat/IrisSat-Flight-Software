@@ -75,6 +75,7 @@ def options(ctx):
     gr.add_option('--with-rtable', metavar='TABLE', default='static', help='Set routing table type')
     gr.add_option('--with-connection-so', metavar='CSP_SO', type=int, default='0x0000', help='Set outgoing connection socket options, see csp.h for valid values')
     gr.add_option('--with-bufalign', metavar='BYTES', type=int, help='Set buffer alignment')
+    gr.add_option('--cflags',metavar='CFLAGS', default = '', help='GCC flags')
 
 def configure(ctx):
     # Validate OS
@@ -108,7 +109,8 @@ def configure(ctx):
 
     # Setup CFLAGS
     if (len(ctx.env.CFLAGS) == 0):
-        ctx.env.prepend_value('CFLAGS', ['-Os','-Wall', '-g', '-std=gnu99', '-mcpu=cortex-m3','-mthumb'])#Changed -Os to O0, added -mcpu and -mthumb.
+        flags = ctx.options.cflags.split()+['-Wall', '-d', '-std=gnu99', '-mcpu=cortex-m3','-mthumb']
+        ctx.env.prepend_value('CFLAGS', flags)#Changed -Os to O0, added -mcpu and -mthumb.
 		#ctx.env.prepend_value('CFLAGS', ['-Os','-Wall', '-g', '-std=gnu99'])
 
     # Setup extra includes
