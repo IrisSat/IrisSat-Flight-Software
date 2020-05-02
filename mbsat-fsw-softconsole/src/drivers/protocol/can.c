@@ -48,21 +48,22 @@
 // VARIABLES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 QueueHandle_t can_rx_queue;
-
+QueueHandle_t csp_rx_queue;
 mss_can_instance_t g_can0;  // MSS CAN object instance.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-int init_CAN(CANBaudRate baudrate)
+int init_CAN(CANBaudRate baudrate, QueueHandle_t *csp_rx_queue_handle)
 {
     int rc = 1;
+
 
     //---------------------------------------------------------------------
     // Initialize the CAN receive queue.
     //---------------------------------------------------------------------
     can_rx_queue = xQueueCreate( QUEUE_LENGTH, ITEM_SIZE);
-
+    csp_rx_queue = csp_rx_queue_handle;
     if (can_rx_queue == NULL)
     {
         rc = 0;
@@ -116,17 +117,15 @@ int CAN_transmit_message(CANMessage_t * message)
     }
 
     pMsg->DLC = message->dlc;
-    pMsg->L = ((0 << 20) | 0x00080000);
 
-    pMsg->IDE = message->extended & 0x01;
-    if (message->extended)
-    {
-        pMsg->ID = message->id & CAN_EXTENDED_ID_MASK;
-    }
-    else
-    {
-        pMsg->ID = message->id & CAN_STANDARD_ID_MASK;
-    }
+    //There is no way for a RTR CAN message to be requested by the application
+    //code, so hard code as a normal frame.
+    pMsg->RTR = 0;
+    pMsg->IDE = 1;
+
+     pMsg->ID = message->id & CAN_EXTENDED_ID_MASK;
+
+
 
     MSS_CAN_set_id(pMsg);
 
@@ -142,6 +141,9 @@ int CAN_transmit_message(CANMessage_t * message)
 // Interrupt handler for the CAN interrupt. Received CAN messages are placed into a Queue.
 __attribute__((__interrupt__)) void CAN_IRQHandler(void)
 {
+
+	//TODO: figure out how to know if a frame is for csp or not.
+	// Probably need to look at all possible csp can id to filter out.
     volatile uint32_t status = MSS_CAN_get_int_status(&g_can0);
     static CAN_MSGOBJECT rx_buf;
     static CANMessage_t q_buf;
@@ -151,14 +153,17 @@ __attribute__((__interrupt__)) void CAN_IRQHandler(void)
         while (CAN_VALID_MSG == MSS_CAN_get_message(&g_can0, &rx_buf))
         {
           q_buf.id = MSS_CAN_get_id(&rx_buf);
-          q_buf.extended = rx_buf.IDE;
           q_buf.dlc = rx_buf.DLC;
           for (int ix = 0; ix < q_buf.dlc; ix++)
           {
               q_buf.data[ix] = rx_buf.DATA[ix];
           }
 
-          xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+          //xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+
+          //NOTE: The queue (and CSP) use an internal can_frame_t but we are sending a CANMessage_t.
+          // Make sure these are the same otherwise CSP will interpret the messages wrong.
+          BaseType_t res = xQueueSendToBackFromISR(csp_rx_queue, &q_buf,NULL);
         }
         MSS_CAN_clear_int_status(&g_can0, CAN_INT_RX_MSG); // This is needed to indicate the interrupt was serviced.
     }

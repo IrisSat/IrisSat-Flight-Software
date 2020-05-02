@@ -31,6 +31,7 @@
 // 2020-01-03 by Joseph Howarth
 // - Add test code for ADCS driver.
 
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -119,6 +120,10 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Library includes */
+#include "csp.h"
+#include "csp/interfaces/csp_if_can.h"
+
 /* Kernel includes. */
 #include "FreeRTOS.h"
 #include "queue.h"
@@ -141,8 +146,12 @@
 #include "priority_queue.h"
 #include "adcs_driver.h"
 #include "filesystem_driver.h"
-
 #include "tests.h"
+
+
+#define SERVER
+//#define CLIENT
+
 
 
 /* External variables */
@@ -152,6 +161,9 @@ extern TaskHandle_t xUART0RxTaskToNotify;
  * Set up the hardware ready to run this demo.
  */
 static void prvSetupHardware( void );
+
+static void vTestCspServer(void * pvParameters);
+static void vTestCspClient(void * pvParameters);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -167,10 +179,13 @@ full information - including hardware setup requirements. */
 
 int main( void )
 {
+
+
     BaseType_t status;
 
     /* Prepare the hardware to run this demo. */
     prvSetupHardware();
+
 
     // Create LED spinning task
     status = xTaskCreate(    vTaskSpinLEDs,              // The task function that spins the LEDs
@@ -187,6 +202,7 @@ int main( void )
                             (void *) &g_mss_uart0,       // Task parameter is the UART instance used by the task
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
+
 
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
@@ -211,13 +227,34 @@ int main( void )
 //                         NULL,
 //                         1,
 //                         NULL);
-//
+////
 //    status = xTaskCreate(vTestCANRx,
 //                         "Test CAN Rx",
 //                         configMINIMAL_STACK_SIZE,
 //                         NULL,
 //                         1,
 //                         NULL);
+
+#ifdef SERVER
+    status = xTaskCreate(vTestCspServer,
+                         "Test CSP Server",
+                         160,
+                         NULL,
+                         1,
+                         NULL);
+
+#endif
+
+#ifdef CLIENT
+    status = xTaskCreate(vTestCspClient,
+                         "Test CSP Client",
+                         160,
+                         NULL,
+                         1,
+                         NULL);
+
+
+#endif
 //
     status = xTaskCreate(vTestWD,
                          "Test WD",
@@ -226,12 +263,12 @@ int main( void )
                          1,
                          NULL);
 
-//    status = xTaskCreate(vTestFS,
-//                         "Test FS",
-//                         1000,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestFS,
+                         "Test FS",
+                         1000,
+                         NULL,
+                         1,
+                         NULL);
 
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -298,19 +335,93 @@ static void prvSetupHardware( void )
     init_spi();
     init_rtc();
     init_mram();
-    init_CAN(CAN_BAUD_RATE_1000K);
+    //init_CAN(CAN_BAUD_RATE_250K,NULL);
     adcs_init_driver();
-
 
 }
 
 
-/*-----------------------------------------------------------*/
-
 
 /*-----------------------------------------------------------*/
+static void vTestCspServer(void * pvParameters){
+
+	struct csp_can_config can_conf;
+	can_conf.bitrate=250000;
+	can_conf.clock_speed=250000;
+	can_conf.ifc = "CAN";
+
+	/* Init buffer system with 5 packets of maximum 256 bytes each */
+	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
+
+	/* Init CSP with address 0 */
+	csp_init(0);
+
+	/* Init the CAN interface with hardware filtering */
+	csp_can_init(CSP_CAN_MASKED, &can_conf);
+
+	/* Setup default route to CAN interface */
+	csp_rtable_set(CSP_DEFAULT_ROUTE,0, &csp_if_can,CSP_NODE_MAC);
+
+	size_t freSpace = xPortGetFreeHeapSize();
+	/* Start router task with 100 word stack, OS task priority 1 */
+	csp_route_start_task(100, 1);
 
 
+	csp_conn_t * conn = NULL;
+	csp_packet_t * packet= NULL;
+	csp_socket_t * socket = csp_socket(0);
+	csp_bind(socket, CSP_ANY);
+	csp_listen(socket,4);
+
+	while(1) {
+
+			conn = csp_accept(socket, 1000);
+			if(conn){
+				packet = csp_read(conn,0);
+				//prvUARTSend(&g_mss_uart0, packet->data, packet->length);
+				//printf(“%S\r\n”, packet->data);
+				csp_buffer_free(packet);
+				csp_close(conn);
+			}
+	}
+}
+/*-----------------------------------------------------------*/
+static void vTestCspClient(void * pvParameters){
+
+	struct csp_can_config can_conf;
+	can_conf.bitrate=250000;
+	can_conf.clock_speed=250000;
+	can_conf.ifc = "CAN";
+
+	/* Init buffer system with 5 packets of maximum 256 bytes each */
+	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
+
+	/* Init CSP with address 1 */
+	csp_init(1);
+
+	/* Init the CAN interface with hardware filtering */
+	csp_can_init(CSP_CAN_MASKED, &can_conf);
+
+	/* Setup address 0 to route to CAN interface */
+	csp_rtable_set(0,0, &csp_if_can,0);
+
+	size_t freSpace = xPortGetFreeHeapSize();
+	/* Start router task with 100 word stack, OS task priority 1 */
+	csp_route_start_task(100, 1);
+
+
+	while(1){
+		csp_conn_t * conn;
+		csp_packet_t * packet;
+		conn = csp_connect(2,0,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
+		packet = csp_buffer_get(sizeof("Hello World")); // Get a buffer large enough to fit our data. Max size is 256.
+		sprintf(packet->data,"Hello World");
+		packet->length=strlen("Hello World");
+		csp_send(conn,packet,0);
+		csp_close(conn);
+		vTaskDelay(10000);
+	}
+}
 
 /*-----------------------------------------------------------*/
 

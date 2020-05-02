@@ -37,6 +37,53 @@
     <peripheral>
       <name>CORESPI_C0_0</name>
       <baseAddress>0x50000000%0x30000000</baseAddress>
+      <addressBlock>
+        <offset>0x00000000</offset>
+        <size>0x100</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <registers>
+        <register>
+          <name>DAT</name>
+          <description>SPI Data Register</description>
+          <addressOffset>0x00</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <fields>
+          </fields>
+        </register>
+        <register>
+          <name>CTRL1</name>
+          <description>Control Register 1</description>
+          <addressOffset>0x04</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <fields>
+          </fields>
+        </register>
+        <register>
+          <name>CTRL2</name>
+          <description>Control Register 2 / Status Register</description>
+          <addressOffset>0x08</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <fields>
+          </fields>
+        </register>
+        <register>
+          <name>SLVSEL</name>
+          <description>SPI Data Register</description>
+          <addressOffset>0x0C</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <fields>
+          </fields>
+        </register>
+      </registers>
     </peripheral>
     <peripheral>
       <name>CORESPI_C1_0</name>

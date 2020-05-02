@@ -32,6 +32,15 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 13. Under the "Startup" tab, make sure that "Pre-run/Restart reset" is not checked.
 14. With the MSR board connected, click "Apply", and then "Debug" to run the software.
 
+## Software Dependancies:
+
+### Cubesat Space Protocol (CSP)
+
+This library is provides a communication protocol stack following the TCP/IP model. The MBSat flight software uses the CSP library for communication with the communication system on the satellite.
+
+A binary is included in the project, along with a modified build script for use if the library must be rebuilt.
+Instructions for building the library can be found in the Libraries folder of the mbsat-fsw-softconsole folder.
+
 
 ## Useful links:
 1. Maker Board IoT Demo project: https://www.digikey.com/eewiki/display/microcontroller/Getting+Started+with+the+Microsemi+SmartFusion+2+Maker-Board
