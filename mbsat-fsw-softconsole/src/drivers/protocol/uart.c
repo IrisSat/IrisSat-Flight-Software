@@ -179,7 +179,7 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 }
 
 
-static void prvUARTSend(mss_uart_instance_t *pxUART, const uint8_t *pcBuffer, size_t xBufferLength)
+ void prvUARTSend(mss_uart_instance_t *pxUART, const uint8_t *pcBuffer, size_t xBufferLength)
 {
 	const TickType_t xVeryShortDelay = 2UL;
 

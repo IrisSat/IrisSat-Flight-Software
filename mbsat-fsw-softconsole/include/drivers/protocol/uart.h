@@ -29,6 +29,6 @@ void vInitializeUARTs(uint32_t baud0);
 void vTaskUARTBridge(void *pvParameters);
 static void prvUARTRxNotificationHandler( mss_uart_instance_t *pxUART );
 static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes);
-static void prvUARTSend(mss_uart_instance_t *pxUART, const uint8_t *pcBuffer, size_t xBufferLength);
+ void prvUARTSend(mss_uart_instance_t *pxUART, const uint8_t *pcBuffer, size_t xBufferLength);
 
 #endif /* RTOSDEMO_INCLUDE_UART_H_ */
