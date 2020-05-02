@@ -57,7 +57,7 @@ static void mr2xh40_single_cmd(
 void mr2xh40_init(MRAMInstance_t * mram)
 {
 	// Note that the datasheet specifies up to a 40 MHz clock rate.
-	spi_configure_slave(mram->core, mram->slave, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
+	//spi_configure_slave(mram->core, mram->slave, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
 	spi_configure_gpio_ss(mram->cs_pin);
 }
 

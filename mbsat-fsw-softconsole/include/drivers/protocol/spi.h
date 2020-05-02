@@ -46,6 +46,7 @@
 typedef enum
 {
     CORE_SPI_0,
+    CORE_SPI_1,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
 
@@ -60,6 +61,12 @@ extern SemaphoreHandle_t core_lock[NUM_SPI_INSTANCES]; // Semaphores for the mut
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
 //  Initialize the SPI cores.
+//	Note:	The fifo length or each CoreSPI peripheral can only be changed in the
+// 			Libero project. The fifo lengths must be updated.
+//  	   	in the spi.c file if changed.
+//
+//	TODO: Check if clock speed can be updated through software. There is no
+//        function in the driver but CoreSPI user guide says this is possible.
 //
 // Returns:
 //  1 on success, 0 on failure.
@@ -73,7 +80,7 @@ int init_spi();
 // Returns:
 //  The object for the given CoreSPI instance.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-SPI_instance_t * get_spi_instance(
+spi_instance_t * get_spi_instance(
     CoreSPIInstance_t core // The SPI core (master) to fetch.
     );
 
@@ -81,13 +88,13 @@ SPI_instance_t * get_spi_instance(
 // Description:
 //  Configure a slave instance. If a slave is not configured, a default configuration is used.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void spi_configure_slave(
-    CoreSPIInstance_t core,             // The SPI core (master) to use.
-    SPI_slave_t slave,                  // The SPI slave to configure.
-    SPI_protocol_mode_t protocol_mode,  // The SPI protocol mode.
-    SPI_pclk_div_t clk_rate,            // The SPI clock rate.
-    SPI_order_t data_xfer_order         // The SPI data transfer order (MSB or LSB).
-    );
+//void spi_configure_slave(
+//    CoreSPIInstance_t core,             // The SPI core (master) to use.
+//    spi_slave_t slave,                  // The SPI slave to configure.
+//    SPI_protocol_mode_t protocol_mode,  // The SPI protocol mode.
+//    SPI_pclk_div_t clk_rate,            // The SPI clock rate.
+//    SPI_order_t data_xfer_order         // The SPI data transfer order (MSB or LSB).
+//    );
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
@@ -104,7 +111,7 @@ void spi_configure_gpio_ss(mss_gpio_id_t pin);
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_write_with_toggle(
 	CoreSPIInstance_t core,  // The SPI core used.
-	SPI_slave_t slave,       // The SPI slave configuration to use.
+	spi_slave_t slave,       // The SPI slave configuration to use.
 	uint8_t * cmd_buffer,    // The buffer containing the command.
 	size_t cmd_size,         // The size of the command buffer.
 	uint8_t * wr_buffer,     // The buffer containing the data to write.
@@ -118,7 +125,7 @@ void spi_transaction_block_write_with_toggle(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_read_with_toggle(
 	CoreSPIInstance_t core,  // The SPI core used.
-	SPI_slave_t slave,       // The SPI slave configuration to use.
+	spi_slave_t slave,       // The SPI slave configuration to use.
 	uint8_t * cmd_buffer,    // The buffer containing the command.
 	size_t cmd_size,         // The size of the command buffer.
 	uint8_t * rd_buffer,     // The buffer containing the data to write.
@@ -132,12 +139,12 @@ void spi_transaction_block_read_with_toggle(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_write_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
-    SPI_slave_t slave,       // The SPI slave configuration to use.
+    spi_slave_t slave,       // The SPI slave configuration to use.
 	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
-    size_t cmd_size,         // The size of the command buffer.
+    uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * wr_buffer,     // The buffer containing the data to write.
-	size_t wr_size           // The size of the write buffer.
+	uint16_t wr_size           // The size of the write buffer.
     );
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -147,12 +154,12 @@ void spi_transaction_block_write_without_toggle(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_read_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
-    SPI_slave_t slave,       // The SPI slave configuration to use.
+    spi_slave_t slave,       // The SPI slave configuration to use.
 	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
-    size_t cmd_size,         // The size of the command buffer.
+    uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * rd_buffer,     // The buffer containing the data to write.
-	size_t rd_size           // The size of the write buffer.
+	uint16_t rd_size           // The size of the write buffer.
     );
 
 #endif /* INCLUDE_SPI_H_ */
