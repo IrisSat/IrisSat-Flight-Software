@@ -1,3 +1,5 @@
+#ifndef FS_DRIVER_H
+#define FS_DRIVER_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // MBSat-1
 //
@@ -276,3 +278,5 @@ lfs_ssize_t fs_size();
 //
 // Returns a negative error code on failure.
 int fs_traverse( int (*cb)(void*, lfs_block_t), void *data);
+
+#endif
