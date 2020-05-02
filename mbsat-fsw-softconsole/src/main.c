@@ -263,12 +263,12 @@ int main( void )
                          1,
                          NULL);
 
-//    status = xTaskCreate(vTestFS,
-//                         "Test FS",
-//                         1000,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestFS,
+                         "Test FS",
+                         1000,
+                         NULL,
+                         1,
+                         NULL);
 
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -378,6 +378,7 @@ static void vTestCspServer(void * pvParameters){
 			conn = csp_accept(socket, 1000);
 			if(conn){
 				packet = csp_read(conn,0);
+				//prvUARTSend(&g_mss_uart0, packet->data, packet->length);
 				//printf(“%S\r\n”, packet->data);
 				csp_buffer_free(packet);
 				csp_close(conn);
@@ -418,7 +419,7 @@ static void vTestCspClient(void * pvParameters){
 		packet->length=strlen("Hello World");
 		csp_send(conn,packet,0);
 		csp_close(conn);
-		vTaskDelay(1000);
+		vTaskDelay(10000);
 	}
 }
 

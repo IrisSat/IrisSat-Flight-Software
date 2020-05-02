@@ -121,7 +121,7 @@ int CAN_transmit_message(CANMessage_t * message)
     //There is no way for a RTR CAN message to be requested by the application
     //code, so hard code as a normal frame.
     pMsg->RTR = 0;
-
+    pMsg->IDE = 1;
 
      pMsg->ID = message->id & CAN_EXTENDED_ID_MASK;
 
