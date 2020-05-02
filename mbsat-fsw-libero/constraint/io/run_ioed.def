@@ -1,8 +1,8 @@
 data HELP_TYPE_DES 2
-data DESIGN cdh_tsat5_system_sb
-data HPATH 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb'
-data CPATH 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/constraint/io'
-data CDIR 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/constraint'
+data DESIGN MSS_C0
+data HPATH 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0'
+data CPATH 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/constraint/io'
+data CDIR 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/constraint'
 data NLV_HIDE_OPTION_DLG 1
 data REGION_DEFCOLOR_EMPTY 2143322112
 data REGION_DEFCOLOR_INCLUSIVE 2147442270
@@ -22,18 +22,19 @@ data VCCI_2.5_VOLTR COM
 data VCCI_3.3_VOLTR COM
 data FLOW_TYPE NEW
 data PLANNER_IOMODE 1
-data AFL 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb/cdh_tsat5_system_sb.afl'
-data ADL 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb/cdh_tsat5_system_sb.adl'
-data LOC 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb/cdh_tsat5_system_sb.loc'
-data SEG 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb/cdh_tsat5_system_sb.seg'
-data NMAT_PDC 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/designer/cdh_tsat5_system_sb/cdh_tsat5_system_sb.nmatinit.pdc'
+data AFL 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0/MSS_C0.afl'
+data ADL 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0/MSS_C0.adl'
+data LOC 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0/MSS_C0.loc'
+data SEG 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0/MSS_C0.seg'
+data NMAT_PDC 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/designer/MSS_C0/MSS_C0.nmatinit.pdc'
 
-data IO_PDC_0 'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/constraint/io/user.pdc'
-data TARGET_IOPDC  'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/constraint/io/user.pdc'
-data TARGET_FPPDC  'C:/Users/Files/MBSAT/Test4/ManitobaSat-Flight-Software/mbsat-fsw-libero/constraint/fp/user.pdc'
+data IO_PDC_0 'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/constraint/io/user.pdc'
+data TARGET_IOPDC  'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/constraint/io/user.pdc'
+data TARGET_FPPDC  'C:/Users/howarth3-INS/Desktop/mbsat-fsw-libero/constraint/fp/user.pdc'
+data TARGET_DEVICES_FOR_MIGRATION 'PA4M1000_N '
 data RESTRICTPROBEPINS 1
 data RESTRICTSPIPINS 0
 data GDEV_SKIP_UNASSIGN_CMP_CHECK    1 
 data HIDE_MIGRATION_PINS_MENU        1 
-data IO_DEFT_STD LVCMOS25
+data IO_DEFT_STD LVCMOS33
 

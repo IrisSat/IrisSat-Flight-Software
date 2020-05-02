@@ -181,12 +181,12 @@ int main( void )
                             NULL);                       // Task handle is not used
 
     // Create UART0 RX Task
-//    status = xTaskCreate(    vTaskUARTBridge,            // The task function that handles all UART RX events
-//                            "UART0 Receiver",            // Text name for debugging
-//                            1000,                        // Size of the stack allocated for this task
-//                            (void *) &g_mss_uart0,       // Task parameter is the UART instance used by the task
-//                            2,                           // Task runs at priority 2
-//                            &xUART0RxTaskToNotify);      // Task handle for task notification
+    status = xTaskCreate(    vTaskUARTBridge,            // The task function that handles all UART RX events
+                            "UART0 Receiver",            // Text name for debugging
+                            1000,                        // Size of the stack allocated for this task
+                            (void *) &g_mss_uart0,       // Task parameter is the UART instance used by the task
+                            2,                           // Task runs at priority 2
+                            &xUART0RxTaskToNotify);      // Task handle for task notification
 
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
@@ -226,12 +226,12 @@ int main( void )
                          1,
                          NULL);
 
-    status = xTaskCreate(vTestFS,
-                         "Test FS",
-                         1000,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestFS,
+//                         "Test FS",
+//                         1000,
+//                         NULL,
+//                         1,
+//                         NULL);
 
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -246,7 +246,7 @@ int main( void )
     //      while loop "while ( transfer_idx < transfer_size )" on line 134 in "SPI_block_read". The
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
-
+//
 //    status = xTaskCreate(vTestMRAM,
 //                         "Test MRAM",
 //                         512,
@@ -292,7 +292,7 @@ static void prvSetupHardware( void )
 
     /* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
      * UART 0 set to 115200 to connect to terminal */
-//    vInitializeUARTs(MSS_UART_115200_BAUD);
+    vInitializeUARTs(MSS_UART_115200_BAUD);
 
     init_WD();
     init_spi();
