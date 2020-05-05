@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri May  1 16:42:36 2020
+// Created by SmartDesign Mon May  4 20:30:19 2020
 // Version: v12.1 12.600.0.14
 //////////////////////////////////////////////////////////////////////
 
@@ -22,6 +22,8 @@ module MSS_C0(
     GPIO_5_M2F,
     GPIO_6_M2F,
     GPIO_7_M2F,
+    GPIO_8_M2F,
+    GPIO_9_M2F,
     MMUART_0_TXD_M2F,
     SPISCLKO,
     SPISCLKO_0,
@@ -54,6 +56,8 @@ output GPIO_3_M2F;
 output GPIO_5_M2F;
 output GPIO_6_M2F;
 output GPIO_7_M2F;
+output GPIO_8_M2F;
+output GPIO_9_M2F;
 output MMUART_0_TXD_M2F;
 output SPISCLKO;
 output SPISCLKO_0;
@@ -98,6 +102,8 @@ wire          GPIO_3_M2F_net_0;
 wire          GPIO_5_M2F_net_0;
 wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
+wire          GPIO_8_M2F_net_0;
+wire          GPIO_9_M2F_net_0;
 wire          MMUART_0_RXD_F2M;
 wire          MMUART_0_TXD_M2F_net_0;
 wire   [31:0] MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR;
@@ -142,6 +148,8 @@ wire          SPISDO_net_1;
 wire          SPISS_0_net_1;
 wire          SPISCLKO_0_net_1;
 wire          SPISDO_0_net_1;
+wire          GPIO_9_M2F_net_1;
+wire          GPIO_8_M2F_net_1;
 wire   [1:1]  SPISS_slice_0;
 wire   [2:2]  SPISS_slice_1;
 wire   [3:3]  SPISS_slice_2;
@@ -177,9 +185,9 @@ wire   [31:8] CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PRDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA;
-wire   [31:0] CoreAPB3_C0_0_APBmslave0_PWDATA;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1;
+wire   [31:0] CoreAPB3_C0_0_APBmslave0_PWDATA;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA;
@@ -225,6 +233,10 @@ assign SPISCLKO_0_net_1       = SPISCLKO_0_net_0;
 assign SPISCLKO_0             = SPISCLKO_0_net_1;
 assign SPISDO_0_net_1         = SPISDO_0_net_0;
 assign SPISDO_0               = SPISDO_0_net_1;
+assign GPIO_9_M2F_net_1       = GPIO_9_M2F_net_0;
+assign GPIO_9_M2F             = GPIO_9_M2F_net_1;
+assign GPIO_8_M2F_net_1       = GPIO_8_M2F_net_0;
+assign GPIO_8_M2F             = GPIO_8_M2F_net_1;
 //--------------------------------------------------------------------
 // Slices assignments
 //--------------------------------------------------------------------
@@ -275,27 +287,27 @@ assign CoreAPB3_C0_0_APBmslave1_PRDATA_0 = { CoreAPB3_C0_0_APBmslave1_PRDATA_0_3
 //--------CoreAPB3_C0
 CoreAPB3_C0 CoreAPB3_C0_0(
         // Inputs
-        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
         .PSEL      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSELx ),
         .PENABLE   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PENABLE ),
         .PWRITE    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWRITE ),
-        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
-        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
         .PREADYS0  ( CoreAPB3_C0_0_APBmslave0_PREADY ),
         .PSLVERRS0 ( CoreAPB3_C0_0_APBmslave0_PSLVERR ),
-        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
         .PREADYS1  ( CoreAPB3_C0_0_APBmslave1_PREADY ),
         .PSLVERRS1 ( CoreAPB3_C0_0_APBmslave1_PSLVERR ),
+        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
+        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
         // Outputs
-        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
         .PREADY    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PREADY ),
         .PSLVERR   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSLVERR ),
-        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
         .PSELS0    ( CoreAPB3_C0_0_APBmslave0_PSELx ),
         .PENABLES  ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
         .PWRITES   ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
-        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ),
-        .PSELS1    ( CoreAPB3_C0_0_APBmslave1_PSELx ) 
+        .PSELS1    ( CoreAPB3_C0_0_APBmslave1_PSELx ),
+        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
+        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
+        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ) 
         );
 
 //--------CoreResetP_C0
@@ -327,23 +339,23 @@ CORESPI_C0 CORESPI_C0_0(
         .SPISSI     ( GND_net ),
         .SPISDI     ( SPISDI ),
         .SPICLKI    ( GND_net ),
-        .PADDR      ( CoreAPB3_C0_0_APBmslave0_PADDR_0 ),
         .PSEL       ( CoreAPB3_C0_0_APBmslave0_PSELx ),
         .PENABLE    ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
         .PWRITE     ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
+        .PADDR      ( CoreAPB3_C0_0_APBmslave0_PADDR_0 ),
         .PWDATA     ( CoreAPB3_C0_0_APBmslave0_PWDATA_0 ),
         // Outputs
         .SPIINT     ( CORESPI_C0_0_SPIINT ),
         .SPIRXAVAIL ( CORESPI_C0_0_SPIRXAVAIL ),
         .SPITXRFM   ( CORESPI_C0_0_SPITXRFM ),
-        .SPISS      ( SPISS_net_2 ),
         .SPISCLKO   ( SPISCLKO_net_0 ),
         .SPIOEN     (  ),
         .SPISDO     ( SPISDO_net_0 ),
         .SPIMODE    (  ),
-        .PRDATA     ( CoreAPB3_C0_0_APBmslave0_PRDATA ),
         .PREADY     ( CoreAPB3_C0_0_APBmslave0_PREADY ),
-        .PSLVERR    ( CoreAPB3_C0_0_APBmslave0_PSLVERR ) 
+        .PSLVERR    ( CoreAPB3_C0_0_APBmslave0_PSLVERR ),
+        .SPISS      ( SPISS_net_2 ),
+        .PRDATA     ( CoreAPB3_C0_0_APBmslave0_PRDATA ) 
         );
 
 //--------CORESPI_C1
@@ -354,23 +366,23 @@ CORESPI_C1 CORESPI_C1_0(
         .SPISSI     ( GND_net ),
         .SPISDI     ( SPISDI_0 ),
         .SPICLKI    ( GND_net ),
-        .PADDR      ( CoreAPB3_C0_0_APBmslave0_PADDR_1 ),
         .PSEL       ( CoreAPB3_C0_0_APBmslave1_PSELx ),
         .PENABLE    ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
         .PWRITE     ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
+        .PADDR      ( CoreAPB3_C0_0_APBmslave0_PADDR_1 ),
         .PWDATA     ( CoreAPB3_C0_0_APBmslave0_PWDATA_1 ),
         // Outputs
         .SPIINT     ( CORESPI_C1_0_SPIINT ),
         .SPIRXAVAIL ( CORESPI_C1_0_SPIRXAVAIL ),
         .SPITXRFM   ( CORESPI_C1_0_SPITXRFM ),
-        .SPISS      ( SPISS_net_3 ),
         .SPISCLKO   ( SPISCLKO_0_net_0 ),
         .SPIOEN     (  ),
         .SPISDO     ( SPISDO_0_net_0 ),
         .SPIMODE    (  ),
-        .PRDATA     ( CoreAPB3_C0_0_APBmslave1_PRDATA ),
         .PREADY     ( CoreAPB3_C0_0_APBmslave1_PREADY ),
-        .PSLVERR    ( CoreAPB3_C0_0_APBmslave1_PSLVERR ) 
+        .PSLVERR    ( CoreAPB3_C0_0_APBmslave1_PSLVERR ),
+        .SPISS      ( SPISS_net_3 ),
+        .PRDATA     ( CoreAPB3_C0_0_APBmslave1_PRDATA ) 
         );
 
 //--------FCCC_C0
@@ -391,14 +403,14 @@ MSS_C0_MSS MSS_C0_MSS_0(
         .CAN_RX_F2M             ( CAN_RX_F2M ),
         .MCCC_CLK_BASE_PLL_LOCK ( FCCC_C0_0_LOCK ),
         .MSS_RESET_N_F2M        ( CoreResetP_C0_0_RESET_N_F2M ),
-        .MSS_INT_F2M            ( MSS_INT_F2M_net_0 ),
-        .FIC_0_APB_M_PRDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
         .FIC_0_APB_M_PREADY     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PREADY ),
         .FIC_0_APB_M_PSLVERR    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSLVERR ),
-        .FIC_2_APB_M_PRDATA     ( FIC_2_APB_M_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .FIC_2_APB_M_PREADY     ( VCC_net ), // tied to 1'b1 from definition
         .FIC_2_APB_M_PSLVERR    ( GND_net ), // tied to 1'b0 from definition
         .M3_RESET_N             ( CoreResetP_C0_0_M3_RESET_N ),
+        .MSS_INT_F2M            ( MSS_INT_F2M_net_0 ),
+        .FIC_0_APB_M_PRDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
+        .FIC_2_APB_M_PRDATA     ( FIC_2_APB_M_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         // Outputs
         .MMUART_0_TXD_M2F       ( MMUART_0_TXD_M2F_net_0 ),
         .SPI_0_DO               ( SPI_0_DO_net_0 ),
@@ -411,18 +423,20 @@ MSS_C0_MSS MSS_C0_MSS_0(
         .GPIO_6_M2F             ( GPIO_6_M2F_net_0 ),
         .GPIO_7_M2F             ( GPIO_7_M2F_net_0 ),
         .MSS_RESET_N_M2F        ( MSS_C0_MSS_0_MSS_RESET_N_M2F ),
-        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
         .FIC_0_APB_M_PSEL       ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSELx ),
         .FIC_0_APB_M_PWRITE     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWRITE ),
         .FIC_0_APB_M_PENABLE    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PENABLE ),
-        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
         .FIC_2_APB_M_PRESET_N   ( MSS_C0_MSS_0_FIC_2_APB_M_PRESET_N ),
         .FIC_2_APB_M_PCLK       (  ),
-        .FIC_2_APB_M_PADDR      (  ),
-        .FIC_2_APB_M_PWDATA     (  ),
         .FIC_2_APB_M_PWRITE     (  ),
         .FIC_2_APB_M_PENABLE    (  ),
         .FIC_2_APB_M_PSEL       (  ),
+        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .FIC_2_APB_M_PADDR      (  ),
+        .FIC_2_APB_M_PWDATA     (  ),
+        .GPIO_8_M2F             ( GPIO_8_M2F_net_0 ),
+        .GPIO_9_M2F             ( GPIO_9_M2F_net_0 ),
         // Inouts
         .SPI_0_CLK              ( SPI_0_CLK ),
         .SPI_0_SS0              ( SPI_0_SS0 ) 
