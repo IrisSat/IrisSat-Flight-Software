@@ -149,7 +149,7 @@
 #include "tests.h"
 
 
-#define SERVER
+//#define SERVER
 //#define CLIENT
 
 
@@ -263,12 +263,12 @@ int main( void )
                          1,
                          NULL);
 
-    status = xTaskCreate(vTestFS,
-                         "Test FS",
-                         1000,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestFS,
+//                         "Test FS",
+//                         1000,
+//                         NULL,
+//                         1,
+//                         NULL);
 
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -291,12 +291,12 @@ int main( void )
 //                         1,
 //                         NULL);
 //
-//	status = xTaskCreate(vTestFlash,
-//                         "Test Flash",
-//                         2000,
-//                         (void *)flash_devices[FLASH_DEVICE_1],
-//                         1,
-//                         NULL);
+	status = xTaskCreate(vTestFlash,
+                         "Test Flash",
+                         2000,
+                         (void *)flash_devices[PROGRAM_FLASH],
+                         1,
+                         NULL);
 //
 
 //    // Task for testing priority queue data structure.

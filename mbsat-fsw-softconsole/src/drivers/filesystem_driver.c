@@ -35,7 +35,7 @@
 #define FS_MAX_OPEN_FILES	3
 
 
-#define FS_FLASH_DEVICE	FLASH_DEVICE_1
+#define FS_FLASH_DEVICE	DATA_FLASH
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // STRUCTURES AND STRUCTURE TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ static SemaphoreHandle_t fs_lock_handle;
 
 	 open_files = 0;
 	 //Get the total number of blocks by dividing the device byte count by the block byte count.
-	 config.block_count = flash_devices[FLASH_DEVICE_1]->device_size/FS_BLOCK_SIZE;
+	 config.block_count = flash_devices[DATA_FLASH]->device_size/FS_BLOCK_SIZE;
 
 	 //Setup the mutex. See https://github.com/ARMmbed/littlefs/issues/156 and
 	 //						https://github.com/ARMmbed/littlefs/pull/317

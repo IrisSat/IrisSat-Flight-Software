@@ -125,6 +125,8 @@ void spi_transaction_block_read_with_toggle(CoreSPIInstance_t core, spi_slave_t 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, mss_gpio_id_t pin, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * wr_buffer, uint16_t wr_size)
 {
+	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
+
 	//Put the command and data into one buffer.
 	uint32_t total_count = cmd_size + wr_size;
 	uint8_t * buffer = pvPortMalloc(total_count);
@@ -142,6 +144,7 @@ void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slav
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_read_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, mss_gpio_id_t pin, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * rd_buffer, uint16_t rd_size)
 {
+	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
 
     SPI_set_slave_select(&core_spi[core], slave);
     SPI_transfer_block(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
