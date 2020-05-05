@@ -171,7 +171,7 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 		/* End of line has been received. Send to module */
 		if (xSemaphoreTake(xUARTMutex, portMAX_DELAY) == pdTRUE)
 		{
-			prvUARTSend(&g_mss_uart0, "test\n\r", strlen("test\n\r"));
+			prvUARTSend(&g_mss_uart0, "MBSAT FSW V0.7\n\r", strlen("MBSAT FSW V0.7\n\r"));
 			xSemaphoreGive(xUARTMutex);
 		}
 		pos = 0;
