@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Mon May  4 20:35:26 2020 
+# Date generated: Tue May  5 18:42:11 2020 
 
 
 # 
@@ -155,6 +155,26 @@ set_io SPISS_0         \
 # 
 # Dedicated Peripheral I/O Settings
 # 
+
+set_io SPI_0_CLK      \
+    -FF_IO_AVAIL Yes  \
+    -DIRECTION INOUT
+
+
+set_io SPI_0_DI       \
+    -FF_IO_AVAIL Yes  \
+    -DIRECTION INPUT
+
+
+set_io SPI_0_DO        \
+    -FF_IO_AVAIL Yes   \
+    -DIRECTION OUTPUT
+
+
+set_io SPI_0_SS0      \
+    -FF_IO_AVAIL Yes  \
+    -DIRECTION INOUT
+
 
 
 # 
