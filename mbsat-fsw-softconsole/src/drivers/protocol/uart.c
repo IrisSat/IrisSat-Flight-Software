@@ -40,8 +40,9 @@
 /* Application includes. */
 #include "uart.h"
 #include "version.h"
+#include "software_update_driver.h"
 
-#define UART_BUFFER_SIZE	128
+#define UART_BUFFER_SIZE	256
 #define REPLY_QUEUE_SIZE	5
 
 static const IRQn_Type xUART0_IRQ = UART0_IRQn;
@@ -98,30 +99,23 @@ void vTaskUARTBridge(void *pvParameters)
 		{
 			taskENTER_CRITICAL();
 			{
-				strlcpy(copied_buffer, my_buffer, *uxUnreadBytes + 1);
-
-				/* Subtract the number of bytes processed from the available bytes */
+				memcpy(copied_buffer, my_buffer, *uxUnreadBytes);
+				uxBytesRead = *uxUnreadBytes;
+//				/* Subtract the number of bytes processed from the available bytes */
 				*uxUnreadBytes -= *uxUnreadBytes;
 			}
 			taskEXIT_CRITICAL();
 		}
 
-		uxBytesRead = strlen(copied_buffer);
-		for (int ix = 0; ix < uxBytesRead; ix++)
-		{
-			if (copied_buffer[ix] == 'v')
-			{
-				prvUARTSend(&g_mss_uart0, (const uint8_t *) CDH_SW_VERSION_STRING, strlen(CDH_SW_VERSION_STRING));
-				break;
-			}
-		}
+
+
 		/* Echo back all data to the terminal */
-		prvUARTSend(&g_mss_uart0, (const uint8_t *) copied_buffer, strlen(copied_buffer));
+		prvUARTSend(&g_mss_uart0, (const uint8_t *) copied_buffer, uxBytesRead);
 
 		/* Do any special processing based on the origin on the data */
 		if(my_uart == &g_mss_uart0)
 		{
-			prvProcessUART0(copied_buffer, strlen(copied_buffer));
+			prvProcessUART0(copied_buffer, uxBytesRead);
 		}
 	}
 }
@@ -159,22 +153,100 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 
 	/* String to contain the entire command to be sent to the ESP8266 module */
 	static uint8_t ucCommandString[UART_BUFFER_SIZE];
-	static uint8_t pos = 0;
+	static uint16_t pos = 0;
 	uint8_t i;
+	static uint8_t mode = 0;
+	static uint32_t numBytes = 0;
+	if(mode == 0){
 
-	/* Add characters onto the command string */
-	memcpy(&ucCommandString[pos], pcBuffer, ulNumBytes);
-	pos += ulNumBytes;
+		/* Add characters onto the command string */
+		memcpy(&ucCommandString[pos], pcBuffer, ulNumBytes);
+		pos += ulNumBytes;
 
-	if(ucCommandString[pos-1] == 10)
-	{
-		/* End of line has been received. Send to module */
-		if (xSemaphoreTake(xUARTMutex, portMAX_DELAY) == pdTRUE)
+		if(ucCommandString[pos-1] == 10)
 		{
-			prvUARTSend(&g_mss_uart0, "MBSAT FSW V0.7\n\r", strlen("MBSAT FSW V0.7\n\r"));
-			xSemaphoreGive(xUARTMutex);
+			/* End of line has been received. Send to module */
+			if (xSemaphoreTake(xUARTMutex, portMAX_DELAY) == pdTRUE)
+			{
+				if(ucCommandString[0] == 'u'){
+					mode = 1;
+				}
+				else if(ucCommandString[0] == 'd'){
+
+					repeat_program();
+				}
+				else if(ucCommandString[0] == 'v'){
+
+					//Verify
+					authenticate_firmware(FIRMWARE_UPDATE_ADDRESS);
+				}
+				else if(ucCommandString[0] == 'p'){
+					initiate_firmware_update(FIRMWARE_UPDATE_ADDRESS);
+				}
+				pos = 0;
+				memset(ucCommandString,0,UART_BUFFER_SIZE);
+				xSemaphoreGive(xUARTMutex);
+			}
+
 		}
-		pos = 0;
+	}
+	else if(mode == 1){
+		/* Add characters onto the command string */
+		memcpy(&ucCommandString[pos], pcBuffer, ulNumBytes);
+		pos += ulNumBytes;
+		if(ucCommandString[pos-1] == 10)
+		{
+			numBytes = (uint32_t) strtol(ucCommandString,&ucCommandString[pos-1],10); //Should check cast.
+			set_program_size(numBytes);
+			mode = 2;
+			memset(ucCommandString,0,UART_BUFFER_SIZE);
+			pos = 0;
+		}
+	}
+	else if (mode == 2){
+
+		if(pos + ulNumBytes > UART_BUFFER_SIZE){
+
+			uint32_t remaining =  UART_BUFFER_SIZE-pos;
+			//Fill up current buffer.
+			memcpy(&ucCommandString[pos], pcBuffer,remaining);
+			pos += remaining;
+
+			//Save the current buffer.
+			save_program(ucCommandString, pos);
+			numBytes -= pos;
+			//Reset buffer and copy overflow data.
+			pos = 0;
+			memcpy(&ucCommandString[pos], &pcBuffer[remaining], ulNumBytes-(remaining));
+			pos += ulNumBytes-(remaining) ;
+
+		}
+		else if(pos + ulNumBytes == UART_BUFFER_SIZE){
+			//Copy the data and then write to flash.
+			memcpy(&ucCommandString[pos], pcBuffer, ulNumBytes);
+			pos += ulNumBytes;
+
+			save_program(ucCommandString, pos);
+			numBytes -= pos;
+			//Reset index in buffer to refill from the beginning.
+			pos = 0;
+		}
+		else{
+			//Just copy the data and wait for a full buffer.
+			memcpy(&ucCommandString[pos], pcBuffer, ulNumBytes);
+			pos += ulNumBytes;
+
+			//Handle the last bytes transfered when there is less than 256 left.
+			if(numBytes<UART_BUFFER_SIZE){
+				save_program(ucCommandString, pos);
+				numBytes -= pos;
+				//Reset index in buffer to refill from the beginning.
+				pos = 0;
+			}
+		}
+		if(numBytes <= 0){
+			mode = 0;
+		}
 	}
 }
 

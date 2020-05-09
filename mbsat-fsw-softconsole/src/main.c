@@ -291,12 +291,12 @@ int main( void )
 //                         1,
 //                         NULL);
 //
-	status = xTaskCreate(vTestFlash,
-                         "Test Flash",
-                         2000,
-                         (void *)flash_devices[PROGRAM_FLASH],
-                         1,
-                         NULL);
+//	status = xTaskCreate(vTestFlash,
+//                         "Test Flash",
+//                         2000,
+//                         (void *)flash_devices[PROGRAM_FLASH],
+//                         1,
+//                         NULL);
 //
 
 //    // Task for testing priority queue data structure.
@@ -337,7 +337,7 @@ static void prvSetupHardware( void )
     init_mram();
     //init_CAN(CAN_BAUD_RATE_250K,NULL);
     adcs_init_driver();
-
+    flash_device_init(flash_devices[PROGRAM_FLASH]);
 }
 
 

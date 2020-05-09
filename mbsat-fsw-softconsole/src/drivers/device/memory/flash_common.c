@@ -184,4 +184,5 @@ void program_flash_spi_write(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_b
     MSS_SPI_set_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
     MSS_SPI_transfer_block(&g_mss_spi0,buffer, total_count, 0, 0);
 	MSS_SPI_clear_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+	vPortFree(buffer);
 }

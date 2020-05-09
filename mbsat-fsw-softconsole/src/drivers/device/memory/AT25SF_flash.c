@@ -71,7 +71,7 @@ FlashStatus_t AT25SF_flash_write_page(AT25SF_Device_t * dev,uint32_t addr, uint8
 
 	while(AT25SF_is_busy(dev)){
         if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
-            vTaskDelay(pdMS_TO_TICKS(100));
+            vTaskDelay(pdMS_TO_TICKS(2));
         }
 	}
 
