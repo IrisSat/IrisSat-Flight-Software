@@ -26,5 +26,7 @@ mbsat-fsw-softconsole/[Dd]ebug/
 mbsat-fsw-softconsole/[Dd]ebug Flash/
 mbsat-fsw-softconsole/[Rr]elease/
 
+#For Libero Bitstream Exports
+mbsat-fsw-libero/designer/MSS_C0/export/
 # For VSCode Editor:
 .vscode/

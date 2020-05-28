@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri May  1 17:04:28 2020
+// Created by SmartDesign Tue May  5 17:50:31 2020
 // Version: v12.1 12.600.0.14
 //////////////////////////////////////////////////////////////////////
 
@@ -43,6 +43,8 @@ module MSS_C0_MSS(
     GPIO_5_M2F,
     GPIO_6_M2F,
     GPIO_7_M2F,
+    GPIO_8_M2F,
+    GPIO_9_M2F,
     MMUART_0_TXD_M2F,
     MSS_RESET_N_M2F,
     SPI_0_DO,
@@ -91,6 +93,8 @@ output        GPIO_3_M2F;
 output        GPIO_5_M2F;
 output        GPIO_6_M2F;
 output        GPIO_7_M2F;
+output        GPIO_8_M2F;
+output        GPIO_9_M2F;
 output        MMUART_0_TXD_M2F;
 output        MSS_RESET_N_M2F;
 output        SPI_0_DO;
@@ -129,6 +133,8 @@ wire          GPIO_3_M2F_net_0;
 wire          GPIO_5_M2F_net_0;
 wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
+wire          GPIO_8_M2F_net_0;
+wire          GPIO_9_M2F_net_0;
 wire          M3_RESET_N;
 wire          MCCC_CLK_BASE;
 wire          MCCC_CLK_BASE_PLL_LOCK;
@@ -169,6 +175,8 @@ wire          FIC_2_APB_M_PCLK_0_net_0;
 wire          FIC_2_APB_MASTER_0_PWRITE_net_0;
 wire          FIC_2_APB_MASTER_0_PENABLE_net_0;
 wire          FIC_2_APB_MASTER_0_PSELx_net_0;
+wire          GPIO_8_M2F_net_1;
+wire          GPIO_9_M2F_net_1;
 wire   [31:0] FIC_0_APB_MASTER_PADDR_net_0;
 wire   [31:0] FIC_0_APB_MASTER_PWDATA_net_0;
 wire   [15:2] FIC_2_APB_MASTER_0_PADDR_net_0;
@@ -286,6 +294,10 @@ assign FIC_2_APB_MASTER_0_PENABLE_net_0 = FIC_2_APB_MASTER_0_PENABLE;
 assign FIC_2_APB_M_PENABLE              = FIC_2_APB_MASTER_0_PENABLE_net_0;
 assign FIC_2_APB_MASTER_0_PSELx_net_0   = FIC_2_APB_MASTER_0_PSELx;
 assign FIC_2_APB_M_PSEL                 = FIC_2_APB_MASTER_0_PSELx_net_0;
+assign GPIO_8_M2F_net_1                 = GPIO_8_M2F_net_0;
+assign GPIO_8_M2F                       = GPIO_8_M2F_net_1;
+assign GPIO_9_M2F_net_1                 = GPIO_9_M2F_net_0;
+assign GPIO_9_M2F                       = GPIO_9_M2F_net_1;
 assign FIC_0_APB_MASTER_PADDR_net_0     = FIC_0_APB_MASTER_PADDR;
 assign FIC_0_APB_M_PADDR[31:0]          = FIC_0_APB_MASTER_PADDR_net_0;
 assign FIC_0_APB_MASTER_PWDATA_net_0    = FIC_0_APB_MASTER_PWDATA;
@@ -623,9 +635,9 @@ MSS_ADLIB_INST(
         .SPI0_SS0_MGPIO7A_H2F_A                  (  ),
         .SPI0_SS0_MGPIO7A_H2F_B                  ( GPIO_7_M2F_net_0 ),
         .SPI0_SS1_MGPIO8A_H2F_A                  (  ),
-        .SPI0_SS1_MGPIO8A_H2F_B                  (  ),
+        .SPI0_SS1_MGPIO8A_H2F_B                  ( GPIO_8_M2F_net_0 ),
         .SPI0_SS2_MGPIO9A_H2F_A                  (  ),
-        .SPI0_SS2_MGPIO9A_H2F_B                  (  ),
+        .SPI0_SS2_MGPIO9A_H2F_B                  ( GPIO_9_M2F_net_0 ),
         .SPI0_SS3_MGPIO10A_H2F_A                 (  ),
         .SPI0_SS3_MGPIO10A_H2F_B                 (  ),
         .SPI0_SS4_MGPIO19A_H2F_A                 (  ),

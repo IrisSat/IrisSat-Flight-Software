@@ -37,7 +37,7 @@ FlashStatus_t MT25Q_flash_is_busy(MT25Q_Device_t * dev);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-//  This checks device ID, disables protected areas, and puts the flash device into 4 byte address mode.
+//  This checks device ID.
 //  Returns FLASH_OK on success.
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 FlashStatus_t MT25Q_setup_flash(MT25Q_Device_t * dev){
@@ -105,7 +105,7 @@ FlashStatus_t MT25Q_flash_write_page(MT25Q_Device_t * dev,uint32_t addr, uint8_t
     FlashStatus_t result = FLASH_OK;
 
     if(addr >= dev->size) result = FLASH_INVALID_ADDRESS;
-
+    //TODO: Check write size < page size.
     if(result == FLASH_OK){
         uint8_t wp_command = MT25Q_OP_WRITE_ENABLE;
         dev->spi_write(&wp_command, sizeof(wp_command), 0, 0);

@@ -149,7 +149,7 @@
 #include "tests.h"
 
 
-#define SERVER
+//#define SERVER
 //#define CLIENT
 
 
@@ -263,12 +263,12 @@ int main( void )
                          1,
                          NULL);
 
-    status = xTaskCreate(vTestFS,
-                         "Test FS",
-                         1000,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestFS,
+//                         "Test FS",
+//                         1000,
+//                         NULL,
+//                         1,
+//                         NULL);
 
 //    status = xTaskCreate(vTestRTC,
 //                         "Test RTC",
@@ -294,7 +294,7 @@ int main( void )
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
 //                         2000,
-//                         (void *)flash_devices[FLASH_DEVICE_1],
+//                         (void *)flash_devices[PROGRAM_FLASH],
 //                         1,
 //                         NULL);
 //
@@ -337,7 +337,7 @@ static void prvSetupHardware( void )
     init_mram();
     //init_CAN(CAN_BAUD_RATE_250K,NULL);
     adcs_init_driver();
-
+    flash_device_init(flash_devices[PROGRAM_FLASH]);
 }
 
 
