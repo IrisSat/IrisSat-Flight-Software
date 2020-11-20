@@ -1,0 +1,32 @@
+Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
+
+Date      :  Tue May  5 17:50:32 2020
+Project   :  C:\Users\Files\MBSAT\working\IrisSat-Flight-Software\iris-fsw-libero
+Component :  MSS_C0_MSS
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/MSS_C0_MSS.v
+
+HDL source files for Synopsys SynplifyPro Synthesis tool:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/MSS_C0_MSS_syn.v
+
+HDL source files for Mentor Precision Synthesis tool:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/MSS_C0_MSS_pre.v
+
+Stimulus files for all Simulation tools:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/SmartFusion2MSS/MSS/1.1.500/peripheral_init.bfm
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/CM3_compile_bfm.tcl
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/test.bfm
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/user.bfm
+
+Firmware files for all Software IDE tools:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/sys_config_mss_clocks.h
+
+Configuration files to be used for Programming:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/ENVM.cfg
+
+Configuration files to be used for all Simulation tools:
+    C:/Users/Files/MBSAT/working/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0_MSS/ENVM.cfg
+
