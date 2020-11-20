@@ -1,5 +1,5 @@
-# Flight Software for ManitobaSat
-This repository contains software for the ManitobaSat Command and Data Handling (CDH) board. The directory structure is like so:
+# Flight Software for IrisSat
+This repository contains software for the IrisSat Command and Data Handling (CDH) board. The directory structure is like so:
 - /mbsat-fsw-libero contains the Libero project required for configuring the device.
 - /mbsat-fsw-softconsole contains the SoftConsole project required to write and debug the software.
 
@@ -18,7 +18,7 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 3. In the "Design Flow" panel on the left, double-click "Run PROGRAM Action".
 
 ### Configure your workspace
-4. Select the root folder (i.e. ManitobaSat-Flight-Software) as your SoftConsole workspace.
+4. Select the root folder (i.e. IrisSat-Flight-Software) as your SoftConsole workspace.
 5. Go to **File -> Import**.
 6. On the Import window, select **General -> Existing C/C++ Projects into Workspace**.
 7. Add "mbsat-fsw-softconsole" to your workspace. 

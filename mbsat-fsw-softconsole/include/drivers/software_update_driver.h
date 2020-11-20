@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 //
 // Repository:
-//	Github: https://github.com/joehowarth17/ManitobaSat-Flight-Software
+//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
 //
 // File Description:
 //  Driver for updating the software/FPGA fabric (ISP).

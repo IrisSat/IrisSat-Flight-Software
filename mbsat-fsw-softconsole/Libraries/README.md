@@ -1,6 +1,6 @@
 # Manitoba-Sat Flight Software Libraries
 
-This folder contains the software dependencies used by the ManitobaSat flight software.
+This folder contains the software dependencies used by the IrisSat flight software.
 
 [Cubesat Space Protocol](#cubesat-space-protocol])
 

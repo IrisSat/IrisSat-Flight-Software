@@ -1,11 +1,11 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// ManitobaSat-1
+// IrisSat-1
 //
 // License:
 //  Available under MIT license.
 //
 // Repository:
-//  Github: https://github.com/joehowarth17/ManitobaSat-Flight-Software
+//  Github: https://github.com/joehowarth17/IrisSat-Flight-Software
 //
 // File Description:
 //  Driver for communicating with the ADCS controller.
@@ -14,7 +14,7 @@
 // 2020-01-02 by Joseph Howarth
 // - Created.
 //
-//  Based on information from https://github.com/aminya/ManitobaSat-ADCS-Software/issues/2 and standard spi implementation.
+//  Based on information from https://github.com/aminya/IrisSat-ADCS-Software/issues/2 and standard spi implementation.
 //  * This does not currently implement communication as specified in SIGMA operations manual *
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 

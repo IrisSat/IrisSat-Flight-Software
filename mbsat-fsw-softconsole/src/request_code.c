@@ -2,7 +2,7 @@
 // MBSATS 2019-2020
 //
 // Repository:
-//  ManitobaSat-Flight-Software
+//  IrisSat-Flight-Software
 //
 // File Description:
 //  Request code function handling.

@@ -4,7 +4,7 @@
 // MBSat-1
 //
 // Repository:
-//	Github: https://github.com/joehowarth17/ManitobaSat-Flight-Software
+//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
 //
 // File Description:
 //  Common interface for external flash drivers.
