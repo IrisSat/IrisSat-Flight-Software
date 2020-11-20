@@ -1,0 +1,18 @@
+Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
+
+Date      :  Fri May  1 16:19:46 2020
+Project   :  C:\Users\howarth3-INS\Desktop\iris-fsw-libero
+Component :  OSC_C0
+Family    :  SmartFusion2
+
+
+HDL source files for all Synthesis and Simulation tools:
+    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/work/OSC_C0/OSC_C0.v
+    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/work/OSC_C0/OSC_C0_0/OSC_C0_OSC_C0_0_OSC.v
+
+HDL source files for Synopsys SynplifyPro Synthesis tool:
+    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps.v
+
+HDL source files for Mentor Precision Synthesis tool:
+    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/SgCore/OSC/2.0.101/osc_comps_pre.v
+
