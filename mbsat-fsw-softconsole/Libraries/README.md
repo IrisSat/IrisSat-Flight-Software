@@ -27,7 +27,7 @@ Next, run the build script which will configure, build and install the library.
 
 To run the build script:
 ```
-./build.sh 'path/to/mbsat-fsw-softconsole'  -Os -g
+./build.sh 'path/to/iris-fsw-softconsole'  -Os -g
 ```
 The first argument should be the path to the softconsole project, and the remaining arguments
 should be the compilation flags.
@@ -37,6 +37,6 @@ should be the compilation flags.
 
 The script will move the static library to the location:
 ```
-path/to/mbsat-fsw-softconsole/Libraries/CSP
+path/to/iris-fsw-softconsole/Libraries/CSP
 ```
 If changes were made to the source code, the modified files should manually be moved to the softconsole project, so that the correct files are used when debugging.

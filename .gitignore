@@ -21,12 +21,12 @@
 RemoteSystemsTempFiles/
 
 # Created for builds.
-mbsat-fsw-softconsole/.settings/
-mbsat-fsw-softconsole/[Dd]ebug/
-mbsat-fsw-softconsole/[Dd]ebug Flash/
-mbsat-fsw-softconsole/[Rr]elease/
+iris-fsw-softconsole/.settings/
+iris-fsw-softconsole/[Dd]ebug/
+iris-fsw-softconsole/[Dd]ebug Flash/
+iris-fsw-softconsole/[Rr]elease/
 
 #For Libero Bitstream Exports
-mbsat-fsw-libero/designer/MSS_C0/export/
+iris-fsw-libero/designer/MSS_C0/export/
 # For VSCode Editor:
 .vscode/
