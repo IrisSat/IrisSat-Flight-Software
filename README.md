@@ -6,6 +6,14 @@ This repository contains software for the IrisSat Command and Data Handling (CDH
 
 ## Build Steps
 
+Git submodules are used in this project. Use the command "git submodule update --init" to make sure you have the submodule files.
+
+The CSP library used in this project must be built before the software can be compiled.
+Follow the instructions in iris-fsw-softconsole/Libraries/ to build the library.
+
+Also the "Production" build of the softconsole project should be compiled before the Libero project is built because the Libero project will include the firmware binary as part of the FPGA image.
+
+
 ### Required hardware
 This project requires the Microsemi Smartfusion2 Maker Board.
 
@@ -38,8 +46,6 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 
 This library is provides a communication protocol stack following the TCP/IP model. The MBSat flight software uses the CSP library for communication with the communication system on the satellite.
 
-A binary is included in the project, along with a modified build script for use if the library must be rebuilt.
-Instructions for building the library can be found in the Libraries folder of the iris-fsw-softconsole folder.
 
 
 ## Useful links:
