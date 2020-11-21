@@ -17,26 +17,29 @@ A binary is included in the project, along with a modified build script for use 
 ### To build the library:
 
 To build the library, you need the arm-none-eabi-gcc toolchain, and python3.
+It is easy to do this process in WSL:
 
-Start by getting the library from:
-https://github.com/joehowarth17/libcsp.git
+```
+sudo apt install gcc-arm-none-eabi
+```
+python is probably already installed.
 
-Make any changes to the library if necessary.
 
-Next, run the build script which will configure, build and install the library.
+Navigate to the libcsp folder and run the build script which will configure, build and install the library.
 
 To run the build script:
 ```
 ./build.sh 'path/to/iris-fsw-softconsole'  -Os -g
 ```
+If you are running this from the libcsp folder in the iris-fsw-softconsole project then the command is:
+
+```
+./build.sh ../.. -Os -g
+```
+
 The first argument should be the path to the softconsole project, and the remaining arguments
 should be the compilation flags.
 
 -Os optimizes for size, and -g includes debug symbols. This combination has been tested.
 -O0 will not include any optimization, useful for debugging.
 
-The script will move the static library to the location:
-```
-path/to/iris-fsw-softconsole/Libraries/CSP
-```
-If changes were made to the source code, the modified files should manually be moved to the softconsole project, so that the correct files are used when debugging.
