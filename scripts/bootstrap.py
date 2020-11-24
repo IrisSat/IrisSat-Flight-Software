@@ -23,8 +23,8 @@ from os.path import abspath
 
 # Set cwd
 print("Changing current working directory to the repository root")
-fileDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.chdir(fileDir)
+repository_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(repository_dir)
 
 is_windows = (os.name == 'nt' or (os.getenv('SYSTEMROOT') is not None and 'windows' in os.getenv('SYSTEMROOT').lower()) or (os.getenv('COMSPEC') is not None and 'windows' in os.getenv('COMSPEC').lower()))
 
@@ -51,4 +51,8 @@ subprocess.run("git submodule update --init --recursive", shell=True)
 # libcsp
 
 print("Building libcsp...")
-subprocess.run(f"{libraries_path}/libcsp/build.sh {softconsole_path} {optimization_flags}", shell=True)
+try:
+    os.chdir(f"{libraries_path}/libcsp")
+    subprocess.run(f"./build.sh ../.. {optimization_flags}", shell=True)
+finally:
+    os.chdir(repository_dir)
