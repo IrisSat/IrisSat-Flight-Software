@@ -61,7 +61,20 @@ subprocess.run("git submodule update --init --recursive", shell=True)
 
 print("Building libcsp...")
 try:
+    project_path = "../.."
+    INCLUDES = f"{project_path}/FreeRTOS,"
+    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source,"
+    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/include,"
+    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/portable,"
+    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3,"
+
     os.chdir(f"{libraries_path}/libcsp")
-    subprocess.run(f"bash ./build.sh ../.. {optimization_flags}", shell=True)
+    subprocess.run(f'python waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', check=True)
+    subprocess.run('python3 waf build', check=True)
+    os.remove(f"{project_path}/Libraries/CSP/libcsp.a")  # remove the old file
+
+    from shutil import copyfile
+    copyfile("build/libcsp.a", f"{project_path}/Libraries/CSP/libcsp.a")
+
 finally:
     os.chdir(repository_dir)
