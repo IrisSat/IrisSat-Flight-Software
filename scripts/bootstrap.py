@@ -26,10 +26,19 @@ print("Changing current working directory to the repository root")
 repository_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(repository_dir)
 
-is_windows = (os.name == 'nt' or (os.getenv('SYSTEMROOT') is not None and 'windows' in os.getenv('SYSTEMROOT').lower()) or (os.getenv('COMSPEC') is not None and 'windows' in os.getenv('COMSPEC').lower()))
-
 softconsole_path = "./iris-fsw-softconsole"
 libraries_path = "./iris-fsw-softconsole/Libraries"
+
+################################################################
+# Environment variables
+import find_os
+
+if find_os.is_windows:
+    os.environ['CC'] = 'gcc.exe'
+    os.environ['CXX'] = 'g++.exe'
+else:
+    os.environ['CC'] = 'gcc'
+    os.environ['CXX'] = 'g++'
 
 ################################################################
 # Optimization Flags
