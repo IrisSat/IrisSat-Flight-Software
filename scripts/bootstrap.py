@@ -24,3 +24,12 @@ is_windows = (os.name == 'nt' or (os.getenv('SYSTEMROOT') is not None and 'windo
 softconsole_path = "./iris-fsw-softconsole"
 libraries_path = "./iris-fsw-softconsole/Libraries"
 
+################################################################
+# Optimization Flags
+
+optimization_flags = "-O3"  # Release build: enable all optimizations
+
+if args.is_debug:
+    optimization_flags = "-O0 -g"  # Debug: enable debug flags and disable all optimizations
+
+################################################################
