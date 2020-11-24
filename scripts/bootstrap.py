@@ -1,3 +1,10 @@
+# Check python version
+import sys
+if not (sys.version_info.major == 3 and sys.version_info.minor >= 6):
+    print("This script requires Python 3.6 or higher!")
+    print("You are using Python {}.{}.".format(sys.version_info.major, sys.version_info.minor))
+    sys.exit(1)
+
 ################################################################
 # Script flags
 import argparse
@@ -41,3 +48,7 @@ print("Downloading submodules...")
 subprocess.run("git submodule update --init --recursive", shell=True)
 
 ################################################################
+# libcsp
+
+print("Building libcsp...")
+subprocess.run(f"{libraries_path}/libcsp/build.sh {softconsole_path} {optimization_flags}", shell=True)
