@@ -32,13 +32,25 @@ libraries_path = "./iris-fsw-softconsole/Libraries"
 ################################################################
 # Environment variables
 import find_os
+import os.path
 
 if find_os.is_windows:
-    os.environ['CC'] = 'gcc.exe'
-    os.environ['CXX'] = 'g++.exe'
+    import glob
+    microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin")
+    if microchip_toolchain_glob:
+        microchip_toolchain_path = os.path.normpath(microchip_toolchain_glob[0])
+        sys.path.extend(microchip_toolchain_path)
+        os.environ['AR'] = os.path.join(microchip_toolchain_path, 'arm-none-eabi-ar.exe')
+        os.environ['CC'] = os.path.join(microchip_toolchain_path, 'arm-none-eabi-gcc.exe')
+        os.environ['CXX'] = os.path.join(microchip_toolchain_path, 'arm-none-eabi-g++.exe')
+    else:
+        os.environ['AR'] = 'arm-none-eabi-ar.exe'
+        os.environ['CC'] = 'arm-none-eabi-gcc.exe'
+        os.environ['CXX'] = 'arm-none-eabi-g++.exe'
 else:
-    os.environ['CC'] = 'gcc'
-    os.environ['CXX'] = 'g++'
+    os.environ['AR'] = 'arm-none-eabi-ar'
+    os.environ['CC'] = 'arm-none-eabi-gcc'
+    os.environ['CXX'] = 'arm-none-eabi-g++'
 
 ################################################################
 # Optimization Flags
