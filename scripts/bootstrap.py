@@ -53,6 +53,6 @@ subprocess.run("git submodule update --init --recursive", shell=True)
 print("Building libcsp...")
 try:
     os.chdir(f"{libraries_path}/libcsp")
-    subprocess.run(f"./build.sh ../.. {optimization_flags}", shell=True)
+    subprocess.run(f"bash ./build.sh ../.. {optimization_flags}", shell=True)
 finally:
     os.chdir(repository_dir)
