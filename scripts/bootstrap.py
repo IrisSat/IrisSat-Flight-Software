@@ -54,7 +54,7 @@ import subprocess
 ################################################################
 # Submodules
 print("Downloading submodules...")
-subprocess.run("git submodule update --init --recursive", shell=True)
+subprocess.run("git submodule update --init --recursive", shell=True, check=True)
 
 ################################################################
 # libcsp
