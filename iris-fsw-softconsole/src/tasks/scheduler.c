@@ -29,7 +29,7 @@
 #include "drivers/mss_rtc/mss_rtc.h"
 
 // User Libraries
-#include "scheduler.h"
+#include "tasks/scheduler.h"
 #include "tasks/priority_queue.h"
 #include "drivers/device/rtc/rtc_time.h"
 #include <request_code.h>
