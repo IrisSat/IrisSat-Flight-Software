@@ -17,7 +17,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "watchdog.h"
+#include "drivers/device/watchdog.h"
 
 void vTestWD(void *pvParameters)
 {

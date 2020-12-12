@@ -141,7 +141,7 @@
 #include "drivers/device/rtc/rtc_time.h"
 #include "drivers/protocol/spi.h"
 #include "drivers/protocol/uart.h"
-#include "watchdog.h"
+#include "drivers/device/watchdog.h"
 #include "scheduler.h"
 #include "priority_queue.h"
 #include "drivers/device/adcs_driver.h"
