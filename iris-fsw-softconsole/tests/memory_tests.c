@@ -19,7 +19,7 @@
 
 #include "mram.h"
 
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 #include "string.h"
 
 void vTestMRAM(void *pvParameters)

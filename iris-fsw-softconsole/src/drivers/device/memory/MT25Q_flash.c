@@ -13,7 +13,7 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 #include "MT25Q_flash.h"
 #include "FreeRTOS.h"
 #include "task.h"

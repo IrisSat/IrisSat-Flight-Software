@@ -17,7 +17,7 @@
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "filesystem_driver.h"
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 
 #include "FreeRTOS.h"
 #include "semphr.h"

@@ -135,7 +135,7 @@
 
 /* Application includes. */
 #include "drivers/protocol/can.h"
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
