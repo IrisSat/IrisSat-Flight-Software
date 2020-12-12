@@ -121,7 +121,7 @@
 #include <string.h>
 
 /* Library includes */
-#include "csp.h"
+#include <csp/csp.h>
 #include "csp/interfaces/csp_if_can.h"
 
 /* Kernel includes. */
