@@ -1,14 +1,6 @@
 #ifndef BOARD_DEFINITIONS_H
 #define BOARD_DEFINITIONS_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Contains definitions for pins and SPI cores for the CDH software.
 //
@@ -36,7 +28,7 @@
 #define FLASH_SPI_CORE   CORE_SPI_0
 #define FLASH_SLAVE_CORE SPI_SLAVE_0 // FLASH uses MSS_GPIO for SS, so this is not relevant.
 
-#define ADCS_SPI_CORE   CORE_SPI_0  
+#define ADCS_SPI_CORE   CORE_SPI_0
 #define ADCS_SLAVE_CORE SPI_SLAVE_0 // ADS uses MSS_GPIO for SS, so this is not relevant.
 
 // MSS GPIO definitions

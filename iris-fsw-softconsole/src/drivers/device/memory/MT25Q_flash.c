@@ -1,9 +1,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//  Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  External flash memory (MT25Q) driver.
 //

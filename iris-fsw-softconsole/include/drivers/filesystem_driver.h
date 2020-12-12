@@ -1,11 +1,6 @@
 #ifndef FS_DRIVER_H
 #define FS_DRIVER_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  Driver interface for the file system.
 //

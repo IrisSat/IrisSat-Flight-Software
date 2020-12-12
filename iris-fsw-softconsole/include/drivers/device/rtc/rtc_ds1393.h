@@ -1,14 +1,6 @@
 #ifndef RTC_DS1393_H_
 #define RTC_DS1393_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Driver for the DS1393 RTC (i.e. the external RTC).
 //

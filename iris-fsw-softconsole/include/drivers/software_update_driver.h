@@ -1,10 +1,6 @@
 #ifndef SOFTWARE_UPDATE_H_
 #define SOFTWARE_UPDATE_H_
 //------------------------------------------------------------------------------
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  Driver for updating the software/FPGA fabric (ISP).
 //

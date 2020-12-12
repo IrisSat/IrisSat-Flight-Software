@@ -1,11 +1,6 @@
 #ifndef W25N_FLASH_H
 #define W25N_FLASH_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// Repository:
-//	Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  External flash memory (W25N01GVxxIG) functions and definitions.
 //	This driver is a modified version of the Mongoose OS Winbond W25XXX SPI NAND Flash Driver

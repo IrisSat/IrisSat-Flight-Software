@@ -1,11 +1,6 @@
 #ifndef FLASH_COMMON_H
 #define FLASH_COMMON_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  Common interface for external flash drivers.
 //

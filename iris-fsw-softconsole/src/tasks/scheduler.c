@@ -1,9 +1,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// Repository:
-//  UMSATS GitHub cdh-tsat5: Command and Data Handling (CDH) for TSAT5
-//
 // File Description:
 //  Custom task scheduler. Uses a queue of time-tagged tasks to be executed at a given future time.
 //

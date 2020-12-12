@@ -1,11 +1,6 @@
 #ifndef REQUEST_CODE_H
 #define REQUEST_CODE_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// Repository:
-//  UMSATS GitHub cdh-tsat5: Command and Data Handling (CDH) for TSAT5
-//
 // File Description:
 //  Predefined task codes for well-defined tasks.
 //

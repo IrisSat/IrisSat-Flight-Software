@@ -1,11 +1,6 @@
 #ifndef AT25SF_H_
 #define AT25SF_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  Dev Kit on-board flash memory (AT25SF161) functions and definitions.
 //

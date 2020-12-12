@@ -1,11 +1,6 @@
 #ifndef ALL_TESTS_H
 #define ALL_TESTS_H
 //-------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  This file contains all the tests for the MBSat flight software.
 //

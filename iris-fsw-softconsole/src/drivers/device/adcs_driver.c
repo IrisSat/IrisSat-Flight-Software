@@ -1,12 +1,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// IrisSat-1
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  Driver for communicating with the ADCS controller.
 //

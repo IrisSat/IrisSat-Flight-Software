@@ -1,14 +1,6 @@
 #ifndef MR2XH40_MRAM_H_
 #define MR2XH40_MRAM_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Driver for the MR2xH40 MRAM part. Note that this driver expects the Write Protect (/WP) and /Hold pins are pulled high (i.e. inactive).
 //

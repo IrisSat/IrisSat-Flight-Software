@@ -1,14 +1,6 @@
 #ifndef RTC_COMMON_H_
 #define RTC_COMMON_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under the GNU General Public License v3.0 (GPL-3.0-or-later)
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Common definitions and macros for all RTC types.
 //

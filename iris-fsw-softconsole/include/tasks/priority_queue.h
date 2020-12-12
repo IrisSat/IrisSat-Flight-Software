@@ -1,11 +1,6 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// Repository:
-//  UMSATS Google Drive: UMSATS/Guides and HowTos.../Command and Data Handling (CDH)/Coding Standards
-//
 // File Description:
 //  Template header file for C / C++ projects. Unused sections can be deleted.
 //

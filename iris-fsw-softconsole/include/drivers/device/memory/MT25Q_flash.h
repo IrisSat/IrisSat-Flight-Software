@@ -1,11 +1,6 @@
 #ifndef MT25Q_H
 #define MT25Q_H
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  External flash memory (MT25Q) functions and definitions.
 //

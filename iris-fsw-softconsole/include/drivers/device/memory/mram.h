@@ -1,14 +1,6 @@
 #ifndef MRAM_H_
 #define MRAM_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  User-facing module for abstracting MRAM initialization and usage. With a chosen MRAM instance, the user can use mr2xh40 driver functions.
 //

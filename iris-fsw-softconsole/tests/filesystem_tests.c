@@ -1,9 +1,4 @@
 //-------------------------------------------------------------------------------------------------
-// MBSat-1
-//
-// Repository:
-//	Github: https://github.com/joehowarth17/IrisSat-Flight-Software
-//
 // File Description:
 //  This file contains tests related to the file system. Additional tests
 //  are in the littleFS folder in the Libraries folder.

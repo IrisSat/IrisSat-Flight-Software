@@ -1,14 +1,6 @@
 #ifndef RTC_TIME_H_
 #define RTC_TIME_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  User-facing RTC module for reading, writing, and validating the internal and external RTC.
 //

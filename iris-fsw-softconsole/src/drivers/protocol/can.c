@@ -1,12 +1,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-//  Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Functions for CAN initialization, message reception, and message transmission. Received messages are read into a Queue, which
 //  can be handled by a dedicated task.

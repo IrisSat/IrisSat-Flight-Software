@@ -1,14 +1,6 @@
 #ifndef INCLUDE_VERSION_H_
 #define INCLUDE_VERSION_H_
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// License:
-// 	Available under MIT license.
-//
-// Repository:
-//  Github: https://github.com/UMSATS/cdh-tsat5
-//
 // File Description:
 //  Contains version information for this software. Instructions:
 //	- For most new releases (e.g. new features), increment the minor revision.

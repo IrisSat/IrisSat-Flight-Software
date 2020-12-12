@@ -1,9 +1,4 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-// UMSATS 2018-2020
-//
-// Repository:
-//  UMSATS Google Drive: UMSATS/Guides and HowTos.../Command and Data Handling (CDH)/Coding Standards
-//
 // File Description:
 //  Source file for external flash memory (W25N01GVxxIG) driver.
 //	This driver is a modified version of the Mongoose OS Winbond W25XXX SPI NAND Flash Driver
@@ -714,4 +709,3 @@ out:
 
   return res;
 }
-
