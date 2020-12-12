@@ -16,7 +16,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "can.h"
+#include "drivers/protocol/can.h"
 
 
 void vTestCANTx(void *pvParameters)

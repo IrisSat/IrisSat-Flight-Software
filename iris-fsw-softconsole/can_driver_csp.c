@@ -1,4 +1,4 @@
-#include "can.h"
+#include "drivers/protocol/can.h"
 #include "arch/csp_thread.h"
 #include "interfaces/csp_if_can.h"
 

@@ -23,7 +23,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include <stdio.h>
 
-#include "can.h"
+#include "drivers/protocol/can.h"
 
 #include "drivers_config/sys_config/sys_config_mss_clocks.h"
 

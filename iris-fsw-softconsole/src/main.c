@@ -134,7 +134,7 @@
 #include "drivers/mss_uart/mss_uart.h"    // For baud rate defines and instances
 
 /* Application includes. */
-#include "can.h"
+#include "drivers/protocol/can.h"
 #include "flash_common.h"
 #include "leds.h"
 #include "mram.h"
