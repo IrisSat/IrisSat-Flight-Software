@@ -29,7 +29,7 @@
 
 #include <string.h>	//For memcpy.
 
-#include "MSS_C0_hw_platform.h" // Contains the address of the CORE_SPI instance for the driver.
+#include <firmware/MSS_C0_hw_platform.h> // Contains the address of the CORE_SPI instance for the driver.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -81,7 +81,7 @@ int init_spi()
 
     	}
     }
-    
+
     return rc;
 }
 
