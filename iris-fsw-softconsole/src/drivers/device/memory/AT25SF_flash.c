@@ -13,7 +13,7 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#include "AT25SF_flash.h"
+#include "drivers/device/memory/AT25SF_flash.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "board_definitions.h"

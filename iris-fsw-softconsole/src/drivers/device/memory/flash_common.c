@@ -18,7 +18,7 @@
 #include "flash_common.h"
 #include "W25N_flash.h"
 #include "MT25Q_flash.h"
-#include "AT25SF_flash.h"
+#include "drivers/device/memory/AT25SF_flash.h"
 #include "drivers/protocol/spi.h"
 #include "mss_spi.h"
 #include "board_definitions.h"
