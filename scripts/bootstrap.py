@@ -21,7 +21,7 @@ args = parser.parse_args()
 ################################################################
 # Paths
 import os
-from os.path import abspath
+import os.path
 
 # Set cwd
 print("Changing current working directory to the repository root")
@@ -34,11 +34,10 @@ libraries_path = "./iris-fsw-softconsole/Libraries"
 ################################################################
 # Environment variables
 import find_os
-import os.path
 
 if find_os.is_windows:
     import glob
-    microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin") +  glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
+    microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin") + glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
     if microchip_toolchain_glob:
         microchip_toolchain_path = os.path.normpath(microchip_toolchain_glob[0])
         sys.path.extend(microchip_toolchain_path)
