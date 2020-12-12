@@ -17,7 +17,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "adcs_driver.h"
+#include "drivers/device/adcs_driver.h"
 
 void vTestAdcsDriver(void * pvParameters){
 

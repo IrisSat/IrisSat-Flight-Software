@@ -144,7 +144,7 @@
 #include "watchdog.h"
 #include "scheduler.h"
 #include "priority_queue.h"
-#include "adcs_driver.h"
+#include "drivers/device/adcs_driver.h"
 #include "filesystem_driver.h"
 #include "tests.h"
 
