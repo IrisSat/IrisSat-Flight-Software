@@ -37,7 +37,7 @@
 #include "CMSIS/system_m2sxxx.h"
 
 /* Application includes. */
-#include "leds.h"
+#include "drivers/device/leds.h"
 
 #include "board_definitions.h"
 
