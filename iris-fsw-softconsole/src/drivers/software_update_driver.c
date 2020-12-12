@@ -11,7 +11,7 @@
 // - Created.
 //------------------------------------------------------------------------------
 
-#include "software_update_driver.h"
+#include "drivers/software_update_driver.h"
 #include "drivers/device/memory/flash_common.h"
 #include "mss_uart.h"
 #include "drivers/protocol/uart.h"

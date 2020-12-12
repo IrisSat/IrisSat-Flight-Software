@@ -40,7 +40,7 @@
 /* Application includes. */
 #include "drivers/protocol/uart.h"
 #include "version.h"
-#include "software_update_driver.h"
+#include "drivers/software_update_driver.h"
 
 #define UART_BUFFER_SIZE	256
 #define REPLY_QUEUE_SIZE	5
