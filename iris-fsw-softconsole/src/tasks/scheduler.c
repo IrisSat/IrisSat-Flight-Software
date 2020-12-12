@@ -25,7 +25,7 @@
 #include <task.h>
 
 // RTC Libraries
-#include <rtc_common.h>
+#include "drivers/device/rtc/rtc_common.h"
 #include "drivers/mss_rtc/mss_rtc.h"
 
 // User Libraries
