@@ -143,7 +143,7 @@
 #include "drivers/protocol/uart.h"
 #include "drivers/device/watchdog.h"
 #include "scheduler.h"
-#include "priority_queue.h"
+#include "tasks/priority_queue.h"
 #include "drivers/device/adcs_driver.h"
 #include "drivers/filesystem_driver.h"
 #include "tests.h"

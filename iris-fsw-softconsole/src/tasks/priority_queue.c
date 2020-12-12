@@ -21,7 +21,7 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "priority_queue.h"
+#include "tasks/priority_queue.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
