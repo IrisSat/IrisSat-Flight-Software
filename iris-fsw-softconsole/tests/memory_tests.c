@@ -17,7 +17,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "mram.h"
+#include "drivers/device/memory/mram.h"
 
 #include "drivers/device/memory/flash_common.h"
 #include "string.h"
