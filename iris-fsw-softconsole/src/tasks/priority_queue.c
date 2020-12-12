@@ -10,8 +10,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/task.h>
+#include <FreeRTOS/include/FreeRTOS.h>
+#include <FreeRTOS/include/task.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

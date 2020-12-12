@@ -8,8 +8,8 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/task.h>
+#include <FreeRTOS/include/FreeRTOS.h>
+#include <FreeRTOS/include/task.h>
 #include "drivers/device/memory/flash_common.h"
 #include "drivers/device/memory/MT25Q_flash.h"
 

@@ -15,8 +15,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/queue.h>
+#include <FreeRTOS/include/FreeRTOS.h>
+#include <FreeRTOS/include/queue.h>
 #include "drivers/mss_can/mss_can.h"
 
 

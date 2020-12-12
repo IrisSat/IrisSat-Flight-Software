@@ -11,8 +11,8 @@
 #include "drivers/device/memory/AT25SF_flash.h"
 #include "board_definitions.h"
 #include <firmware/drivers/mss_spi/mss_spi.h>
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/task.h>
+#include <FreeRTOS/include/FreeRTOS.h>
+#include <FreeRTOS/include/task.h>
 
 //Returns 1 if device is busy, 0 if not.
 uint8_t AT25SF_is_busy(AT25SF_Device_t * dev);

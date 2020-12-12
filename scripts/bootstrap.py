@@ -76,10 +76,10 @@ try:
     INCLUDES = f"{project_path}/include,"
     INCLUDES += f"{project_path}/Libraries,"
     INCLUDES += f"{project_path}/Libraries/FreeRTOS,"
-    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source,"
-    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/include,"
-    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/portable,"
-    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/include,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/portable,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/portable/GCC/ARM_CM3,"
 
     os.chdir(f"{libraries_path}/libcsp")
     print("configuring...")

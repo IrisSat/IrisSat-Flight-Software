@@ -19,8 +19,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/semphr.h>
+#include <FreeRTOS/include/FreeRTOS.h>
+#include <FreeRTOS/include/semphr.h>
 #include "drivers/CoreSPI/core_spi.h"   // Contains the interface for the CoreSPI drivers.
 #include "drivers/mss_gpio/mss_gpio.h"
 
