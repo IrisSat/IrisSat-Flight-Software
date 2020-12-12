@@ -18,7 +18,7 @@
 #include "mss_sys_services.h"
 #include "string.h"
 #include "stdio.h"
-#include "mss_spi.h"
+#include <firmware/drivers/mss_spi/mss_spi.h>
 
 static uint32_t programSize = 0;
 static uint8_t initialized = 0;

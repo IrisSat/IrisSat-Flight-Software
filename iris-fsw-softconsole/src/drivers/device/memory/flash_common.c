@@ -20,7 +20,7 @@
 #include "drivers/device/memory/MT25Q_flash.h"
 #include "drivers/device/memory/AT25SF_flash.h"
 #include "drivers/protocol/spi.h"
-#include "mss_spi.h"
+#include <firmware/drivers/mss_spi/mss_spi.h>
 #include "board_definitions.h"
 
 //Device specific spi functions
