@@ -81,8 +81,10 @@ try:
     INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3,"
 
     os.chdir(f"{libraries_path}/libcsp")
-    subprocess.run(f'python waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', check=True)
-    subprocess.run('python3 waf build', check=True)
+    print("configuring...")
+    subprocess.run(f'python3 waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', shell=True, check=True)
+    print("building...")
+    subprocess.run('python3 waf build', shell=True, check=True)
     os.remove(f"{project_path}/Libraries/CSP/libcsp.a")  # remove the old file
 
     from shutil import copyfile
