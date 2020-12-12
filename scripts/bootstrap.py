@@ -36,7 +36,7 @@ import os.path
 
 if find_os.is_windows:
     import glob
-    microchip_toolchain_glob = glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
+    microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin") +  glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
     if microchip_toolchain_glob:
         microchip_toolchain_path = os.path.normpath(microchip_toolchain_glob[0])
         sys.path.extend(microchip_toolchain_path)
