@@ -19,11 +19,23 @@ This project requires the Microsemi Smartfusion2 Maker Board.
 
 ### Required Software
 This project requires SoftConsole 6.1 and Libero 12.1.
+
+### Bootstrap
+This script bootstraps the softconsole project, and It requires python 3 and arm-none-eabi toolchain (included in SoftConsole) to be installed.
+```
+python ./scripts/bootstrap.py
+```
+
+To build libcsp with debug configuration, pass `--debug`
+```
+python ./scripts/bootstrap.py --debug
+```
+
 ### Configure your workspace
 1. Select the root folder (i.e. IrisSat-Flight-Software) as your SoftConsole workspace.
 2. Go to **File -> Import**.
 3. On the Import window, select **General -> Existing C/C++ Projects into Workspace**.
-4. Add "iris-fsw-softconsole" to your workspace. 
+4. Add "iris-fsw-softconsole" to your workspace.
 
 ### Build
 5. To build the SoftConsole project, go to **Project -> Build All**, or use **Ctrl-B**.
@@ -37,7 +49,7 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 11. In the "Design Flow" panel on the left, double-click "Update eNVM Memory Content", double-click on the Data Storage client and select iris-fsw-softconsole/Production/iris-fsw-softconsole.hex as the content file.
 12. In the "Design Flow" panel on the left, double-click "Run PROGRAM Action".
 
-### Debug 
+### Debug
 13. Go to **Run -> Debug Configurations**.
 14. Double-click **GDB OpenOCD Debugging** to create a new Debugging configuration.
 15. Under the "Main" tab, browse and select the "iris-fsw-softconsole" project as the project.
@@ -45,7 +57,7 @@ This project requires SoftConsole 6.1 and Libero 12.1.
 17. Under the "Startup" tab, make sure that "Pre-run/Restart reset" is not checked.
 18. With the MSR board connected, click "Apply", and then "Debug" to run the software.
 
-*Also if the Libero project is modified, the firmware should be regenerated and copied to the softconsole project. Note that the CoreSPI firmware must be generated from the Microsemi Firmware Catalog and copied to the firmware folder in the softconsole project* 
+*Also if the Libero project is modified, the firmware should be regenerated and copied to the softconsole project. Note that the CoreSPI firmware must be generated from the Microsemi Firmware Catalog and copied to the firmware folder in the softconsole project*
 
 ## Software Dependancies:
 
@@ -58,4 +70,3 @@ This library is provides a communication protocol stack following the TCP/IP mod
 ## Useful links:
 1. Maker Board IoT Demo project: https://www.digikey.com/eewiki/display/microcontroller/Getting+Started+with+the+Microsemi+SmartFusion+2+Maker-Board
 2. Maker Board "First Project" Demo: https://github.com/tstana/M2S010-MKR-KIT_FirstProj/wiki
-

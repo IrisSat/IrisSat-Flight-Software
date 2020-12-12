@@ -34,3 +34,6 @@ iris-fsw-libero/designer/MSS_C0/export/
 
 # For VSCode Editor:
 .vscode/
+
+# Python Scripts
+scripts/**/*.pyc
