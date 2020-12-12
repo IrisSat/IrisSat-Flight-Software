@@ -14,7 +14,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #include "drivers/device/memory/flash_common.h"
-#include "MT25Q_flash.h"
+#include "drivers/device/memory/MT25Q_flash.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -309,7 +309,7 @@ FlashStatus_t MT25Q_flash_erase_4k(MT25Q_Device_t * dev,uint32_t addr){
 
     //Wait until the erase is done.
     while(MT25Q_flash_is_busy(dev) == FLASH_BUSY){
-            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE)); 
+            vTaskDelay(pdMS_TO_TICKS(STAT_POLLING_RATE));
     }
 
     uint8_t check_command = MT25Q_OP_READ_FLAG_REG;
