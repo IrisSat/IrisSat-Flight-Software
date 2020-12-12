@@ -32,8 +32,10 @@ iris-fsw-libero/designer/MSS_C0/export/
 # log files
 *.log
 
-# For VSCode Editor:
+# Editors:
 .vscode/
+.idea/
+.vs/
 
 # Python Scripts
 scripts/**/*.pyc
