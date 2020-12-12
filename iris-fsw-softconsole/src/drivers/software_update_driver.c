@@ -15,7 +15,7 @@
 #include "drivers/device/memory/flash_common.h"
 #include "mss_uart.h"
 #include "drivers/protocol/uart.h"
-#include "mss_sys_services.h"
+#include <firmware/drivers/mss_sys_services/mss_sys_services.h>
 #include "string.h"
 #include "stdio.h"
 #include <firmware/drivers/mss_spi/mss_spi.h>
@@ -129,4 +129,3 @@ void save_program(void * buff, uint16_t size, uint8_t version){
 		if(stat == FLASH_OK) pos_update += size;
 	}
 }
-
