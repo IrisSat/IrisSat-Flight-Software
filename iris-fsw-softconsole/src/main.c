@@ -139,7 +139,7 @@
 #include "leds.h"
 #include "mram.h"
 #include "rtc_time.h"
-#include "spi.h"
+#include "drivers/protocol/spi.h"
 #include "uart.h"
 #include "watchdog.h"
 #include "scheduler.h"

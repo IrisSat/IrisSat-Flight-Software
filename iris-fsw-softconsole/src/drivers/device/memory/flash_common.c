@@ -19,7 +19,7 @@
 #include "W25N_flash.h"
 #include "MT25Q_flash.h"
 #include "AT25SF_flash.h"
-#include "spi.h"
+#include "drivers/protocol/spi.h"
 #include "mss_spi.h"
 #include "board_definitions.h"
 

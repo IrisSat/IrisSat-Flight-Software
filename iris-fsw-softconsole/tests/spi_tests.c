@@ -16,7 +16,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "spi.h"
+#include "drivers/protocol/spi.h"
 
 void vTestSPI(void *pvParameters)
 {
