@@ -140,7 +140,7 @@
 #include "mram.h"
 #include "rtc_time.h"
 #include "drivers/protocol/spi.h"
-#include "uart.h"
+#include "drivers/protocol/uart.h"
 #include "watchdog.h"
 #include "scheduler.h"
 #include "priority_queue.h"

@@ -14,7 +14,7 @@
 #include "software_update_driver.h"
 #include "flash_common.h"
 #include "mss_uart.h"
-#include "uart.h"
+#include "drivers/protocol/uart.h"
 #include "mss_sys_services.h"
 #include "string.h"
 #include "stdio.h"

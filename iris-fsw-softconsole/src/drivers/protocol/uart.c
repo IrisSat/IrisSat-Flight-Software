@@ -38,7 +38,7 @@
 #include <stdlib.h>
 
 /* Application includes. */
-#include "uart.h"
+#include "drivers/protocol/uart.h"
 #include "version.h"
 #include "software_update_driver.h"
 
