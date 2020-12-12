@@ -16,8 +16,8 @@
 #include <firmware/drivers/mss_uart/mss_uart.h>
 #include "drivers/protocol/uart.h"
 #include <firmware/drivers/mss_sys_services/mss_sys_services.h>
-#include "string.h"
-#include "stdio.h"
+#include <string.h>
+#include <stdio.h>
 #include <firmware/drivers/mss_spi/mss_spi.h>
 
 static uint32_t programSize = 0;

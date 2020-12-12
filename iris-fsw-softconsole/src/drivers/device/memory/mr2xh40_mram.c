@@ -20,7 +20,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "drivers/device/memory/mr2xh40_mram.h"
 
-#include "stdlib.h" // Used to include a definition of NULL.
+#include <stdlib.h> // Used to include a definition of NULL.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMERATIONS AND ENUMERATION TYPEDEFS
