@@ -26,10 +26,10 @@
  */
 
 /* Kernel includes. */
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/queue.h>
+#include <FreeRTOS/FreeRTOS-Source/include/semphr.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 
 /* Library includes. */
 #include "drivers/mss_uart/mss_uart.h"

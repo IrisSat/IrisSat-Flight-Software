@@ -13,10 +13,9 @@
 // - Created.
 //-------------------------------------------------------------------------------------------------
 
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 #include "tests.h"
-
-#include "FreeRTOS.h"
-#include "task.h"
 
 #include "drivers/filesystem_driver.h"
 

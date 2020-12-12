@@ -13,10 +13,10 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 #include "drivers/device/memory/flash_common.h"
 #include "drivers/device/memory/MT25Q_flash.h"
-#include "FreeRTOS.h"
-#include "task.h"
 
 #define STAT_POLLING_RATE   100
 #define M25Q_ID 0x20

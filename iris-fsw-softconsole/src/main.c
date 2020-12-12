@@ -125,10 +125,10 @@
 #include "csp/interfaces/csp_if_can.h"
 
 /* Kernel includes. */
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "task.h"
-#include "semphr.h"
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/queue.h>
+#include <FreeRTOS/FreeRTOS-Source/include/semphr.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 
 /* Driver includes. */
 #include "drivers/mss_uart/mss_uart.h"    // For baud rate defines and instances
