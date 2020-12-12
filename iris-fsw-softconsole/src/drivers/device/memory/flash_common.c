@@ -16,7 +16,7 @@
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include "drivers/device/memory/flash_common.h"
-#include "W25N_flash.h"
+#include "drivers/device/memory/W25N_flash.h"
 #include "drivers/device/memory/MT25Q_flash.h"
 #include "drivers/device/memory/AT25SF_flash.h"
 #include "drivers/protocol/spi.h"
