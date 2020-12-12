@@ -36,7 +36,7 @@ import os.path
 
 if find_os.is_windows:
     import glob
-    microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin")
+    microchip_toolchain_glob = glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
     if microchip_toolchain_glob:
         microchip_toolchain_path = os.path.normpath(microchip_toolchain_glob[0])
         sys.path.extend(microchip_toolchain_path)
@@ -82,13 +82,9 @@ try:
 
     os.chdir(f"{libraries_path}/libcsp")
     print("configuring...")
-    subprocess.run(f'python3 waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', shell=True, check=True)
+    subprocess.run(f'python waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', shell=True, check=True)
     print("building...")
-    subprocess.run('python3 waf build', shell=True, check=True)
-    os.remove(f"{project_path}/Libraries/CSP/libcsp.a")  # remove the old file
-
-    from shutil import copyfile
-    copyfile("build/libcsp.a", f"{project_path}/Libraries/CSP/libcsp.a")
+    subprocess.run('python waf build', shell=True, check=True)
 
 finally:
     os.chdir(repository_dir)
