@@ -16,8 +16,8 @@
 #include <string.h>
 
 // FreeRTOS Libraries
-#include <FreeRTOS/include/FreeRTOS.h>
-#include <FreeRTOS/include/task.h>
+#include <FreeRTOS-Kernel/include/FreeRTOS.h>
+#include <FreeRTOS-Kernel/include/task.h>
 
 // RTC Libraries
 #include "drivers/device/rtc/rtc_common.h"

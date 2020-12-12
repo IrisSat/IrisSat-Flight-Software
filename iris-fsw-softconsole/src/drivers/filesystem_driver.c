@@ -11,8 +11,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include <FreeRTOS/include/FreeRTOS.h>
-#include <FreeRTOS/include/semphr.h>
+#include <FreeRTOS-Kernel/include/FreeRTOS.h>
+#include <FreeRTOS-Kernel/include/semphr.h>
 #include "drivers/filesystem_driver.h"
 #include "drivers/device/memory/flash_common.h"
 

@@ -7,8 +7,8 @@
 // - Created.
 //-------------------------------------------------------------------------------------------------
 
-#include <FreeRTOS/include/FreeRTOS.h>
-#include <FreeRTOS/include/task.h>
+#include <FreeRTOS-Kernel/include/FreeRTOS.h>
+#include <FreeRTOS-Kernel/include/task.h>
 #include "tests.h"
 
 #include "drivers/protocol/can.h"

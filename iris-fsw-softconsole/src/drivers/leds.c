@@ -21,8 +21,8 @@
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 /* Scheduler includes. */
-#include <FreeRTOS/include/FreeRTOS.h>
-#include <FreeRTOS/include/task.h>
+#include <FreeRTOS-Kernel/include/FreeRTOS.h>
+#include <FreeRTOS-Kernel/include/task.h>
 
 /* Library includes. */
 #include "drivers/mss_gpio/mss_gpio.h"
