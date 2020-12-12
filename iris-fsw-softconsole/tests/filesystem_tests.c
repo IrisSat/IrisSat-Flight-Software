@@ -8,12 +8,11 @@
 // - Created.
 //-------------------------------------------------------------------------------------------------
 
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 #include "tests.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
-
-#include "filesystem_driver.h"
+#include "drivers/filesystem_driver.h"
 
 void vTestFS(void * pvParams){
 	lfs_file_t file = {0}; //Set to 0 because debugger tries to read fields of struct one of which is a pointer, but since this is on free rtos heap, initial value is a5a5a5a5.

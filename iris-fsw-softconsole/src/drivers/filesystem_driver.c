@@ -11,11 +11,11 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include "filesystem_driver.h"
-#include "flash_common.h"
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/semphr.h>
+#include "drivers/filesystem_driver.h"
+#include "drivers/device/memory/flash_common.h"
 
-#include "FreeRTOS.h"
-#include "semphr.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS

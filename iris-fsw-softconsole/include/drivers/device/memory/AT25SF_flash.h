@@ -11,7 +11,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #include <stdint.h>
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 
 #define AT25SF_PAGE_SIZE             (256)
 #define AT25SF_SUBSECTOR_SMALL_SIZE  (4096)

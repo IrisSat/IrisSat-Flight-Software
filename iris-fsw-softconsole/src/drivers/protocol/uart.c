@@ -18,21 +18,21 @@
  */
 
 /* Kernel includes. */
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/queue.h>
+#include <FreeRTOS/FreeRTOS-Source/include/semphr.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 
 /* Library includes. */
 #include "drivers/mss_uart/mss_uart.h"
-#include "CMSIS/system_m2sxxx.h"
+#include <firmware/CMSIS/system_m2sxxx.h>
 #include <string.h>
 #include <stdlib.h>
 
 /* Application includes. */
-#include "uart.h"
+#include "drivers/protocol/uart.h"
 #include "version.h"
-#include "software_update_driver.h"
+#include "drivers/software_update_driver.h"
 
 #define UART_BUFFER_SIZE	256
 #define REPLY_QUEUE_SIZE	5
@@ -282,4 +282,3 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 		}
 	}
 }
-

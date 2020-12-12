@@ -10,7 +10,7 @@
 //  * This does not currently implement communication as specified in SIGMA operations manual *
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#include "adcs_driver.h"
+#include "drivers/device/adcs_driver.h"
 #include "board_definitions.h"
 
 #define ADCS_ACK_PREFIX 0x01

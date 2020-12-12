@@ -21,15 +21,15 @@
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 /* Scheduler includes. */
-#include "FreeRTOS.h"
-#include "task.h"
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 
 /* Library includes. */
 #include "drivers/mss_gpio/mss_gpio.h"
-#include "CMSIS/system_m2sxxx.h"
+#include <firmware/CMSIS/system_m2sxxx.h>
 
 /* Application includes. */
-#include "leds.h"
+#include "drivers/device/leds.h"
 
 #include "board_definitions.h"
 

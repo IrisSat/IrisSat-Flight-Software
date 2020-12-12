@@ -10,12 +10,12 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#include "flash_common.h"
-#include "W25N_flash.h"
-#include "MT25Q_flash.h"
-#include "AT25SF_flash.h"
-#include "spi.h"
-#include "mss_spi.h"
+#include "drivers/device/memory/flash_common.h"
+#include "drivers/device/memory/W25N_flash.h"
+#include "drivers/device/memory/MT25Q_flash.h"
+#include "drivers/device/memory/AT25SF_flash.h"
+#include "drivers/protocol/spi.h"
+#include <firmware/drivers/mss_spi/mss_spi.h>
 #include "board_definitions.h"
 
 //Device specific spi functions

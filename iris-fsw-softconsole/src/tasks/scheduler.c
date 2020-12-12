@@ -16,18 +16,18 @@
 #include <string.h>
 
 // FreeRTOS Libraries
-#include <FreeRTOS.h>
-#include <task.h>
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 
 // RTC Libraries
-#include <rtc_common.h>
+#include "drivers/device/rtc/rtc_common.h"
 #include "drivers/mss_rtc/mss_rtc.h"
 
 // User Libraries
-#include "scheduler.h"
-#include "priority_queue.h"
-#include <rtc_time.h>
-#include <request_code.h>
+#include "tasks/scheduler.h"
+#include "tasks/priority_queue.h"
+#include "drivers/device/rtc/rtc_time.h"
+#include "request_code.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS

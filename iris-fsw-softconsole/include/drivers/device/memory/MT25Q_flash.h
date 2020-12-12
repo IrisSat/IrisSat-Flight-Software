@@ -12,7 +12,7 @@
 //
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 #include <stdint.h>
-#include "flash_common.h"
+#include "drivers/device/memory/flash_common.h"
 
 #define MT25Q_PAGE_SIZE             (256)
 #define MT25Q_SUBSECTOR_SMALL_SIZE  (4096)

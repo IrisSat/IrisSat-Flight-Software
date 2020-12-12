@@ -7,15 +7,14 @@
 // - Created.
 //-------------------------------------------------------------------------------------------------
 
+#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
+#include <FreeRTOS/FreeRTOS-Source/include/task.h>
 #include "tests.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
+#include "drivers/device/memory/mram.h"
 
-#include "mram.h"
-
-#include "flash_common.h"
-#include "string.h"
+#include "drivers/device/memory/flash_common.h"
+#include <string.h>
 
 void vTestMRAM(void *pvParameters)
 {
