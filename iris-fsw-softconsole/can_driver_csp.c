@@ -1,6 +1,6 @@
 #include "drivers/protocol/can.h"
-#include "arch/csp_thread.h"
-#include "interfaces/csp_if_can.h"
+#include <csp/arch/csp_thread.h>
+#include <csp/interfaces/csp_if_can.h>
 
 typedef uint32_t can_id_t;
 
