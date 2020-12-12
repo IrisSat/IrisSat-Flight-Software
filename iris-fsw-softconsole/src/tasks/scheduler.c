@@ -31,7 +31,7 @@
 // User Libraries
 #include "scheduler.h"
 #include "priority_queue.h"
-#include <rtc_time.h>
+#include "drivers/device/rtc/rtc_time.h"
 #include <request_code.h>
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

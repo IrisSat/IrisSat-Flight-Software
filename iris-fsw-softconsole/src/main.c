@@ -138,7 +138,7 @@
 #include "drivers/device/memory/flash_common.h"
 #include "leds.h"
 #include "drivers/device/memory/mram.h"
-#include "rtc_time.h"
+#include "drivers/device/rtc/rtc_time.h"
 #include "drivers/protocol/spi.h"
 #include "drivers/protocol/uart.h"
 #include "watchdog.h"
