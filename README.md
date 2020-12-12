@@ -6,14 +6,6 @@ This repository contains software for the IrisSat Command and Data Handling (CDH
 
 ## Build Steps
 
-Git submodules are used in this project. Use the command "git submodule update --init" to make sure you have the submodule files.
-
-The CSP library used in this project must be built before the software can be compiled.
-Follow the instructions in iris-fsw-softconsole/Libraries/ to build the library.
-
-Also the "Production" build of the softconsole project should be compiled before the Libero project is built because the Libero project will include the firmware binary as part of the FPGA image.
-
-
 ### Required hardware
 This project requires the Microsemi Smartfusion2 Maker Board.
 
@@ -21,7 +13,7 @@ This project requires the Microsemi Smartfusion2 Maker Board.
 This project requires SoftConsole 6.1 and Libero 12.1.
 
 ### Bootstrap
-This script bootstraps the softconsole project, and It requires python 3 and arm-none-eabi toolchain (included in SoftConsole) to be installed.
+This script bootstraps the softconsole project, and It requires python 3 and arm-none-eabi toolchain (included in SoftConsole) to be installed. This script downloads the git submodules, and then builds libcsp which has a separate build step.
 ```
 python ./scripts/bootstrap.py
 ```
@@ -39,6 +31,8 @@ python ./scripts/bootstrap.py --debug
 
 ### Build
 5. To build the SoftConsole project, go to **Project -> Build All**, or use **Ctrl-B**.
+
+**Note**: The "Production" build of the softconsole project should be compiled before the Libero project is built because the Libero project will include the firmware binary as part of the FPGA image.
 
 ### Configure FPGA
 6. Open the \*.prjx found in iris-fsw-libero, with Libero 12.1.
