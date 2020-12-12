@@ -33,7 +33,7 @@
 
 /* Library includes. */
 #include "drivers/mss_uart/mss_uart.h"
-#include "CMSIS/system_m2sxxx.h"
+#include <firmware/CMSIS/system_m2sxxx.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -290,4 +290,3 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 		}
 	}
 }
-
