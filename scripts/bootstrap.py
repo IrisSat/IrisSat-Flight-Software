@@ -31,9 +31,9 @@ libraries_path = "./iris-fsw-softconsole/Libraries"
 
 ################################################################
 # Environment variables
-import find_os
+import utils
 
-if find_os.is_windows:
+if utils.is_windows:
     import glob
     microchip_toolchain_glob = glob.glob("C:/Microchip/*/arm-none-eabi-gcc/bin") + glob.glob("C:/Microsemi/*/arm-none-eabi-gcc/bin")
     if microchip_toolchain_glob:
@@ -66,6 +66,12 @@ import subprocess
 # Submodules
 print("Downloading submodules...")
 subprocess.run("git submodule update --init --recursive", shell=True, check=True)
+
+################################################################
+import utils
+
+# FreeRTOS
+utils.download_git_branch("V10.4.2", "https://github.com/FreeRTOS/FreeRTOS-Kernel", libraries_path, "FreeRTOS-Kernel")
 
 ################################################################
 # libcsp
