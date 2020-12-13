@@ -73,11 +73,11 @@ subprocess.run("git submodule update --init --recursive", shell=True, check=True
 print("Building libcsp...")
 try:
     project_path = "../.."
-    INCLUDES = f"{project_path}/FreeRTOS,"
-    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source,"
-    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/include,"
-    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/portable,"
-    INCLUDES += f"{project_path}/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3,"
+    INCLUDES = f"{project_path}/Libraries/FreeRTOS,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/include,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/portable,"
+    INCLUDES += f"{project_path}/Libraries/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3,"
 
     os.chdir(f"{libraries_path}/libcsp")
     print("configuring...")
