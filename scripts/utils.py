@@ -19,8 +19,11 @@ import glob
 def download_git_branch(rev, url, download_dir, folder_name=""):
     print(f"Downloading {url} {rev} to {download_dir}/{folder_name}...")
 
+    # Find the name of git basename folder
+    git_basename = os.path.splitext(os.path.basename(url))[0]
+
     if folder_name == "":
-        folder_name = os.path.basename(url)
+        folder_name = git_basename
 
     final_path = os.path.join(download_dir, folder_name)
 
@@ -29,7 +32,7 @@ def download_git_branch(rev, url, download_dir, folder_name=""):
 
     # download the repo to a temporary folder
     temp_dir = tempfile.mkdtemp()
-    download_path = os.path.join(temp_dir, os.path.basename(url))
+    download_path = os.path.join(temp_dir, git_basename)
     subprocess.run(f"git clone --depth 1 --branch {rev} {url}", shell=True, check=True, cwd=temp_dir)
 
     # delete .git folder
