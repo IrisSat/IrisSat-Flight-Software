@@ -74,20 +74,42 @@ import utils
 version_FREERTOS = "V9.0.0"
 utils.download_git_branch(version_FREERTOS, "https://github.com/FreeRTOS/FreeRTOS-Kernel", libraries_path, "FreeRTOS-Kernel")
 
+freertos_kernel_folder = os.path.join(libraries_path, 'FreeRTOS-Kernel')
+
 # this is not needed for V10
 if version_FREERTOS == "V9.0.0":
     # Move files to workaround the old folder structure of FreeRTOS-Kernel
     import shutil
-    freertos_kernel_folder = os.path.join(libraries_path, 'FreeRTOS-Kernel')
+    import pathlib
     source_folder = os.path.join(freertos_kernel_folder, 'FreeRTOS', 'Source')
     shutil.move(source_folder, libraries_path)     # move source content temporarily
-    shutil.rmtree(freertos_kernel_folder, ignore_errors=True) # delete unneeded files
+
+    # Delete unneeded files
+    shutil.rmtree(freertos_kernel_folder, ignore_errors=True)
+    shutil.rmtree(os.path.join(freertos_kernel_folder, 'FreeRTOS'), ignore_errors=True)
+    shutil.rmtree(os.path.join(freertos_kernel_folder, 'FreeRTOS-Plus'), ignore_errors=True)
+    pathlib.Path(freertos_kernel_folder).mkdir(parents=True, exist_ok=True)
+
     # move content of source to freertos kernel folder
     source_temp_dir = os.path.join(libraries_path, 'Source')
     source_content = os.listdir(source_temp_dir)
     for file in source_content:
         shutil.move(os.path.join(source_temp_dir, file), os.path.join(freertos_kernel_folder, file))
     os.rmdir(source_temp_dir)
+
+
+# remove portable directories not needed for Arm CORTEX M3
+portable_folder = os.path.join(freertos_kernel_folder, 'portable')
+portable_content = os.listdir(portable_folder)
+for file in portable_content:
+    if file != "portable" and file != "GCC" and file != "MemMang":
+        shutil.rmtree(os.path.join(portable_folder, file), ignore_errors=True)
+
+gcc_folder = os.path.join(portable_folder, "GCC")
+gcc_content = os.listdir(gcc_folder)
+for file in gcc_content:
+    if file != "GCC" and file != "ARM_CM3":
+        shutil.rmtree(os.path.join(gcc_folder, file), ignore_errors=True)
 
 ################################################################
 # libcsp
