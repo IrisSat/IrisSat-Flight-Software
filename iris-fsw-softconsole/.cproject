@@ -467,14 +467,6 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/hal/CortexM3/GNU}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/portable/GCC/ARM_CM3}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
@@ -850,14 +842,6 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/hal}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/hal/CortexM3/GNU}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/portable/GCC/ARM_CM3}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
                                     									
