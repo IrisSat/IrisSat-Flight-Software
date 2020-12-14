@@ -111,6 +111,14 @@ for file in gcc_content:
     if file != "GCC" and file != "ARM_CM3":
         shutil.rmtree(os.path.join(gcc_folder, file), ignore_errors=True)
 
+
+# Use heap_4.c from MemMang
+memmang_folder = os.path.join(portable_folder, "MemMang")
+memmang_content = os.listdir(memmang_folder)
+for file in memmang_content:
+    if file != "MemMang" and file != "heap_4.c":
+        os.remove(os.path.join(memmang_folder, file))
+
 ################################################################
 # libcsp
 
