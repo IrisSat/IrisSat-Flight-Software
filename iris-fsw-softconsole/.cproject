@@ -127,11 +127,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/littlefs}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/include}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/portable/GCC/ARM_CM3}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -303,8 +301,10 @@
                         						
                         <entry excluding="Libraries/libcsp/utils|Libraries/libcsp/doc|Libraries/libcsp/bindings|Libraries/libcsp/examples|Libraries/libcsp/include|Libraries/libcsp/src|Libraries/CSP/src|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                         						
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-                        					
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+                        						
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tests"/>
+                                                					
                     </sourceEntries>
                     				
                 </configuration>
@@ -431,11 +431,11 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS-Kernel/include}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/FreeRTOS-Kernel/portable/GCC/ARM_CM3}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/cdh-tsat5-softconsole/include}&quot;"/>
                                     								
@@ -467,14 +467,6 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/hal/CortexM3/GNU}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
@@ -483,11 +475,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/littlefs}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/include}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/portable/GCC/ARM_CM3}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -728,6 +718,10 @@
                     <sourceEntries>
                         						
                         <entry excluding="Libraries/libcsp/bindings|Libraries/libcsp/doc|Libraries/libcsp/examples|Libraries/libcsp/src|Libraries/CSP/src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+                                                
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tests"/>
                         					
                     </sourceEntries>
                     				
@@ -851,14 +845,6 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/firmware/hal/CortexM3/GNU}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
@@ -867,11 +853,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/littlefs}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/include}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/include}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS/FreeRTOS-Source/portable/GCC/ARM_CM3}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries/FreeRTOS-Kernel/portable/GCC/ARM_CM3}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -1044,6 +1028,8 @@
                         <entry excluding="Libraries/libcsp/bindings|Libraries/libcsp/doc|Libraries/libcsp/examples|Libraries/libcsp/src|Libraries/CSP/src|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                         						
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+                        						
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tests"/>
                         					
                     </sourceEntries>
                     				

@@ -8,8 +8,8 @@
 // - Created.
 //-------------------------------------------------------------------------------------------------
 
-#include <FreeRTOS/FreeRTOS-Source/include/FreeRTOS.h>
-#include <FreeRTOS/FreeRTOS-Source/include/task.h>
+#include <FreeRTOS-Kernel/include/FreeRTOS.h>
+#include <FreeRTOS-Kernel/include/task.h>
 #include "tests.h"
 
 #include "drivers/filesystem_driver.h"

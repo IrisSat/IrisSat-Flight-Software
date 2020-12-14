@@ -29,6 +29,9 @@ iris-fsw-softconsole/[Rr]elease/
 #For Libero Bitstream Exports
 iris-fsw-libero/designer/MSS_C0/export/
 
+# Automatically downloaded
+iris-fsw-softconsole/Libraries/FreeRTOS-Kernel
+
 # log files
 *.log
 
