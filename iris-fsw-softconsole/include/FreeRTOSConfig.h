@@ -1,3 +1,6 @@
+// Amin: portCONFIGURE_TIMER_FOR_RUN_TIME_STATS was defined to be empty
+
+
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
@@ -71,7 +74,7 @@ extern uint32_t SystemCoreClock;
 void vConfigureTimerForRunTimeStats( void );
 uint32_t ulGetRunTimeCounterValue( void );
 #define configGENERATE_RUN_TIME_STATS	0
-#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() vConfigureTimerForRunTimeStats()
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() // vConfigureTimerForRunTimeStats()
 #define portGET_RUN_TIME_COUNTER_VALUE() ulGetRunTimeCounterValue()
 
 /* Set the following definitions to 1 to include the API function, or zero
