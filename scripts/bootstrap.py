@@ -71,7 +71,23 @@ subprocess.run("git submodule update --init --recursive", shell=True, check=True
 import utils
 
 # FreeRTOS
-utils.download_git_branch("V10.4.2", "https://github.com/FreeRTOS/FreeRTOS-Kernel", libraries_path, "FreeRTOS-Kernel")
+version_FREERTOS = "V9.0.0"
+utils.download_git_branch(version_FREERTOS, "https://github.com/FreeRTOS/FreeRTOS-Kernel", libraries_path, "FreeRTOS-Kernel")
+
+# this is not needed for V10
+if version_FREERTOS == "V9.0.0":
+    # Move files to workaround the old folder structure of FreeRTOS-Kernel
+    import shutil
+    freertos_kernel_folder = os.path.join(libraries_path, 'FreeRTOS-Kernel')
+    source_folder = os.path.join(freertos_kernel_folder, 'FreeRTOS', 'Source')
+    shutil.move(source_folder, libraries_path)     # move source content temporarily
+    shutil.rmtree(freertos_kernel_folder, ignore_errors=True) # delete unneeded files
+    # move content of source to freertos kernel folder
+    source_temp_dir = os.path.join(libraries_path, 'Source')
+    source_content = os.listdir(source_temp_dir)
+    for file in source_content:
+        shutil.move(os.path.join(source_temp_dir, file), os.path.join(freertos_kernel_folder, file))
+    os.rmdir(source_temp_dir)
 
 ################################################################
 # libcsp
