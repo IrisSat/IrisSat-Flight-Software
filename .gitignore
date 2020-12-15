@@ -31,6 +31,7 @@ iris-fsw-libero/designer/MSS_C0/export/
 
 # Automatically downloaded
 iris-fsw-softconsole/Libraries/FreeRTOS-Kernel
+iris-fsw-softconsole/Libraries/libcsp
 
 # log files
 *.log
