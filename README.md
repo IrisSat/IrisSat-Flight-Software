@@ -10,7 +10,7 @@ This repository contains software for the IrisSat Command and Data Handling (CDH
 This project requires the Microsemi Smartfusion2 Maker Board.
 
 ### Required Software
-This project requires SoftConsole 6.1 and Libero 12.1.
+This project is tested with SoftConsole 6.5 and Libero 12.2.
 
 ### Bootstrap
 This script bootstraps the softconsole project, and It requires python 3 and arm-none-eabi toolchain (included in SoftConsole) to be installed. This script downloads the dependencies, and then builds libcsp which has a separate build step.
