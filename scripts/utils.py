@@ -33,7 +33,7 @@ def download_git_branch(rev, url, download_dir, folder_name=""):
     # download the repo to a temporary folder
     temp_dir = tempfile.mkdtemp()
     download_path = os.path.join(temp_dir, git_basename)
-    subprocess.run(f"git clone --depth 1 --branch {rev} {url}", shell=True, check=True, cwd=temp_dir)
+    subprocess.run(f"git -c advice.detachedHead=false clone --depth 1 --branch {rev} {url}", shell=True, check=True, cwd=temp_dir)
 
     # delete .git folder
     git_folder = glob.glob(f"{temp_dir}/*/.git")[0]
