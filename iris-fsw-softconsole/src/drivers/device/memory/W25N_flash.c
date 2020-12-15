@@ -376,13 +376,13 @@ FlashStatus_t w25n_page_data_read(W25NDevice_t *dd,uint16_t page_num) {
 
 		if (st & (W25N_REG_STAT_ECC1 | W25N_REG_STAT_ECC0)) {
 
-			bool hard = (st & W25N_REG_STAT_ECC1);
-
-			if (hard){
-				return FLASH_ERROR_ECC;
-			}else{
-				return FLASH_ERROR_ECC;
-			}
+//			bool hard = (st & W25N_REG_STAT_ECC1);
+//			if (hard){
+//				return FLASH_ERROR_ECC;
+//			}else{
+//				return FLASH_ERROR_ECC;
+//			}
+			return FLASH_ERROR_ECC;
 		}
 	}
 
