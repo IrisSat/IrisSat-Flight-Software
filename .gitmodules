@@ -1,6 +1,0 @@
-[submodule "iris-fsw-softconsole/Libraries/littlefs"]
-	path = iris-fsw-softconsole/Libraries/littlefs
-	url = https://github.com/littlefs-project/littlefs
-[submodule "iris-fsw-softconsole/Libraries/libcsp"]
-	path = iris-fsw-softconsole/Libraries/libcsp
-	url = https://github.com/IrisSat/libcsp.git

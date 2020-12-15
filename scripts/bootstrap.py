@@ -121,6 +121,9 @@ for file in memmang_content:
 
 ################################################################
 # libcsp
+print("Downloading libcsp...")
+version_libcsp = "track-c9c177e" # tracks c9c177e commit of upstream with an additional bug fix for get_csp_can_queue
+utils.download_git_branch(version_libcsp, " https://github.com/IrisSat/libcsp", libraries_path, "libcsp")
 
 print("Building libcsp...")
 try:
@@ -132,11 +135,20 @@ try:
     INCLUDES += f"{project_path}/Libraries/FreeRTOS-Kernel/portable,"
     INCLUDES += f"{project_path}/Libraries/FreeRTOS-Kernel/portable/GCC/ARM_CM3,"
 
+    os.environ["CFLAGS"] = f"-Wall -std=gnu99 {optimization_flags} -mcpu=cortex-m3 -mthumb"
+
     os.chdir(f"{libraries_path}/libcsp")
     print("configuring...")
-    subprocess.run(f'python waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --cflags "{optimization_flags}" --includes="{INCLUDES}"', shell=True, check=True)
+    subprocess.run(f'python waf configure --toolchain=arm-none-eabi- --enable-if-can --with-os=freertos --includes="{INCLUDES}"', shell=True, check=True)
     print("building...")
     subprocess.run('python waf build', shell=True, check=True)
 
 finally:
     os.chdir(repository_dir)
+
+
+################################################################
+# littlefs
+print("Downloading littlefs...")
+version_libcsp = "v2.3.0"
+utils.download_git_branch(version_libcsp, "https://github.com/littlefs-project/littlefs", libraries_path, "littlefs")
