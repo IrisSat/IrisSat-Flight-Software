@@ -456,24 +456,23 @@ FlashStatus_t w25n_read(W25NDevice_t *dev, size_t address, size_t len, void *dst
 
     if (!w25n_map_page(dev, address, &page_num, &page_off)) {
       res = FLASH_INVALID_ADDRESS;
-      goto out;
+      return res;
     }
     size_t rd_len = MIN(len, W25N_PAGE_SIZE - page_off);
 
 
     if ((res2 = w25n_page_data_read(dev, page_num))) {
       res = res2;
-      goto out;
+      return res;
     }
     if (!w25n_op_arg_rx(dev, W25N_OP_READ, 2, page_off, 1, rd_len, dp)) {
-      goto out;
+      return res;
     }
     address += rd_len;
     len -= rd_len;
     dp += rd_len;
   }
   res = FLASH_OK;
-out:
 
   return res;
 }
@@ -553,13 +552,13 @@ FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_b
   if(block_num < 0 || block_num > total_blocks){
 
 	    res = FLASH_INVALID_ADDRESS;
-	    goto out;
+	    return res;
   }
 
   if( num_blocks> (total_blocks-block_num)){
 
 	    res = FLASH_INVALID_ADDRESS;
-	    goto out;
+	    return res;
   }
 
   size_t off = block_num * W25N_BLOCK_SIZE;
@@ -567,7 +566,7 @@ FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_b
 
     if (off % W25N_BLOCK_SIZE != 0 || len % W25N_BLOCK_SIZE != 0) {
       res = FLASH_INVALID_ADDRESS;
-      goto out;
+      return res;
     }
 
   uint16_t page_num;
@@ -576,23 +575,23 @@ FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_b
   while (len > 0) {
     if (!w25n_map_page(dd, off, &page_num, &page_off)) {
       res = FLASH_INVALID_ADDRESS;
-      goto out;
+      return res;
     }
 
-    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) goto out;
-    if (!w25n_op_arg(dd, W25N_OP_BLOCK_ERASE, 1 + 2, page_num)) goto out;
+    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) return res;
+    if (!w25n_op_arg(dd, W25N_OP_BLOCK_ERASE, 1 + 2, page_num)) return res;
     uint8_t st;
     while ((st = w25n_read_reg(dd, W25N_REG_STAT)) & W25N_REG_STAT_BUSY) {
     }
     if (st & W25N_REG_STAT_EFAIL) {
        /* TODO(rojer): On-the-fly remapping of bad blocks. */
-      goto out;
+      return res;
     }
     off += W25N_BLOCK_SIZE;
     len -= W25N_BLOCK_SIZE;
   }
   res = FLASH_OK;
-out:
+
   return res;
 }
 
@@ -631,10 +630,6 @@ FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck
 
 
 	return result;
-
-	out:
-	  return result;
-
 }
 
 FlashStatus_t w25n_read_bb_lut(W25NDevice_t *dd,
@@ -643,7 +638,7 @@ FlashStatus_t w25n_read_bb_lut(W25NDevice_t *dd,
   uint8_t tmp[W25N_BB_LUT_SIZE * 4];
   if (!w25n_op_arg_rx(dd, W25N_OP_BBM_READ_LUT, 0, 0, 1, sizeof(tmp),
                         tmp)) {
-    goto out;
+    return res;
   }
   for (int i = 0, j = 0; j < (int) W25N_BB_LUT_SIZE; i++, j += 4) {
     W25NBadBlockEntry_t *e = &lut->e[i];
@@ -654,7 +649,7 @@ FlashStatus_t w25n_read_bb_lut(W25NDevice_t *dd,
     if (num_bb != NULL && e->enable && !e->invalid) (*num_bb)++;
   }
   res = FLASH_OK;
-out:
+
   return res;
 }
 
@@ -667,14 +662,14 @@ FlashStatus_t w25n_remap_block(W25NDevice_t *dd, size_t bad_off,
   uint16_t bpn, lba, pba;
   W25NBadBlockLUT_t *lut;
   if (!w25n_map_page_ex(dd, bad_off, &bpn, NULL, false)) {
-    goto out;
+    return res;
   }
   uint8_t gdn;
   uint16_t gpn;
   if (!w25n_map_page_ex(dd, good_off,  &gpn, NULL, false)) {
-    goto out;
+    return res;
   }
-  if (bdn != gdn) goto out; /* Cannot remap between different dies. */
+  if (bdn != gdn) return res; /* Cannot remap between different dies. */
   lba = bpn >> 6, pba = gpn >> 6;
   /*
    * The datasheet says:
@@ -686,26 +681,25 @@ FlashStatus_t w25n_remap_block(W25NDevice_t *dd, size_t bad_off,
   for (int i = 0; i < (int) W25N_BB_LUT_SIZE; i++) {
     if (lut->e[i].lba == lba) {
     	//Mapping already exists.;
-      goto out;
+      return res;
     }
   }
 
   if (w25n_read_reg(dd, W25N_REG_STAT) & W25N_REG_STAT_LUTF) {
 	 //BB lookup table is full.
-    goto out;
+    return res;
   }
   {
     uint8_t tx_data[5] = {
         W25N_OP_BBM_SWAP_BLOCKS, (lba >> 8) & 0xff, (lba & 0xff),
         (pba >> 8) & 0xff, (pba & 0xff),
     };
-    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) goto out;
-    if (w25n_txn(dd, sizeof(tx_data), tx_data, 0, 0, NULL)) goto out;
+    if (!w25n_simple_op(dd, W25N_OP_WRITE_ENABLE)) return res;
+    if (w25n_txn(dd, sizeof(tx_data), tx_data, 0, 0, NULL)) return res;
   }
 
-  if (!w25n_read_bb_lut(dd, lut, NULL)) goto out;
+  if (!w25n_read_bb_lut(dd, lut, NULL)) return res;
   res = FLASH_OK;
-out:
 
   return res;
 }
