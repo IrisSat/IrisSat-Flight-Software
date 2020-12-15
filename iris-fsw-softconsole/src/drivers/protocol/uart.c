@@ -254,7 +254,8 @@ static void prvProcessUART0(uint8_t *pcBuffer, uint32_t ulNumBytes)
 				pos = 0;
 			}
 		}
-		if(numBytes <= 0){
+		// if(numBytes <= 0){
+		if(numBytes == 0){
 			mode = 0;
 			prvUARTSend(&g_mss_uart0, "Done uploading program!\n", strlen("Done uploading program!\n"));
 		}

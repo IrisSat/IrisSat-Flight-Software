@@ -549,7 +549,7 @@ FlashStatus_t w25n_erase_blocks(W25NDevice_t *dd, size_t block_num, size_t num_b
   const size_t total_blocks = W25N_DIE_SIZE/W25N_BLOCK_SIZE - dd->bb_reserve;
 
   //Check that the block number is valid.
-  if(block_num < 0 || block_num > total_blocks){
+  if(/* block_num < 0 || */ block_num > total_blocks){
 
 	    res = FLASH_INVALID_ADDRESS;
 	    return res;
