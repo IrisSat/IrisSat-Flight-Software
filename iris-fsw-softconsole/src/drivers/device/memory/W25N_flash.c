@@ -615,7 +615,7 @@ FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck
 	}
 
 	 int num_bb = 0;
-	 uint8_t cfg0;
+	 uint8_t cfg0 = 0u;
 	 for (uint8_t i = 0; i < 1; i++) {
 
 	   w25n_write_reg(dev, W25N_REG_PROT, 0);
