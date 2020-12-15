@@ -122,8 +122,8 @@ for file in memmang_content:
 ################################################################
 # libcsp
 print("Downloading libcsp...")
-version_libcsp = "v1.4"
-utils.download_git_branch(version_libcsp, " https://github.com/libcsp/libcsp", libraries_path, "libcsp")
+version_libcsp = "v1.4-c9c177e" # c9c177e commit of upstream
+utils.download_git_branch(version_libcsp, " https://github.com/IrisSat/libcsp", libraries_path, "libcsp")
 
 print("Building libcsp...")
 try:
