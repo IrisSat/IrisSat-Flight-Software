@@ -658,18 +658,15 @@ FlashStatus_t w25n_remap_block(W25NDevice_t *dd, size_t bad_off,
                         size_t good_off) {
   FlashStatus_t res = false;
 
-  uint8_t bdn;
   uint16_t bpn, lba, pba;
   W25NBadBlockLUT_t *lut;
   if (!w25n_map_page_ex(dd, bad_off, &bpn, NULL, false)) {
     return res;
   }
-  uint8_t gdn;
   uint16_t gpn;
   if (!w25n_map_page_ex(dd, good_off,  &gpn, NULL, false)) {
     return res;
   }
-  if (bdn != gdn) return res; /* Cannot remap between different dies. */
   lba = bpn >> 6, pba = gpn >> 6;
   /*
    * The datasheet says:
