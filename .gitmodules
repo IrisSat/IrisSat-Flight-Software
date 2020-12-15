@@ -1,3 +1,0 @@
-[submodule "iris-fsw-softconsole/Libraries/littlefs"]
-	path = iris-fsw-softconsole/Libraries/littlefs
-	url = https://github.com/littlefs-project/littlefs
