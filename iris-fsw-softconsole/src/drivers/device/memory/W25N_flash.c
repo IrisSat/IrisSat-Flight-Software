@@ -445,7 +445,6 @@ FlashStatus_t w25n_read(W25NDevice_t *dev, size_t address, size_t len, void *dst
   FlashStatus_t res2 = FLASH_ERROR;
 
 
-//  const size_t orig_len = len;
 
   uint8_t *dp = (uint8_t *) dst;
 
@@ -614,7 +613,6 @@ FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck
 		result = FLASH_OK;
 	}
 
-//	 int num_bb = 0;
 	 uint8_t cfg0 = 0u;
 	 for (uint8_t i = 0; i < 1; i++) {
 
