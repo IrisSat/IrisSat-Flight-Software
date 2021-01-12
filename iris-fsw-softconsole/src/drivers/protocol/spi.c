@@ -131,6 +131,7 @@ void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slav
     SPI_transfer_block(&core_spi[core],buffer, total_count, 0, 0);
     SPI_clear_slave_select(&core_spi[core],slave);
 
+    vPortFree(buffer);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
