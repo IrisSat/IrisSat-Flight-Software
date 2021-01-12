@@ -32,6 +32,7 @@
 #define WAIT_FOR_CORE_MAX_DELAY(core) 	WAIT_FOR_CORE(core, portMAX_DELAY)                       // Macro for acquiring a FreeRTOS mutex for an SPI core, with a timeout of portMAX_DELAY.
 #define RELEASE_CORE(core) 				xSemaphoreGive(core_lock[(core)])                        // Macro for releasing a FreeRTOS mutex for an SPI core.
 
+#define SPI_BUFF_SIZE                   512
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

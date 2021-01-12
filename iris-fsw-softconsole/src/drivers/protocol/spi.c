@@ -46,7 +46,10 @@ addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_C0_0,
 uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8};
 
-//SPI
+//SPI tempoary buffer
+uint8_t spi_temp_buff[SPI_BUFF_SIZE];
+
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -123,20 +126,20 @@ void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slav
 
 	//Put the command and data into one buffer.
 	uint32_t total_count = cmd_size + wr_size;
-	uint8_t * buffer = pvPortMalloc(total_count);
 
+	if(total_count < SPI_BUFF_SIZE){
 
-	if(buffer != NULL){
-
-        memcpy(buffer,cmd_buffer,cmd_size);
-        memcpy(&buffer[cmd_size],wr_buffer,wr_size);
+        memcpy(spi_temp_buff,cmd_buffer,cmd_size);
+        memcpy(&spi_temp_buff[cmd_size],wr_buffer,wr_size);
 
         //Select the slave and then perform SPI transfer.
         SPI_set_slave_select(&core_spi[core], slave);
-        SPI_transfer_block(&core_spi[core],buffer, total_count, 0, 0);
+        SPI_transfer_block(&core_spi[core],spi_temp_buff, total_count, 0, 0);
         SPI_clear_slave_select(&core_spi[core],slave);
 
-        vPortFree(buffer);
+	}
+	else{
+	    while(1){}// Just loop here for now, until we add error code.
 	}
 }
 
