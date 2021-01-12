@@ -45,6 +45,8 @@ addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_C0_0,
 //The length of each CoreSPI fifo.
 uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8};
+
+//SPI
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -123,15 +125,19 @@ void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slav
 	uint32_t total_count = cmd_size + wr_size;
 	uint8_t * buffer = pvPortMalloc(total_count);
 
-	memcpy(buffer,cmd_buffer,cmd_size);
-	memcpy(&buffer[cmd_size],wr_buffer,wr_size);
 
-	//Select the slave and then perform SPI transfer.
-    SPI_set_slave_select(&core_spi[core], slave);
-    SPI_transfer_block(&core_spi[core],buffer, total_count, 0, 0);
-    SPI_clear_slave_select(&core_spi[core],slave);
+	if(buffer != NULL){
 
-    vPortFree(buffer);
+        memcpy(buffer,cmd_buffer,cmd_size);
+        memcpy(&buffer[cmd_size],wr_buffer,wr_size);
+
+        //Select the slave and then perform SPI transfer.
+        SPI_set_slave_select(&core_spi[core], slave);
+        SPI_transfer_block(&core_spi[core],buffer, total_count, 0, 0);
+        SPI_clear_slave_select(&core_spi[core],slave);
+
+        vPortFree(buffer);
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
