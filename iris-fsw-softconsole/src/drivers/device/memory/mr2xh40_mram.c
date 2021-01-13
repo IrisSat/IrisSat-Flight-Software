@@ -91,7 +91,7 @@ void mr2xh40_write(MRAMInstance_t * mram, uint32_t address, uint8_t * wr_buffer,
 	uint8_t cmd[4] = { MRAM_CMD_WRITE,
 					  (address >> 16) & 0x07,
 					  (address >> 8) & 0xFF,
-					  (address) && 0xFF
+					  (address) & 0xFF
 	};
 	mr2xh40_single_cmd(mram, MRAM_CMD_WREN); // Enable writes.
 
