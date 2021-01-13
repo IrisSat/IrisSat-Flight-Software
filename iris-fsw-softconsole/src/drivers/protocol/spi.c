@@ -122,13 +122,14 @@ void spi_transaction_block_read_with_toggle(CoreSPIInstance_t core, spi_slave_t 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, mss_gpio_id_t pin, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * wr_buffer, uint16_t wr_size)
 {
-	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
 
 	//Put the command and data into one buffer.
 	uint32_t total_count = cmd_size + wr_size;
 
 	if(total_count < SPI_BUFF_SIZE){
 
+		//Copy the data into the static buffer.
+		//We should not need to clear the buffer since we overwrite previous data and know the length.
         memcpy(spi_temp_buff,cmd_buffer,cmd_size);
         memcpy(&spi_temp_buff[cmd_size],wr_buffer,wr_size);
 
@@ -139,6 +140,9 @@ void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slav
 
 	}
 	else{
+		//Handle when the data exceeds the size of the static buffer.
+		//Shouldn't really happen since we can increase size of the buffer
+		//during development or modify the calling code..
 	    while(1){}// Just loop here for now, until we add error code.
 	}
 }
