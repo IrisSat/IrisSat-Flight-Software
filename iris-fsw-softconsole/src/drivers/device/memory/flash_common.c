@@ -148,6 +148,10 @@ FlashStatus_t flash_erase_device(FlashDev_t *device){
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEVICE SPECIFIC FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//These are used so that we can easily modify the basic spi functions used for each driver.
+//Each Flash driver ultimately just does spi read and spi write, so we write the drivers to use these functions.
+//This makes it so we only have to change these in one place instead of all across the flash drivers.
+
 
 void data_flash_spi_read(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *rd_buffer,uint16_t rd_size){
 	spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, FLASH_SS_PIN, cmd_buffer, cmd_size, rd_buffer, rd_size);
@@ -165,19 +169,20 @@ void program_flash_spi_read(uint8_t *cmd_buffer, uint16_t cmd_size, uint8_t *rd_
 }
 void program_flash_spi_write(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buffer,uint16_t wr_size){
 
-	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
-	//Our (core) spi driver does the same thing.
-
 	//Put the command and data into one buffer.
 	uint32_t total_count = cmd_size + wr_size;
-	uint8_t * buffer = pvPortMalloc(total_count);
 
-	memcpy(buffer,cmd_buffer,cmd_size);
-	memcpy(&buffer[cmd_size],wr_buffer,wr_size);
+    if(total_count < SPI_BUFF_SIZE){
 
+        memcpy(spi_temp_buff,cmd_buffer,cmd_size);
+        memcpy(&spi_temp_buff[cmd_size],wr_buffer,wr_size);
 
-    MSS_SPI_set_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
-    MSS_SPI_transfer_block(&g_mss_spi0,buffer, total_count, 0, 0);
-	MSS_SPI_clear_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
-	vPortFree(buffer);
+        MSS_SPI_set_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+        MSS_SPI_transfer_block(&g_mss_spi0,spi_temp_buff, total_count, 0, 0);
+        MSS_SPI_clear_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+
+    }
+    else{
+        while(1){}
+    }
 }
