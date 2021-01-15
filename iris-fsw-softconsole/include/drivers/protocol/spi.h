@@ -40,6 +40,7 @@ typedef enum
 {
     CORE_SPI_0,
     CORE_SPI_1,
+    MSS_SPI_0,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
 
@@ -133,7 +134,6 @@ void spi_transaction_block_read_with_toggle(
 void spi_transaction_block_write_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
     spi_slave_t slave,       // The SPI slave configuration to use.
-	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
     uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * wr_buffer,     // The buffer containing the data to write.
@@ -148,7 +148,6 @@ void spi_transaction_block_write_without_toggle(
 void spi_transaction_block_read_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
     spi_slave_t slave,       // The SPI slave configuration to use.
-	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
     uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * rd_buffer,     // The buffer containing the data to write.

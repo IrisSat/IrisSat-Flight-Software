@@ -18,18 +18,27 @@
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
 // SPI Master and Slave core definitions
 #define RTC_SPI_CORE   CORE_SPI_0
-#define RTC_SLAVE_CORE SPI_SLAVE_0  // RTC uses MSS_GPIO for SS, so this is not relevant.
+#define RTC_SLAVE_CORE SPI_SLAVE_0
 
 #define MRAM0_SPI_CORE   CORE_SPI_1
-#define MRAM0_SLAVE_CORE SPI_SLAVE_0 // MRAM0 uses MSS_GPIO for SS, so this is not relevant.
+#define MRAM0_SLAVE_CORE SPI_SLAVE_0
 
 #define FLASH_SPI_CORE   CORE_SPI_0
-#define FLASH_SLAVE_CORE SPI_SLAVE_0 // FLASH uses MSS_GPIO for SS, so this is not relevant.
+#define FLASH_SLAVE_CORE SPI_SLAVE_0
 
 #define ADCS_SPI_CORE   CORE_SPI_0
-#define ADCS_SLAVE_CORE SPI_SLAVE_0 // ADS uses MSS_GPIO for SS, so this is not relevant.
+#define ADCS_SLAVE_CORE SPI_SLAVE_0
+
+#define PROGRAM_FLASH_SPI_CORE  MSS_SPI_0
+#define PROGRAM_FLASH_WP_PIN    MSS_GPIO_8
+#define PROGRAM_FLASH_HOLD_PIN  MSS_GPIO_9
+
+//The slave core is per CoreSPI instance, so since each device is using  a
+//separate instance, they all use "slave core 0".
 
 // MSS GPIO definitions
 #define LED0          MSS_GPIO_0
@@ -41,14 +50,5 @@
 #define LED6          MSS_GPIO_6
 #define LED7          MSS_GPIO_7
 
-#define RTC_SS_PIN     MSS_GPIO_8
-#define ADC_SS_PIN     MSS_GPIO_9
-#define FLASH_SS_PIN   MSS_GPIO_10
-#define RADIO_SS_PIN   MSS_GPIO_11
-#define MRAM0_SS_PIN   MSS_GPIO_12
-#define ADCS_SS_PIN    MSS_GPIO_13
-
-#define PROGRAM_FLASH_WP_PIN	MSS_GPIO_8
-#define PROGRAM_FLASH_HOLD_PIN	MSS_GPIO_9
 
 #endif // BOARD_DEFINITIONS_H

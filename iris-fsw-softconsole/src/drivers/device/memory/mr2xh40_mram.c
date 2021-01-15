@@ -60,7 +60,6 @@ void mr2xh40_read_status_register(MRAMInstance_t * mram, uint8_t * buffer)
 	spi_transaction_block_read_without_toggle(
 				mram->core,
 				mram->slave,
-				mram->cs_pin,
 				&cmd,
 				1,
 				buffer,
@@ -78,7 +77,7 @@ void mr2xh40_read(MRAMInstance_t * mram, uint32_t address, uint8_t * rd_buffer, 
 	spi_transaction_block_read_without_toggle(
 					mram->core,
 					mram->slave,
-					mram->cs_pin,
+
 					cmd,
 					sizeof(cmd),
 					rd_buffer,
@@ -98,7 +97,6 @@ void mr2xh40_write(MRAMInstance_t * mram, uint32_t address, uint8_t * wr_buffer,
 	spi_transaction_block_write_without_toggle(
 					mram->core,
 					mram->slave,
-					mram->cs_pin,
 					cmd,
 					sizeof(cmd),
 					wr_buffer,
@@ -113,7 +111,6 @@ static void mr2xh40_single_cmd(MRAMInstance_t * mram, uint8_t cmd)
     spi_transaction_block_read_without_toggle(
        mram->core,
        mram->slave,
-       mram->cs_pin,
        &cmd,
        1,
        NULL,
