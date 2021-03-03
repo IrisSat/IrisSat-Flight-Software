@@ -21,6 +21,8 @@
 
 #include <string.h>	//For memcpy.
 
+
+#include <firmware/drivers/mss_spi/mss_spi.h> // For the MSS SPI functions
 #include <firmware/MSS_C0_hw_platform.h> // Contains the address of the CORE_SPI instance for the driver.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -50,8 +52,12 @@ uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8,
 												8,
 												8,
-												8	};
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+												8
+												8};
+
+//SPI tempoary buffer
+uint8_t spi_temp_buff[SPI_BUFF_SIZE];
+
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 int init_spi()
@@ -121,31 +127,54 @@ void spi_transaction_block_read_with_toggle(CoreSPIInstance_t core, spi_slave_t 
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, mss_gpio_id_t pin, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * wr_buffer, uint16_t wr_size)
+void spi_transaction_block_write_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * wr_buffer, uint16_t wr_size)
 {
-	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
 
 	//Put the command and data into one buffer.
 	uint32_t total_count = cmd_size + wr_size;
-	uint8_t * buffer = pvPortMalloc(total_count);
 
-	memcpy(buffer,cmd_buffer,cmd_size);
-	memcpy(&buffer[cmd_size],wr_buffer,wr_size);
+	if(total_count < SPI_BUFF_SIZE){
 
-	//Select the slave and then perform SPI transfer.
-    SPI_set_slave_select(&core_spi[core], slave);
-    SPI_transfer_block(&core_spi[core],buffer, total_count, 0, 0);
-    SPI_clear_slave_select(&core_spi[core],slave);
+		//Copy the data into the static buffer.
+		//We should not need to clear the buffer since we overwrite previous data and know the length.
+        memcpy(spi_temp_buff,cmd_buffer,cmd_size);
+        memcpy(&spi_temp_buff[cmd_size],wr_buffer,wr_size);
 
+
+        if(core == MSS_SPI_0){
+            //For the built-in MSS SPI peripheral.
+            MSS_SPI_set_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+            MSS_SPI_transfer_block(&g_mss_spi0,spi_temp_buff, total_count, 0, 0);
+            MSS_SPI_clear_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+        }
+        else{
+            //For the CoreSPI FPGA Cores.
+            SPI_set_slave_select(&core_spi[core], slave);
+            SPI_transfer_block(&core_spi[core],spi_temp_buff, total_count, 0, 0);
+            SPI_clear_slave_select(&core_spi[core],slave);
+        }
+	}
+	else{
+		//Handle when the data exceeds the size of the static buffer.
+		//Shouldn't really happen since we can increase size of the buffer
+		//during development or modify the calling code..
+	    while(1){}// Just loop here for now, until we add error code.
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void spi_transaction_block_read_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, mss_gpio_id_t pin, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * rd_buffer, uint16_t rd_size)
+void spi_transaction_block_read_without_toggle(CoreSPIInstance_t core, spi_slave_t slave, uint8_t * cmd_buffer, uint16_t cmd_size, uint8_t * rd_buffer, uint16_t rd_size)
 {
-	//TODO: Should we use a static buffer instead of malloc? If not we need to handle if malloc fails.
+    if(core == MSS_SPI_0){
 
-    SPI_set_slave_select(&core_spi[core], slave);
-    SPI_transfer_block(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
-    SPI_clear_slave_select(&core_spi[core],slave);
+        MSS_SPI_set_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+        MSS_SPI_transfer_block(&g_mss_spi0,cmd_buffer, cmd_size, rd_buffer, rd_size);
+        MSS_SPI_clear_slave_select(&g_mss_spi0,MSS_SPI_SLAVE_0);
+    }
+    else{
 
+        SPI_set_slave_select(&core_spi[core], slave);
+        SPI_transfer_block(&core_spi[core], cmd_buffer, cmd_size, rd_buffer, rd_size);
+        SPI_clear_slave_select(&core_spi[core],slave);
+    }
 }

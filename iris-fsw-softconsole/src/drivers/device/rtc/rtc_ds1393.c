@@ -30,8 +30,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void ds1393_init()
 {
-	//spi_configure_slave(RTC_SPI_CORE, RTC_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_256);
-	spi_configure_gpio_ss(RTC_SS_PIN);
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +46,6 @@ void ds1393_read_time(Calendar_t * read_buffer)
 	spi_transaction_block_read_without_toggle(
 			RTC_SPI_CORE,
 			RTC_SLAVE_CORE,
-			RTC_SS_PIN,
 			&address,
 			1,
 			buffer,
@@ -78,7 +76,6 @@ void ds1393_write_time(Calendar_t * write_buffer)
 	spi_transaction_block_write_without_toggle(
 			RTC_SPI_CORE,
 			RTC_SLAVE_CORE,
-			RTC_SS_PIN,
 			&address,
 			1,
 			buffer,
@@ -91,7 +88,6 @@ void ds1393_read_reg(DS1393RegAddresses_t address, uint8_t * buffer)
 	spi_transaction_block_read_without_toggle(
 			RTC_SPI_CORE,
 			RTC_SLAVE_CORE,
-			RTC_SS_PIN,
 			&address,
 			1,
 			buffer,
@@ -105,7 +101,6 @@ void ds1393_write_reg(DS1393RegAddresses_t address, uint8_t value)
 	spi_transaction_block_write_without_toggle(
 			RTC_SPI_CORE,
 			RTC_SLAVE_CORE,
-			RTC_SS_PIN,
 			&address,
 			1,
 			&value,
