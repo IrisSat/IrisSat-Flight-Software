@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Tue May  5 17:50:31 2020
-// Version: v12.1 12.600.0.14
+// Created by SmartDesign Fri Feb 26 12:48:12 2021
+// Version: v12.6 12.900.20.24
 //////////////////////////////////////////////////////////////////////
 
 `timescale 1ns / 100ps
@@ -38,6 +38,12 @@ module MSS_C0_MSS(
     FIC_2_APB_M_PWDATA,
     FIC_2_APB_M_PWRITE,
     GPIO_0_M2F,
+    GPIO_10_M2F,
+    GPIO_11_M2F,
+    GPIO_12_M2F,
+    GPIO_13_M2F,
+    GPIO_14_M2F,
+    GPIO_15_M2F,
     GPIO_1_M2F,
     GPIO_3_M2F,
     GPIO_5_M2F,
@@ -88,6 +94,12 @@ output        FIC_2_APB_M_PSEL;
 output [31:0] FIC_2_APB_M_PWDATA;
 output        FIC_2_APB_M_PWRITE;
 output        GPIO_0_M2F;
+output        GPIO_10_M2F;
+output        GPIO_11_M2F;
+output        GPIO_12_M2F;
+output        GPIO_13_M2F;
+output        GPIO_14_M2F;
+output        GPIO_15_M2F;
 output        GPIO_1_M2F;
 output        GPIO_3_M2F;
 output        GPIO_5_M2F;
@@ -135,6 +147,12 @@ wire          GPIO_6_M2F_net_0;
 wire          GPIO_7_M2F_net_0;
 wire          GPIO_8_M2F_net_0;
 wire          GPIO_9_M2F_net_0;
+wire          GPIO_10_M2F_net_0;
+wire          GPIO_11_M2F_net_0;
+wire          GPIO_12_M2F_net_0;
+wire          GPIO_13_M2F_net_0;
+wire          GPIO_14_M2F_net_0;
+wire          GPIO_15_M2F_net_0;
 wire          M3_RESET_N;
 wire          MCCC_CLK_BASE;
 wire          MCCC_CLK_BASE_PLL_LOCK;
@@ -177,6 +195,12 @@ wire          FIC_2_APB_MASTER_0_PENABLE_net_0;
 wire          FIC_2_APB_MASTER_0_PSELx_net_0;
 wire          GPIO_8_M2F_net_1;
 wire          GPIO_9_M2F_net_1;
+wire          GPIO_10_M2F_net_1;
+wire          GPIO_11_M2F_net_1;
+wire          GPIO_12_M2F_net_1;
+wire          GPIO_13_M2F_net_1;
+wire          GPIO_14_M2F_net_1;
+wire          GPIO_15_M2F_net_1;
 wire   [31:0] FIC_0_APB_MASTER_PADDR_net_0;
 wire   [31:0] FIC_0_APB_MASTER_PWDATA_net_0;
 wire   [15:2] FIC_2_APB_MASTER_0_PADDR_net_0;
@@ -298,6 +322,18 @@ assign GPIO_8_M2F_net_1                 = GPIO_8_M2F_net_0;
 assign GPIO_8_M2F                       = GPIO_8_M2F_net_1;
 assign GPIO_9_M2F_net_1                 = GPIO_9_M2F_net_0;
 assign GPIO_9_M2F                       = GPIO_9_M2F_net_1;
+assign GPIO_10_M2F_net_1                = GPIO_10_M2F_net_0;
+assign GPIO_10_M2F                      = GPIO_10_M2F_net_1;
+assign GPIO_11_M2F_net_1                = GPIO_11_M2F_net_0;
+assign GPIO_11_M2F                      = GPIO_11_M2F_net_1;
+assign GPIO_12_M2F_net_1                = GPIO_12_M2F_net_0;
+assign GPIO_12_M2F                      = GPIO_12_M2F_net_1;
+assign GPIO_13_M2F_net_1                = GPIO_13_M2F_net_0;
+assign GPIO_13_M2F                      = GPIO_13_M2F_net_1;
+assign GPIO_14_M2F_net_1                = GPIO_14_M2F_net_0;
+assign GPIO_14_M2F                      = GPIO_14_M2F_net_1;
+assign GPIO_15_M2F_net_1                = GPIO_15_M2F_net_0;
+assign GPIO_15_M2F                      = GPIO_15_M2F_net_1;
 assign FIC_0_APB_MASTER_PADDR_net_0     = FIC_0_APB_MASTER_PADDR;
 assign FIC_0_APB_M_PADDR[31:0]          = FIC_0_APB_MASTER_PADDR_net_0;
 assign FIC_0_APB_MASTER_PWDATA_net_0    = FIC_0_APB_MASTER_PWDATA;
@@ -639,22 +675,22 @@ MSS_ADLIB_INST(
         .SPI0_SS2_MGPIO9A_H2F_A                  (  ),
         .SPI0_SS2_MGPIO9A_H2F_B                  ( GPIO_9_M2F_net_0 ),
         .SPI0_SS3_MGPIO10A_H2F_A                 (  ),
-        .SPI0_SS3_MGPIO10A_H2F_B                 (  ),
+        .SPI0_SS3_MGPIO10A_H2F_B                 ( GPIO_10_M2F_net_0 ),
         .SPI0_SS4_MGPIO19A_H2F_A                 (  ),
         .SPI0_SS5_MGPIO20A_H2F_A                 (  ),
         .SPI0_SS6_MGPIO21A_H2F_A                 (  ),
         .SPI0_SS7_MGPIO22A_H2F_A                 (  ),
         .SPI1_CLK_OUT                            (  ),
         .SPI1_SDI_MGPIO11A_H2F_A                 (  ),
-        .SPI1_SDI_MGPIO11A_H2F_B                 (  ),
+        .SPI1_SDI_MGPIO11A_H2F_B                 ( GPIO_11_M2F_net_0 ),
         .SPI1_SDO_MGPIO12A_H2F_A                 (  ),
-        .SPI1_SDO_MGPIO12A_H2F_B                 (  ),
+        .SPI1_SDO_MGPIO12A_H2F_B                 ( GPIO_12_M2F_net_0 ),
         .SPI1_SS0_MGPIO13A_H2F_A                 (  ),
-        .SPI1_SS0_MGPIO13A_H2F_B                 (  ),
+        .SPI1_SS0_MGPIO13A_H2F_B                 ( GPIO_13_M2F_net_0 ),
         .SPI1_SS1_MGPIO14A_H2F_A                 (  ),
-        .SPI1_SS1_MGPIO14A_H2F_B                 (  ),
+        .SPI1_SS1_MGPIO14A_H2F_B                 ( GPIO_14_M2F_net_0 ),
         .SPI1_SS2_MGPIO15A_H2F_A                 (  ),
-        .SPI1_SS2_MGPIO15A_H2F_B                 (  ),
+        .SPI1_SS2_MGPIO15A_H2F_B                 ( GPIO_15_M2F_net_0 ),
         .SPI1_SS3_MGPIO16A_H2F_A                 (  ),
         .SPI1_SS3_MGPIO16A_H2F_B                 (  ),
         .SPI1_SS4_MGPIO17A_H2F_A                 (  ),

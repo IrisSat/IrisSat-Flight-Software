@@ -41,10 +41,16 @@ SemaphoreHandle_t core_lock[NUM_SPI_INSTANCES]; // Semaphores for the mutex lock
 
 //The base address for each CoreSPI peripheral.
 addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_C0_0,
-                                                CORESPI_C1_0 };
+                                                CORESPI_C1_0,
+												CORESPI_C1_1,
+												CORESPI_C1_2,
+												CORESPI_C1_3	};
 //The length of each CoreSPI fifo.
 uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
-												8};
+												8,
+												8,
+												8,
+												8	};
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

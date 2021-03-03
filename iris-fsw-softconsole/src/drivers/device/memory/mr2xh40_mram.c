@@ -10,6 +10,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include "drivers/mss_gpio/mss_gpio.h"
+
 #include "drivers/device/memory/mr2xh40_mram.h"
 
 #include <stdlib.h> // Used to include a definition of NULL.
@@ -51,6 +53,10 @@ void mr2xh40_init(MRAMInstance_t * mram)
 	// Note that the datasheet specifies up to a 40 MHz clock rate.
 	//spi_configure_slave(mram->core, mram->slave, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
 	spi_configure_gpio_ss(mram->cs_pin);
+	MSS_GPIO_config(MSS_GPIO_10, MSS_GPIO_OUTPUT_MODE);
+	MSS_GPIO_config(MSS_GPIO_11, MSS_GPIO_OUTPUT_MODE);
+	MSS_GPIO_set_output(MSS_GPIO_10, 1);
+	MSS_GPIO_set_output(MSS_GPIO_11, 1);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +79,7 @@ void mr2xh40_read(MRAMInstance_t * mram, uint32_t address, uint8_t * rd_buffer, 
 	uint8_t cmd[4] = { MRAM_CMD_READ,
 					  (address >> 16) & 0x07,
 					  (address >> 8) & 0xFF,
-					  (address) && 0xFF
+					  (address) & 0xFF
 	};
 	spi_transaction_block_read_without_toggle(
 					mram->core,

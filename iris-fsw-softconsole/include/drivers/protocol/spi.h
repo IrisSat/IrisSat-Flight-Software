@@ -39,6 +39,9 @@ typedef enum
 {
     CORE_SPI_0,
     CORE_SPI_1,
+	CORE_SPI_2,
+	CORE_SPI_3,
+	CORE_SPI_4,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
 

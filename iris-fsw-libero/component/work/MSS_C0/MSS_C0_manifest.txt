@@ -1,14 +1,15 @@
-Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
+Microsemi Corporation - Microsemi Libero Software Release v12.6 (Version 12.900.20.24)
 
-Date      :  Mon May  4 20:30:19 2020
-Project   :  C:\Users\howarth3-INS\Desktop\iris-fsw-libero
+Date      :  Fri Feb 26 12:56:18 2021
+Project   :  C:\Users\mites\Desktop\CDH-Phase-C-Tests\IrisSat-Flight-Software\iris-fsw-libero
 Component :  MSS_C0
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/work/MSS_C0/MSS_C0.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0/MSS_C0.v
 
 Stimulus files for all Simulation tools:
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/work/MSS_C0/subsystem.bfm
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0/subsystem.bfm
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0/subsystem.bfm
 

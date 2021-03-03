@@ -22,14 +22,19 @@
 #define RTC_SPI_CORE   CORE_SPI_0
 #define RTC_SLAVE_CORE SPI_SLAVE_0  // RTC uses MSS_GPIO for SS, so this is not relevant.
 
-#define MRAM0_SPI_CORE   CORE_SPI_1
+#define MRAM0_SPI_CORE   CORE_SPI_2
 #define MRAM0_SLAVE_CORE SPI_SLAVE_0 // MRAM0 uses MSS_GPIO for SS, so this is not relevant.
 
-#define FLASH_SPI_CORE   CORE_SPI_0
+#define FLASH_SPI_CORE   CORE_SPI_3
 #define FLASH_SLAVE_CORE SPI_SLAVE_0 // FLASH uses MSS_GPIO for SS, so this is not relevant.
 
-#define ADCS_SPI_CORE   CORE_SPI_0
+#define ADCS_SPI_CORE   CORE_SPI_1
 #define ADCS_SLAVE_CORE SPI_SLAVE_0 // ADS uses MSS_GPIO for SS, so this is not relevant.
+
+#define MRAM1_SPI_CORE   CORE_SPI_4
+#define MRAM1_SLAVE_CORE SPI_SLAVE_0 // MRAM1 uses MSS_GPIO for SS, so this is not relevant.
+
+// MRAM_n in SoftConsole is equivalent to MRAM_(n+1) in schematics
 
 // MSS GPIO definitions
 #define LED0          MSS_GPIO_0
