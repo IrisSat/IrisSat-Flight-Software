@@ -28,6 +28,7 @@ void vTestSPI(void *pvParameters)
         spi_transaction_block_write_without_toggle(
                     CORE_SPI_0,
                     SPI_SLAVE_0,
+					MSS_GPIO_0,
                     test_cmd,
                     sizeof(test_cmd) / sizeof(test_cmd[0]),
                     test_wr,
@@ -40,6 +41,7 @@ void vTestSPI(void *pvParameters)
         spi_transaction_block_read_without_toggle(
                     CORE_SPI_0,
                     SPI_SLAVE_0,
+					MSS_GPIO_0,
                     test_cmd,
                     sizeof(test_cmd) / sizeof(test_cmd[0]),
                     test_rd,
