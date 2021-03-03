@@ -52,7 +52,7 @@ uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8,
 												8,
 												8,
-												8
+												8,
 												8};
 
 //SPI tempoary buffer
