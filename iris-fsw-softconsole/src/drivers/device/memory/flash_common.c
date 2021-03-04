@@ -14,6 +14,7 @@
 #include "drivers/device/memory/W25N_flash.h"
 #include "drivers/device/memory/MT25Q_flash.h"
 #include "drivers/device/memory/AT25SF_flash.h"
+#include "drivers/device/memory/W25Q_flash.h"
 #include "drivers/protocol/spi.h"
 #include "board_definitions.h"
 
@@ -40,15 +41,18 @@ static FlashDev_t 	data_flash = {	.driver = &data_flash_driver,
 									.erase_size = W25N_BLOCK_SIZE,
 									.device_size = 1*W25N_DIE_SIZE	};
 
-//static W25NDevice_t data_flash_driver;
-static AT25SF_Device_t program_flash_driver = {	.spi_read = program_flash_spi_read,
-												.spi_write= program_flash_spi_write};
+////static W25NDevice_t data_flash_driver;
+//static AT25SF_Device_t program_flash_driver = {	.spi_read = program_flash_spi_read,
+//												.spi_write= program_flash_spi_write};
+static W25Q_Device_t program_flash_driver = {   .spi_read = program_flash_spi_read,
+                                              .spi_write= program_flash_spi_write};
+
 
 static FlashDev_t 	program_flash = {	.driver = &program_flash_driver,
 										.id = PROGRAM_FLASH,
-										.page_size = AT25SF_PAGE_SIZE,
-										.erase_size = AT25SF_SUBSECTOR_SMALL_SIZE,
-										.device_size = AT25SF_DIE_SIZE	};
+										.page_size = W25Q_PAGE_SIZE,
+										.erase_size = W25Q_SUBSECTOR_SMALL_SIZE,
+										.device_size = W25Q_DIE_SIZE	};
 
 FlashDev_t *flash_devices[NUM_FLASH_DEVICES] = {
 		&data_flash,
@@ -69,7 +73,8 @@ FlashStatus_t flash_device_init(FlashDev_t *device){
 		break;
 
 		case PROGRAM_FLASH:
-			result = AT25SF_setup_flash(device->driver);
+//			result = AT25SF_setup_flash(device->driver);
+		    result = W25Q_setup_flash(device->driver);
 		break;
 	}
 	return result;
@@ -86,7 +91,8 @@ FlashStatus_t flash_write(FlashDev_t *device,uint32_t address, uint8_t *wr_buffe
 		break;
 
 		case PROGRAM_FLASH:;
-			result = AT25SF_flash_write_page(device->driver, address, wr_buffer, wr_size);
+//			result = AT25SF_flash_write_page(device->driver, address, wr_buffer, wr_size);
+			result = W25Q_flash_write_page(device->driver, address, wr_buffer, wr_size);
 		break;
 
 	}
@@ -104,7 +110,9 @@ FlashStatus_t flash_read(FlashDev_t *device, uint32_t address, uint8_t *rd_buffe
 		break;
 
 		case PROGRAM_FLASH:;
-			result = AT25SF_flash_read(device->driver, address, rd_buffer, rd_size);
+			result = W25Q_flash_read(device->driver, address, rd_buffer, rd_size);
+//			result = AT25SF_flash_read(device->driver, address, rd_buffer, rd_size);
+
 		break;
 
 	}
@@ -123,7 +131,8 @@ FlashStatus_t flash_erase(FlashDev_t *device, uint32_t address){
 		break;
 
 		case PROGRAM_FLASH:;
-			result = AT25SF_flash_erase_4k(device->driver, address);
+//			result = AT25SF_flash_erase_4k(device->driver, address);
+			result = W25Q_flash_erase_4k(device->driver, address);
 		break;
 	}
 	return result;
@@ -141,7 +150,8 @@ FlashStatus_t flash_erase_device(FlashDev_t *device){
 		break;
 
 		case PROGRAM_FLASH:;
-			result = AT25SF_flash_erase_device(device->driver);
+//			result = AT25SF_flash_erase_device(device->driver);
+			result = W25Q_flash_erase_device(device->driver);
 		break;
 
 	}
