@@ -1,0 +1,21 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/liberosoc
+# Edit at https://www.toptal.com/developers/gitignore?templates=liberosoc
+
+### LiberoSOC ###
+#Microsemi Libero SOC v11.5
+
+#ignore miscellaneous files in the following directories
+simulation/*
+package/*
+tooldata/*
+viewdraw/*
+stimulus/*
+
+#synthesis log files
+synthesis/*
+
+#designer files
+designer/*/*
+
+# End of https://www.toptal.com/developers/gitignore/api/liberosoc

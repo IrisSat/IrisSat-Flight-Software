@@ -1,19 +1,3 @@
-# -------------------------------------------------------------------------------------------------------------------------------------------------------------
-# UMSATS 2018-2020
-#
-# Repository:
-#  Github: https://github.com/UMSATS/cdh-tsat5
-#
-# File Description:
-#  Gitignores for cdh-tsat5.
-#
-# History
-# 2019-01-16 by Tamkin Rahman
-# - Created.
-# 2020-02-17 by Joseph Howarth
-# - Added vscode ignore.
-# -------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 # SoftConsole 4.0 ignores:
 
 # Created for workspace.
@@ -21,10 +5,26 @@
 RemoteSystemsTempFiles/
 
 # Created for builds.
-mbsat-fsw-softconsole/.settings/
-mbsat-fsw-softconsole/[Dd]ebug/
-mbsat-fsw-softconsole/[Dd]ebug Flash/
-mbsat-fsw-softconsole/[Rr]elease/
+iris-fsw-softconsole/.settings/
+iris-fsw-softconsole/[Dd]ebug/
+iris-fsw-softconsole/[Dd]ebug Flash/
+iris-fsw-softconsole/[Rr]elease/
 
-# For VSCode Editor:
+#For Libero Bitstream Exports
+iris-fsw-libero/designer/MSS_C0/export/
+
+# Automatically downloaded
+iris-fsw-softconsole/Libraries/FreeRTOS-Kernel
+iris-fsw-softconsole/Libraries/libcsp
+iris-fsw-softconsole/Libraries/littlefs
+
+# log files
+*.log
+
+# Editors:
 .vscode/
+.idea/
+.vs/
+
+# Python Scripts
+scripts/**/*.pyc
