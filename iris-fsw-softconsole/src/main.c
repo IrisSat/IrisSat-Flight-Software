@@ -69,9 +69,9 @@
 #include "drivers/device/adcs_driver.h"
 #include "drivers/filesystem_driver.h"
 #include "tests.h"
+#include "tasks/telemetry.h"
 
-
-//#define SERVER
+#define SERVER
 //#define CLIENT
 
 
@@ -86,6 +86,7 @@ static void prvSetupHardware( void );
 
 static void vTestCspServer(void * pvParameters);
 static void vTestCspClient(void * pvParameters);
+static void vTestingTask(void * pvParams);
 
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
@@ -160,7 +161,7 @@ int main( void )
 #ifdef SERVER
     status = xTaskCreate(vTestCspServer,
                          "Test CSP Server",
-                         160,
+                         1000,
                          NULL,
                          1,
                          NULL);
@@ -178,6 +179,9 @@ int main( void )
 
 #endif
 //
+
+    status = xTaskCreate(vTestingTask, "test", 512, NULL, 1, NULL);
+
     status = xTaskCreate(vTestWD,
                          "Test WD",
                          configMINIMAL_STACK_SIZE,
@@ -254,12 +258,12 @@ static void prvSetupHardware( void )
     vInitializeUARTs(MSS_UART_115200_BAUD);
 
     init_WD();
-    init_spi();
-    init_rtc();
-    init_mram();
+//    init_spi();
+//    init_rtc();
+//    init_mram();
     //init_CAN(CAN_BAUD_RATE_250K,NULL);
-    adcs_init_driver();
-    flash_device_init(flash_devices[PROGRAM_FLASH]);
+//    adcs_init_driver();
+//    flash_device_init(flash_devices[PROGRAM_FLASH]);
 }
 
 
@@ -267,7 +271,12 @@ static void prvSetupHardware( void )
 /*-----------------------------------------------------------*/
 static void vTestCspServer(void * pvParameters){
 
-	struct csp_can_config can_conf;
+	struct csp_can_config can_conf = {0};
+    csp_conn_t * conn = NULL;
+    csp_packet_t * packet= NULL;
+    csp_socket_t * socket  = NULL;
+
+
 	can_conf.bitrate=250000;
 	can_conf.clock_speed=250000;
 	can_conf.ifc = "CAN";
@@ -276,7 +285,7 @@ static void vTestCspServer(void * pvParameters){
 	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
 
 	/* Init CSP with address 0 */
-	csp_init(0);
+	csp_init(CDH_CSP_ADDRESS);
 
 	/* Init the CAN interface with hardware filtering */
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
@@ -289,10 +298,10 @@ static void vTestCspServer(void * pvParameters){
 	csp_route_start_task(100, 1);
 
 
-	csp_conn_t * conn = NULL;
-	csp_packet_t * packet= NULL;
-	csp_socket_t * socket = csp_socket(0);
-	csp_bind(socket, CSP_ANY);
+	 conn = NULL;
+	 packet= NULL;
+	socket = csp_socket(0);
+	csp_bind(socket, CSP_TELEM_PORT);
 	csp_listen(socket,4);
 
 	while(1) {
@@ -302,6 +311,18 @@ static void vTestCspServer(void * pvParameters){
 				packet = csp_read(conn,0);
 				//prvUARTSend(&g_mss_uart0, packet->data, packet->length);
 				//printf(“%S\r\n”, packet->data);
+				uint32_t addr = packet->id.src;
+				if(addr ==  PAYLOAD_CSP_ADDRESS){
+
+				    telemetryPacket_t t = {0};
+				    unpackTelemetry(packet->data, &t);
+
+				    double temp = *(double *)t.data;
+
+				    double a = temp;//Does nothing... just a place for breakpoint, while temp is in scope.
+				}
+
+
 				csp_buffer_free(packet);
 				csp_close(conn);
 			}
@@ -345,6 +366,52 @@ static void vTestCspClient(void * pvParameters){
 	}
 }
 
+void vTestingTask(void * pvParams){
+
+    csp_conn_t * conn = NULL;
+    csp_packet_t * outPacket = NULL;
+
+    while(1){
+        vTaskDelay(pdMS_TO_TICKS(5000));
+        static Calendar_t buffer = {
+                59u, // seconds
+                59u, // minutes
+                23u, // hours
+                28u, // day
+                2u, // February
+                20u, // year (2020)
+                1u, // weekday
+                1u, // week (not used), HOWEVER it must be 1 or greater.
+        };
+
+
+        conn = csp_connect(2,PAYLOAD_CSP_ADDRESS,CSP_CMD_PORT,1000,0);    //Create a connection. This tells CSP where to send the data (address and destination port).
+        outPacket = csp_buffer_get(sizeof(Calendar_t)+2);
+//        uint8_t testbuff[20];
+        payloadTelemetry_t cmd = PAYLOAD_BOARD_TEMP_ID;
+        uint8_t length = 0;///cmd so no data.
+
+
+//        memcpy(&testbuff[0],&buffer,sizeof(Calendar_t));
+//        memcpy(&testbuff[sizeof(Calendar_t)],&cmd,1);
+//        memcpy(&testbuff[sizeof(Calendar_t)+1],&length,1);
+
+        memcpy(&outPacket->data[0],&buffer,sizeof(Calendar_t));
+        memcpy(&outPacket->data[sizeof(Calendar_t)],&cmd,1);
+        memcpy(&outPacket->data[sizeof(Calendar_t)+1],&length,1);
+        outPacket->length = sizeof(Calendar_t )+2;
+
+        int good = csp_send(conn,outPacket,0);
+        csp_close(conn);
+
+        if(!good){
+
+            csp_buffer_free(outPacket);
+        }
+
+
+    }
+}
 /*-----------------------------------------------------------*/
 
 void vApplicationMallocFailedHook( void )
