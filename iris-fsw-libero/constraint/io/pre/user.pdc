@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Tue Mar  2 12:22:58 2021 
+# Date generated: Wed Mar 24 11:33:49 2021 
 
 
 # 
@@ -97,6 +97,42 @@ set_io FLASH1_SPI_SCK  \
 
 set_io FLASH1_WP       \
     -pinname 8         \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_CS       \
+    -pinname 64        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_HOLDn    \
+    -pinname 57        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_MISO    \
+    -pinname 66       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io FLASH2_MOSI     \
+    -pinname 52        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_SCK      \
+    -pinname 53        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_WP       \
+    -pinname 67        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
@@ -237,26 +273,6 @@ set_io RTC_SPI_SCK     \
 # 
 # Dedicated Peripheral I/O Settings
 # 
-
-set_io SPI_0_CLK      \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INOUT
-
-
-set_io SPI_0_DI       \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INPUT
-
-
-set_io SPI_0_DO        \
-    -FF_IO_AVAIL Yes   \
-    -DIRECTION OUTPUT
-
-
-set_io SPI_0_SS0      \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INOUT
-
 
 
 # 

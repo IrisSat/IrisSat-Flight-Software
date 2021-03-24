@@ -192,12 +192,12 @@ int main( void )
 //                         1,
 //                         NULL);
 
-//    status = xTaskCreate(vTestRTC,
-//                         "Test RTC",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestRTC,
+                         "Test RTC",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 
     // TR - Not quite sure of the reason, but it appears that when we have a task created for both
     //      vTestRTC and vTestMRAM, the device stops communicating over SPI after the vTestRTC task
@@ -213,12 +213,12 @@ int main( void )
 //                         1,
 //                         NULL);
 //
-	status = xTaskCreate(vTestFlash,
-                         "Test Flash",
-                         2000,
-                         (void *)flash_devices[PROGRAM_FLASH],
-                         1,
-                         NULL);
+//	status = xTaskCreate(vTestFlash,
+//                         "Test Flash",
+//                         2000,
+//                         (void *)flash_devices[PROGRAM_FLASH],
+//                         1,
+//                         NULL);
 //
 
 //    // Task for testing priority queue data structure.
@@ -255,11 +255,11 @@ static void prvSetupHardware( void )
 //
 //    init_WD();
     init_spi();
-//    init_rtc();
+    init_rtc();
 //    init_mram();
 //    //init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
-    flash_device_init(flash_devices[PROGRAM_FLASH]);
+//    flash_device_init(flash_devices[PROGRAM_FLASH]);
 }
 
 

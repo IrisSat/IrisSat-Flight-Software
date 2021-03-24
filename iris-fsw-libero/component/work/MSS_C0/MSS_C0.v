@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri Feb 26 12:56:17 2021
+// Created by SmartDesign Wed Mar 24 12:21:54 2021
 // Version: v12.6 12.900.20.24
 //////////////////////////////////////////////////////////////////////
 
@@ -12,6 +12,7 @@ module MSS_C0(
     CAN_RX_F2M,
     DEVRST_N,
     FLASH1_SPI_MISO,
+    FLASH2_MISO,
     MMUART_0_RXD_F2M,
     MRAM1_MISO,
     MRAM2_SPI_MISO,
@@ -27,6 +28,11 @@ module MSS_C0(
     FLASH1_SPI_MOSI,
     FLASH1_SPI_SCK,
     FLASH1_WP,
+    FLASH2_CS,
+    FLASH2_HOLDn,
+    FLASH2_MOSI,
+    FLASH2_SCK,
+    FLASH2_WP,
     GPIO_0_M2F,
     GPIO_1_M2F,
     GPIO_3_M2F,
@@ -62,6 +68,7 @@ input  ADCS_SPI_MISO;
 input  CAN_RX_F2M;
 input  DEVRST_N;
 input  FLASH1_SPI_MISO;
+input  FLASH2_MISO;
 input  MMUART_0_RXD_F2M;
 input  MRAM1_MISO;
 input  MRAM2_SPI_MISO;
@@ -79,6 +86,11 @@ output FLASH1_SPI_CS;
 output FLASH1_SPI_MOSI;
 output FLASH1_SPI_SCK;
 output FLASH1_WP;
+output FLASH2_CS;
+output FLASH2_HOLDn;
+output FLASH2_MOSI;
+output FLASH2_SCK;
+output FLASH2_WP;
 output GPIO_0_M2F;
 output GPIO_1_M2F;
 output GPIO_3_M2F;
@@ -133,6 +145,9 @@ wire          CoreAPB3_C0_0_APBmslave3_PSLVERR;
 wire          CoreAPB3_C0_0_APBmslave4_PREADY;
 wire          CoreAPB3_C0_0_APBmslave4_PSELx;
 wire          CoreAPB3_C0_0_APBmslave4_PSLVERR;
+wire          CoreAPB3_C0_0_APBmslave5_PREADY;
+wire          CoreAPB3_C0_0_APBmslave5_PSELx;
+wire          CoreAPB3_C0_0_APBmslave5_PSLVERR;
 wire          CoreResetP_C0_0_M3_RESET_N;
 wire          CoreResetP_C0_0_MSS_HPMS_READY;
 wire          CoreResetP_C0_0_RESET_N_F2M;
@@ -151,6 +166,9 @@ wire          CORESPI_C1_2_SPITXRFM;
 wire          CORESPI_C1_3_SPIINT;
 wire          CORESPI_C1_3_SPIRXAVAIL;
 wire          CORESPI_C1_3_SPITXRFM;
+wire          CORESPI_C1_4_SPIINT;
+wire          CORESPI_C1_4_SPIRXAVAIL;
+wire          CORESPI_C1_4_SPITXRFM;
 wire          DEVRST_N;
 wire          FCCC_C0_0_GL0;
 wire          FCCC_C0_0_LOCK;
@@ -160,6 +178,12 @@ wire          FLASH1_SPI_MISO;
 wire          FLASH1_SPI_MOSI_net_0;
 wire          FLASH1_SPI_SCK_net_0;
 wire          FLASH1_WP_net_0;
+wire   [0:0]  FLASH2_CS_net_0;
+wire          FLASH2_HOLDn_net_0;
+wire          FLASH2_MISO;
+wire          FLASH2_MOSI_net_0;
+wire          FLASH2_SCK_net_0;
+wire          FLASH2_WP_net_0;
 wire          GPIO_0_M2F_net_0;
 wire          GPIO_1_M2F_net_0;
 wire          GPIO_3_M2F_net_0;
@@ -197,6 +221,7 @@ wire          OR3_1_Y;
 wire          OR3_2_Y;
 wire          OR3_3_Y;
 wire          OR3_4_Y;
+wire          OR3_5_Y;
 wire          OSC_C0_0_RCOSC_25_50MHZ_CCC_OUT_RCOSC_25_50MHZ_CCC;
 wire          OSC_C0_0_RCOSC_25_50MHZ_O2F;
 wire   [0:0]  RTC_SPI_CS_net_0;
@@ -240,6 +265,11 @@ wire          MRAM2_SPI_MOSI_net_1;
 wire          MRAM2_SPI_SCK_net_1;
 wire          MRAM2_WP_net_1;
 wire          MRAM2_HOLDn_net_1;
+wire          FLASH2_CS_net_1;
+wire          FLASH2_MOSI_net_1;
+wire          FLASH2_SCK_net_1;
+wire          FLASH2_WP_net_1;
+wire          FLASH2_HOLDn_net_1;
 wire   [1:1]  SPISS_slice_0;
 wire   [2:2]  SPISS_slice_1;
 wire   [3:3]  SPISS_slice_2;
@@ -275,11 +305,19 @@ wire   [4:4]  SPISS_slice_31;
 wire   [5:5]  SPISS_slice_32;
 wire   [6:6]  SPISS_slice_33;
 wire   [7:7]  SPISS_slice_34;
+wire   [1:1]  SPISS_slice_35;
+wire   [2:2]  SPISS_slice_36;
+wire   [3:3]  SPISS_slice_37;
+wire   [4:4]  SPISS_slice_38;
+wire   [5:5]  SPISS_slice_39;
+wire   [6:6]  SPISS_slice_40;
+wire   [7:7]  SPISS_slice_41;
 wire   [7:0]  SPISS_net_0;
 wire   [7:0]  SPISS_net_1;
 wire   [7:0]  SPISS_net_2;
 wire   [7:0]  SPISS_net_3;
 wire   [7:0]  SPISS_net_4;
+wire   [7:0]  SPISS_net_5;
 wire   [15:0] MSS_INT_F2M_net_0;
 //--------------------------------------------------------------------
 // TiedOff Nets
@@ -290,40 +328,44 @@ wire   [31:0] FIC_2_APB_M_PRDATA_const_net_0;
 //--------------------------------------------------------------------
 // Bus Interface Nets Declarations - Unequal Pin Widths
 //--------------------------------------------------------------------
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_1;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PADDR;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PWDATA;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5;
 wire   [31:8] CoreAPB3_C0_0_APBmslave1_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave1_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave2_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave2_PRDATA_0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave3_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave3_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave3_PRDATA_0_7to0;
@@ -332,6 +374,10 @@ wire   [31:8] CoreAPB3_C0_0_APBmslave4_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave4_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave4_PRDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave4_PRDATA;
+wire   [31:8] CoreAPB3_C0_0_APBmslave5_PRDATA_0_31to8;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave5_PRDATA_0_7to0;
+wire   [31:0] CoreAPB3_C0_0_APBmslave5_PRDATA_0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave5_PRDATA;
 //--------------------------------------------------------------------
 // Constant assignments
 //--------------------------------------------------------------------
@@ -405,11 +451,22 @@ assign MRAM2_WP_net_1         = MRAM2_WP_net_0;
 assign MRAM2_WP               = MRAM2_WP_net_1;
 assign MRAM2_HOLDn_net_1      = MRAM2_HOLDn_net_0;
 assign MRAM2_HOLDn            = MRAM2_HOLDn_net_1;
+assign FLASH2_CS_net_1        = FLASH2_CS_net_0[0];
+assign FLASH2_CS              = FLASH2_CS_net_1;
+assign FLASH2_MOSI_net_1      = FLASH2_MOSI_net_0;
+assign FLASH2_MOSI            = FLASH2_MOSI_net_1;
+assign FLASH2_SCK_net_1       = FLASH2_SCK_net_0;
+assign FLASH2_SCK             = FLASH2_SCK_net_1;
+assign FLASH2_WP_net_1        = FLASH2_WP_net_0;
+assign FLASH2_WP              = FLASH2_WP_net_1;
+assign FLASH2_HOLDn_net_1     = FLASH2_HOLDn_net_0;
+assign FLASH2_HOLDn           = FLASH2_HOLDn_net_1;
 //--------------------------------------------------------------------
 // Slices assignments
 //--------------------------------------------------------------------
 assign ADCS_SPI_CS_net_0[0]   = SPISS_net_1[0:0];
 assign FLASH1_SPI_CS_net_0[0] = SPISS_net_3[0:0];
+assign FLASH2_CS_net_0[0]     = SPISS_net_5[0:0];
 assign MRAM1_CS_net_0[0]      = SPISS_net_2[0:0];
 assign MRAM2_SPI_CS_net_0[0]  = SPISS_net_4[0:0];
 assign RTC_SPI_CS_net_0[0]    = SPISS_net_0[0:0];
@@ -448,21 +505,30 @@ assign SPISS_slice_31[4]      = SPISS_net_4[4:4];
 assign SPISS_slice_32[5]      = SPISS_net_4[5:5];
 assign SPISS_slice_33[6]      = SPISS_net_4[6:6];
 assign SPISS_slice_34[7]      = SPISS_net_4[7:7];
+assign SPISS_slice_35[1]      = SPISS_net_5[1:1];
+assign SPISS_slice_36[2]      = SPISS_net_5[2:2];
+assign SPISS_slice_37[3]      = SPISS_net_5[3:3];
+assign SPISS_slice_38[4]      = SPISS_net_5[4:4];
+assign SPISS_slice_39[5]      = SPISS_net_5[5:5];
+assign SPISS_slice_40[6]      = SPISS_net_5[6:6];
+assign SPISS_slice_41[7]      = SPISS_net_5[7:7];
 //--------------------------------------------------------------------
 // Concatenation assignments
 //--------------------------------------------------------------------
-assign MSS_INT_F2M_net_0 = { 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , OR3_4_Y , OR3_3_Y , OR3_2_Y , OR3_1_Y , OR3_0_Y };
+assign MSS_INT_F2M_net_0 = { 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , OR3_5_Y , OR3_4_Y , OR3_3_Y , OR3_2_Y , OR3_1_Y , OR3_0_Y };
 //--------------------------------------------------------------------
 // Bus Interface Nets Assignments - Unequal Pin Widths
 //--------------------------------------------------------------------
-assign CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
-assign CoreAPB3_C0_0_APBmslave0_PADDR_2 = { CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_0 = { CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_1 = { CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_2 = { CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_3 = { CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_5 = { CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_4 = { CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 };
 
@@ -470,16 +536,18 @@ assign CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8 = 24'h0;
 assign CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave0_PRDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PRDATA_0 = { CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8, CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0 };
 
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_2 = { CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_3 = { CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_0 = { CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_1 = { CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0 };
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_3 = { CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_2 = { CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_4 = { CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_5 = { CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 };
 
 assign CoreAPB3_C0_0_APBmslave1_PRDATA_0_31to8 = 24'h0;
 assign CoreAPB3_C0_0_APBmslave1_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave1_PRDATA[7:0];
@@ -497,45 +565,53 @@ assign CoreAPB3_C0_0_APBmslave4_PRDATA_0_31to8 = 24'h0;
 assign CoreAPB3_C0_0_APBmslave4_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave4_PRDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave4_PRDATA_0 = { CoreAPB3_C0_0_APBmslave4_PRDATA_0_31to8, CoreAPB3_C0_0_APBmslave4_PRDATA_0_7to0 };
 
+assign CoreAPB3_C0_0_APBmslave5_PRDATA_0_31to8 = 24'h0;
+assign CoreAPB3_C0_0_APBmslave5_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave5_PRDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave5_PRDATA_0 = { CoreAPB3_C0_0_APBmslave5_PRDATA_0_31to8, CoreAPB3_C0_0_APBmslave5_PRDATA_0_7to0 };
+
 //--------------------------------------------------------------------
 // Component instances
 //--------------------------------------------------------------------
 //--------CoreAPB3_C0
 CoreAPB3_C0 CoreAPB3_C0_0(
         // Inputs
-        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
         .PSEL      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSELx ),
         .PENABLE   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PENABLE ),
         .PWRITE    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWRITE ),
-        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
-        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
         .PREADYS0  ( CoreAPB3_C0_0_APBmslave0_PREADY ),
         .PSLVERRS0 ( CoreAPB3_C0_0_APBmslave0_PSLVERR ),
-        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
         .PREADYS1  ( CoreAPB3_C0_0_APBmslave1_PREADY ),
         .PSLVERRS1 ( CoreAPB3_C0_0_APBmslave1_PSLVERR ),
-        .PRDATAS2  ( CoreAPB3_C0_0_APBmslave2_PRDATA_0 ),
         .PREADYS2  ( CoreAPB3_C0_0_APBmslave2_PREADY ),
         .PSLVERRS2 ( CoreAPB3_C0_0_APBmslave2_PSLVERR ),
-        .PRDATAS3  ( CoreAPB3_C0_0_APBmslave3_PRDATA_0 ),
         .PREADYS3  ( CoreAPB3_C0_0_APBmslave3_PREADY ),
         .PSLVERRS3 ( CoreAPB3_C0_0_APBmslave3_PSLVERR ),
-        .PRDATAS4  ( CoreAPB3_C0_0_APBmslave4_PRDATA_0 ),
         .PREADYS4  ( CoreAPB3_C0_0_APBmslave4_PREADY ),
         .PSLVERRS4 ( CoreAPB3_C0_0_APBmslave4_PSLVERR ),
+        .PREADYS5  ( CoreAPB3_C0_0_APBmslave5_PREADY ),
+        .PSLVERRS5 ( CoreAPB3_C0_0_APBmslave5_PSLVERR ),
+        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
+        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
+        .PRDATAS2  ( CoreAPB3_C0_0_APBmslave2_PRDATA_0 ),
+        .PRDATAS3  ( CoreAPB3_C0_0_APBmslave3_PRDATA_0 ),
+        .PRDATAS4  ( CoreAPB3_C0_0_APBmslave4_PRDATA_0 ),
+        .PRDATAS5  ( CoreAPB3_C0_0_APBmslave5_PRDATA_0 ),
         // Outputs
-        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
         .PREADY    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PREADY ),
         .PSLVERR   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSLVERR ),
-        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
         .PSELS0    ( CoreAPB3_C0_0_APBmslave0_PSELx ),
         .PENABLES  ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
         .PWRITES   ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
-        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ),
         .PSELS1    ( CoreAPB3_C0_0_APBmslave1_PSELx ),
         .PSELS2    ( CoreAPB3_C0_0_APBmslave2_PSELx ),
         .PSELS3    ( CoreAPB3_C0_0_APBmslave3_PSELx ),
-        .PSELS4    ( CoreAPB3_C0_0_APBmslave4_PSELx ) 
+        .PSELS4    ( CoreAPB3_C0_0_APBmslave4_PSELx ),
+        .PSELS5    ( CoreAPB3_C0_0_APBmslave5_PSELx ),
+        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
+        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
+        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ) 
         );
 
 //--------CoreResetP_C0
@@ -694,6 +770,33 @@ CORESPI_C1 CORESPI_C1_3(
         .PRDATA     ( CoreAPB3_C0_0_APBmslave4_PRDATA ) 
         );
 
+//--------CORESPI_C1
+CORESPI_C1 CORESPI_C1_4(
+        // Inputs
+        .PCLK       ( FCCC_C0_0_GL0 ),
+        .PRESETN    ( CoreResetP_C0_0_MSS_HPMS_READY ),
+        .SPISSI     ( GND_net ),
+        .SPISDI     ( FLASH2_MISO ),
+        .SPICLKI    ( GND_net ),
+        .PSEL       ( CoreAPB3_C0_0_APBmslave5_PSELx ),
+        .PENABLE    ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
+        .PWRITE     ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
+        .PADDR      ( CoreAPB3_C0_0_APBmslave0_PADDR_5 ),
+        .PWDATA     ( CoreAPB3_C0_0_APBmslave0_PWDATA_5 ),
+        // Outputs
+        .SPIINT     ( CORESPI_C1_4_SPIINT ),
+        .SPIRXAVAIL ( CORESPI_C1_4_SPIRXAVAIL ),
+        .SPITXRFM   ( CORESPI_C1_4_SPITXRFM ),
+        .SPISCLKO   ( FLASH2_SCK_net_0 ),
+        .SPIOEN     (  ),
+        .SPISDO     ( FLASH2_MOSI_net_0 ),
+        .SPIMODE    (  ),
+        .PREADY     ( CoreAPB3_C0_0_APBmslave5_PREADY ),
+        .PSLVERR    ( CoreAPB3_C0_0_APBmslave5_PSLVERR ),
+        .SPISS      ( SPISS_net_5 ),
+        .PRDATA     ( CoreAPB3_C0_0_APBmslave5_PRDATA ) 
+        );
+
 //--------FCCC_C0
 FCCC_C0 FCCC_C0_0(
         // Inputs
@@ -744,14 +847,16 @@ MSS_C0_MSS MSS_C0_MSS_0(
         .GPIO_9_M2F             ( GPIO_9_M2F_net_0 ),
         .GPIO_10_M2F            ( MRAM1_WP_net_0 ),
         .GPIO_11_M2F            ( MRAM1_HOLDn_net_0 ),
-        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
-        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
-        .FIC_2_APB_M_PADDR      (  ),
-        .FIC_2_APB_M_PWDATA     (  ),
         .GPIO_12_M2F            ( FLASH1_WP_net_0 ),
         .GPIO_13_M2F            ( FLASH1_HOLDn_net_0 ),
         .GPIO_14_M2F            ( MRAM2_WP_net_0 ),
         .GPIO_15_M2F            ( MRAM2_HOLDn_net_0 ),
+        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .FIC_2_APB_M_PADDR      (  ),
+        .FIC_2_APB_M_PWDATA     (  ),
+        .GPIO_16_M2F            ( FLASH2_WP_net_0 ),
+        .GPIO_17_M2F            ( FLASH2_HOLDn_net_0 ),
         // Inouts
         .SPI_0_CLK              ( SPI_0_CLK ),
         .SPI_0_SS0              ( SPI_0_SS0 ) 
@@ -805,6 +910,16 @@ OR3 OR3_4(
         .C ( CORESPI_C1_3_SPITXRFM ),
         // Outputs
         .Y ( OR3_4_Y ) 
+        );
+
+//--------OR3
+OR3 OR3_5(
+        // Inputs
+        .A ( CORESPI_C1_4_SPIINT ),
+        .B ( CORESPI_C1_4_SPIRXAVAIL ),
+        .C ( CORESPI_C1_4_SPITXRFM ),
+        // Outputs
+        .Y ( OR3_5_Y ) 
         );
 
 //--------OSC_C0

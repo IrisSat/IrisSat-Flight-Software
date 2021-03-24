@@ -175,10 +175,10 @@ void data_flash_spi_write(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buff
 
 void program_flash_spi_read(uint8_t *cmd_buffer, uint16_t cmd_size, uint8_t *rd_buffer, uint16_t rd_size){
 
-    spi_transaction_block_read_without_toggle(FLASH_SPI_CORE, FLASH_SLAVE_CORE, cmd_buffer, cmd_size, rd_buffer, rd_size);
+    spi_transaction_block_read_without_toggle(FLASH2_SPI_CORE, FLASH_SLAVE_CORE, cmd_buffer, cmd_size, rd_buffer, rd_size);
 
 }
 void program_flash_spi_write(uint8_t *cmd_buffer,uint16_t cmd_size,uint8_t *wr_buffer,uint16_t wr_size){
 
-    spi_transaction_block_write_without_toggle(PROGRAM_FLASH_SPI_CORE, FLASH_SLAVE_CORE, cmd_buffer, cmd_size, wr_buffer, wr_size);
+    spi_transaction_block_write_without_toggle(FLASH2_SPI_CORE, FLASH_SLAVE_CORE, cmd_buffer, cmd_size, wr_buffer, wr_size);
 }

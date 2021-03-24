@@ -2,7 +2,7 @@
 <device>
   <name>MSS_C0</name>
   <version>1.0</version>
-  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Fri Feb 26 14:36:11 2021</description>
+  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Wed Mar 24 10:16:32 2021</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
@@ -57,6 +57,10 @@
     <peripheral>
       <name>CORESPI_C1_3</name>
       <baseAddress>0x50040000%0x30040000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI_C1_4</name>
+      <baseAddress>0x50050000%0x30050000</baseAddress>
     </peripheral>
     <peripheral>
       <name>CACHE_BACKDOOR</name>

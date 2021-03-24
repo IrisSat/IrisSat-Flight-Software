@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri Feb 26 12:22:56 2021
+// Created by SmartDesign Wed Mar 24 09:43:30 2021
 // Version: v12.6 12.900.20.24
 //////////////////////////////////////////////////////////////////////
 
@@ -20,7 +20,7 @@ create_and_configure_core -core_vlnv {Actel:DirectCore:CoreAPB3:4.1.100} -compon
 "APBSLOT2ENABLE:true"  \
 "APBSLOT3ENABLE:true"  \
 "APBSLOT4ENABLE:true"  \
-"APBSLOT5ENABLE:false"  \
+"APBSLOT5ENABLE:true"  \
 "APBSLOT6ENABLE:false"  \
 "APBSLOT7ENABLE:false"  \
 "APBSLOT8ENABLE:false"  \
@@ -63,17 +63,20 @@ module CoreAPB3_C0(
     PRDATAS2,
     PRDATAS3,
     PRDATAS4,
+    PRDATAS5,
     PREADYS0,
     PREADYS1,
     PREADYS2,
     PREADYS3,
     PREADYS4,
+    PREADYS5,
     PSEL,
     PSLVERRS0,
     PSLVERRS1,
     PSLVERRS2,
     PSLVERRS3,
     PSLVERRS4,
+    PSLVERRS5,
     PWDATA,
     PWRITE,
     // Outputs
@@ -86,6 +89,7 @@ module CoreAPB3_C0(
     PSELS2,
     PSELS3,
     PSELS4,
+    PSELS5,
     PSLVERR,
     PWDATAS,
     PWRITES
@@ -101,17 +105,20 @@ input  [31:0] PRDATAS1;
 input  [31:0] PRDATAS2;
 input  [31:0] PRDATAS3;
 input  [31:0] PRDATAS4;
+input  [31:0] PRDATAS5;
 input         PREADYS0;
 input         PREADYS1;
 input         PREADYS2;
 input         PREADYS3;
 input         PREADYS4;
+input         PREADYS5;
 input         PSEL;
 input         PSLVERRS0;
 input         PSLVERRS1;
 input         PSLVERRS2;
 input         PSLVERRS3;
 input         PSLVERRS4;
+input         PSLVERRS5;
 input  [31:0] PWDATA;
 input         PWRITE;
 //--------------------------------------------------------------------
@@ -126,6 +133,7 @@ output        PSELS1;
 output        PSELS2;
 output        PSELS3;
 output        PSELS4;
+output        PSELS5;
 output        PSLVERR;
 output [31:0] PWDATAS;
 output        PWRITES;
@@ -140,49 +148,53 @@ wire          PSEL;
 wire          APB3mmaster_PSLVERR;
 wire   [31:0] PWDATA;
 wire          PWRITE;
-wire   [31:0] APBmslave0_3_PADDR;
-wire          APBmslave0_3_PENABLE;
+wire   [31:0] APBmslave0_4_PADDR;
+wire          APBmslave0_4_PENABLE;
 wire   [31:0] PRDATAS0;
 wire          PREADYS0;
-wire          APBmslave0_3_PSELx;
+wire          APBmslave0_4_PSELx;
 wire          PSLVERRS0;
-wire   [31:0] APBmslave0_3_PWDATA;
-wire          APBmslave0_3_PWRITE;
+wire   [31:0] APBmslave0_4_PWDATA;
+wire          APBmslave0_4_PWRITE;
 wire   [31:0] PRDATAS1;
 wire          PREADYS1;
-wire          APBmslave1_3_PSELx;
+wire          APBmslave1_4_PSELx;
 wire          PSLVERRS1;
 wire   [31:0] PRDATAS2;
 wire          PREADYS2;
-wire          APBmslave2_2_PSELx;
+wire          APBmslave2_3_PSELx;
 wire          PSLVERRS2;
 wire   [31:0] PRDATAS3;
 wire          PREADYS3;
-wire          APBmslave3_1_PSELx;
+wire          APBmslave3_2_PSELx;
 wire          PSLVERRS3;
 wire   [31:0] PRDATAS4;
 wire          PREADYS4;
-wire          APBmslave4_0_PSELx;
+wire          APBmslave4_1_PSELx;
 wire          PSLVERRS4;
+wire   [31:0] PRDATAS5;
+wire          PREADYS5;
+wire          APBmslave5_0_PSELx;
+wire          PSLVERRS5;
 wire   [31:0] APB3mmaster_PRDATA_net_0;
 wire          APB3mmaster_PREADY_net_0;
 wire          APB3mmaster_PSLVERR_net_0;
-wire   [31:0] APBmslave0_3_PADDR_net_0;
-wire          APBmslave0_3_PSELx_net_0;
-wire          APBmslave0_3_PENABLE_net_0;
-wire          APBmslave0_3_PWRITE_net_0;
-wire   [31:0] APBmslave0_3_PWDATA_net_0;
-wire          APBmslave1_3_PSELx_net_0;
-wire          APBmslave2_2_PSELx_net_0;
-wire          APBmslave3_1_PSELx_net_0;
-wire          APBmslave4_0_PSELx_net_0;
+wire   [31:0] APBmslave0_4_PADDR_net_0;
+wire          APBmslave0_4_PSELx_net_0;
+wire          APBmslave0_4_PENABLE_net_0;
+wire          APBmslave0_4_PWRITE_net_0;
+wire   [31:0] APBmslave0_4_PWDATA_net_0;
+wire          APBmslave1_4_PSELx_net_0;
+wire          APBmslave2_3_PSELx_net_0;
+wire          APBmslave3_2_PSELx_net_0;
+wire          APBmslave4_1_PSELx_net_0;
+wire          APBmslave5_0_PSELx_net_0;
 //--------------------------------------------------------------------
 // TiedOff Nets
 //--------------------------------------------------------------------
 wire          GND_net;
 wire          VCC_net;
 wire   [31:0] IADDR_const_net_0;
-wire   [31:0] PRDATAS5_const_net_0;
 wire   [31:0] PRDATAS6_const_net_0;
 wire   [31:0] PRDATAS7_const_net_0;
 wire   [31:0] PRDATAS8_const_net_0;
@@ -200,7 +212,6 @@ wire   [31:0] PRDATAS16_const_net_0;
 assign GND_net               = 1'b0;
 assign VCC_net               = 1'b1;
 assign IADDR_const_net_0     = 32'h00000000;
-assign PRDATAS5_const_net_0  = 32'h00000000;
 assign PRDATAS6_const_net_0  = 32'h00000000;
 assign PRDATAS7_const_net_0  = 32'h00000000;
 assign PRDATAS8_const_net_0  = 32'h00000000;
@@ -221,24 +232,26 @@ assign APB3mmaster_PREADY_net_0   = APB3mmaster_PREADY;
 assign PREADY                     = APB3mmaster_PREADY_net_0;
 assign APB3mmaster_PSLVERR_net_0  = APB3mmaster_PSLVERR;
 assign PSLVERR                    = APB3mmaster_PSLVERR_net_0;
-assign APBmslave0_3_PADDR_net_0   = APBmslave0_3_PADDR;
-assign PADDRS[31:0]               = APBmslave0_3_PADDR_net_0;
-assign APBmslave0_3_PSELx_net_0   = APBmslave0_3_PSELx;
-assign PSELS0                     = APBmslave0_3_PSELx_net_0;
-assign APBmslave0_3_PENABLE_net_0 = APBmslave0_3_PENABLE;
-assign PENABLES                   = APBmslave0_3_PENABLE_net_0;
-assign APBmslave0_3_PWRITE_net_0  = APBmslave0_3_PWRITE;
-assign PWRITES                    = APBmslave0_3_PWRITE_net_0;
-assign APBmslave0_3_PWDATA_net_0  = APBmslave0_3_PWDATA;
-assign PWDATAS[31:0]              = APBmslave0_3_PWDATA_net_0;
-assign APBmslave1_3_PSELx_net_0   = APBmslave1_3_PSELx;
-assign PSELS1                     = APBmslave1_3_PSELx_net_0;
-assign APBmslave2_2_PSELx_net_0   = APBmslave2_2_PSELx;
-assign PSELS2                     = APBmslave2_2_PSELx_net_0;
-assign APBmslave3_1_PSELx_net_0   = APBmslave3_1_PSELx;
-assign PSELS3                     = APBmslave3_1_PSELx_net_0;
-assign APBmslave4_0_PSELx_net_0   = APBmslave4_0_PSELx;
-assign PSELS4                     = APBmslave4_0_PSELx_net_0;
+assign APBmslave0_4_PADDR_net_0   = APBmslave0_4_PADDR;
+assign PADDRS[31:0]               = APBmslave0_4_PADDR_net_0;
+assign APBmslave0_4_PSELx_net_0   = APBmslave0_4_PSELx;
+assign PSELS0                     = APBmslave0_4_PSELx_net_0;
+assign APBmslave0_4_PENABLE_net_0 = APBmslave0_4_PENABLE;
+assign PENABLES                   = APBmslave0_4_PENABLE_net_0;
+assign APBmslave0_4_PWRITE_net_0  = APBmslave0_4_PWRITE;
+assign PWRITES                    = APBmslave0_4_PWRITE_net_0;
+assign APBmslave0_4_PWDATA_net_0  = APBmslave0_4_PWDATA;
+assign PWDATAS[31:0]              = APBmslave0_4_PWDATA_net_0;
+assign APBmslave1_4_PSELx_net_0   = APBmslave1_4_PSELx;
+assign PSELS1                     = APBmslave1_4_PSELx_net_0;
+assign APBmslave2_3_PSELx_net_0   = APBmslave2_3_PSELx;
+assign PSELS2                     = APBmslave2_3_PSELx_net_0;
+assign APBmslave3_2_PSELx_net_0   = APBmslave3_2_PSELx;
+assign PSELS3                     = APBmslave3_2_PSELx_net_0;
+assign APBmslave4_1_PSELx_net_0   = APBmslave4_1_PSELx;
+assign PSELS4                     = APBmslave4_1_PSELx_net_0;
+assign APBmslave5_0_PSELx_net_0   = APBmslave5_0_PSELx;
+assign PSELS5                     = APBmslave5_0_PSELx_net_0;
 //--------------------------------------------------------------------
 // Component instances
 //--------------------------------------------------------------------
@@ -250,7 +263,7 @@ CoreAPB3 #(
         .APBSLOT2ENABLE  ( 1 ),
         .APBSLOT3ENABLE  ( 1 ),
         .APBSLOT4ENABLE  ( 1 ),
-        .APBSLOT5ENABLE  ( 0 ),
+        .APBSLOT5ENABLE  ( 1 ),
         .APBSLOT6ENABLE  ( 0 ),
         .APBSLOT7ENABLE  ( 0 ),
         .APBSLOT8ENABLE  ( 0 ),
@@ -298,8 +311,8 @@ CoreAPB3_C0_0(
         .PSLVERRS3  ( PSLVERRS3 ),
         .PREADYS4   ( PREADYS4 ),
         .PSLVERRS4  ( PSLVERRS4 ),
-        .PREADYS5   ( VCC_net ), // tied to 1'b1 from definition
-        .PSLVERRS5  ( GND_net ), // tied to 1'b0 from definition
+        .PREADYS5   ( PREADYS5 ),
+        .PSLVERRS5  ( PSLVERRS5 ),
         .PREADYS6   ( VCC_net ), // tied to 1'b1 from definition
         .PSLVERRS6  ( GND_net ), // tied to 1'b0 from definition
         .PREADYS7   ( VCC_net ), // tied to 1'b1 from definition
@@ -329,7 +342,7 @@ CoreAPB3_C0_0(
         .PRDATAS2   ( PRDATAS2 ),
         .PRDATAS3   ( PRDATAS3 ),
         .PRDATAS4   ( PRDATAS4 ),
-        .PRDATAS5   ( PRDATAS5_const_net_0 ), // tied to 32'h00000000 from definition
+        .PRDATAS5   ( PRDATAS5 ),
         .PRDATAS6   ( PRDATAS6_const_net_0 ), // tied to 32'h00000000 from definition
         .PRDATAS7   ( PRDATAS7_const_net_0 ), // tied to 32'h00000000 from definition
         .PRDATAS8   ( PRDATAS8_const_net_0 ), // tied to 32'h00000000 from definition
@@ -345,14 +358,14 @@ CoreAPB3_C0_0(
         // Outputs
         .PREADY     ( APB3mmaster_PREADY ),
         .PSLVERR    ( APB3mmaster_PSLVERR ),
-        .PWRITES    ( APBmslave0_3_PWRITE ),
-        .PENABLES   ( APBmslave0_3_PENABLE ),
-        .PSELS0     ( APBmslave0_3_PSELx ),
-        .PSELS1     ( APBmslave1_3_PSELx ),
-        .PSELS2     ( APBmslave2_2_PSELx ),
-        .PSELS3     ( APBmslave3_1_PSELx ),
-        .PSELS4     ( APBmslave4_0_PSELx ),
-        .PSELS5     (  ),
+        .PWRITES    ( APBmslave0_4_PWRITE ),
+        .PENABLES   ( APBmslave0_4_PENABLE ),
+        .PSELS0     ( APBmslave0_4_PSELx ),
+        .PSELS1     ( APBmslave1_4_PSELx ),
+        .PSELS2     ( APBmslave2_3_PSELx ),
+        .PSELS3     ( APBmslave3_2_PSELx ),
+        .PSELS4     ( APBmslave4_1_PSELx ),
+        .PSELS5     ( APBmslave5_0_PSELx ),
         .PSELS6     (  ),
         .PSELS7     (  ),
         .PSELS8     (  ),
@@ -365,8 +378,8 @@ CoreAPB3_C0_0(
         .PSELS15    (  ),
         .PSELS16    (  ),
         .PRDATA     ( APB3mmaster_PRDATA ),
-        .PADDRS     ( APBmslave0_3_PADDR ),
-        .PWDATAS    ( APBmslave0_3_PWDATA ) 
+        .PADDRS     ( APBmslave0_4_PADDR ),
+        .PWDATAS    ( APBmslave0_4_PWDATA ) 
         );
 
 
