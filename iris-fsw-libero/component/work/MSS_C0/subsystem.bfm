@@ -1,5 +1,5 @@
 #===========================================================
-# Created by Microsemi SmartDesign Mon May  4 20:30:19 2020
+# Created by Microsemi SmartDesign Wed Mar 24 12:21:55 2021
 #
 # Syntax: 
 # ------- 
@@ -17,5 +17,9 @@
 # Define name and base address of each resource.
 #-----------------------------------------------------------
 
-memmap CORESPI_C0_0 0x50000000;
-memmap CORESPI_C1_0 0x50010000;
+memmap CORESPI_C0_0 0x5000_0000;
+memmap CORESPI_C1_0 0x5001_0000;
+memmap CORESPI_C1_1 0x5002_0000;
+memmap CORESPI_C1_2 0x5003_0000;
+memmap CORESPI_C1_3 0x5004_0000;
+memmap CORESPI_C1_4 0x5005_0000;

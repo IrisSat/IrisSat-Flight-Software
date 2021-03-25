@@ -18,6 +18,14 @@
 
 void vTestMRAM(void *pvParameters)
 {
+    //Write the pins low(0V)
+    MSS_GPIO_set_output(MSS_GPIO_10, 0);
+    MSS_GPIO_set_output(MSS_GPIO_11, 0);
+    vTaskDelay(1000);//Wait 1 second
+    //Write the pins high (3.3V)
+    MSS_GPIO_set_output(MSS_GPIO_10, 1);
+    MSS_GPIO_set_output(MSS_GPIO_11, 1);
+
     // Test code that writes to all locations of the MRAM, and then reads it back.
     static uint8_t write_buffer[0x10];
     static uint8_t read_buffer1[sizeof(write_buffer)];
@@ -88,8 +96,8 @@ void vTestFlash(void *pvParameters)
 	                                5*device->page_size, //5th page
 									6*device->page_size,
 									device->erase_size,
-									device->device_size - device->page_size,
-									device->device_size -2*(device->page_size)
+									device->device_size - (device->erase_size + device->page_size),
+									device->device_size -2*(device->page_size + device->erase_size)
 	                                };
 
 	            //Prepare some data to write to each page.
@@ -105,7 +113,7 @@ void vTestFlash(void *pvParameters)
 
 	            //Verify that the erase device works properly.
 	            //All addresses should have 0xFF as the data.
-	            for(int j=0; j<6;j++){
+	            for(int j=0; j<4;j++){
 
 	                flash_read(device,addr[j], data_rx, device->page_size);
 
@@ -118,7 +126,7 @@ void vTestFlash(void *pvParameters)
 	            //Now verify that writing is working:
 	            //Write to all the addresses on page of data.
 
-	            for(int j=0; j<6;j++){
+	            for(int j=0; j<4;j++){
 	                //write
 	                res =flash_write(device,addr[j], data_tx, device->page_size);
 	                if(res != FLASH_OK) while(1){}
@@ -149,7 +157,7 @@ void vTestFlash(void *pvParameters)
 	            if(res != FLASH_OK) while(1){}
 
 	            //Now check that the only the first address is 0.
-	            for(int j=0;j<6;j++){
+	            for(int j=0;j<4;j++){
 
 	                flash_read(device,addr[j], data_rx, device->page_size);
 

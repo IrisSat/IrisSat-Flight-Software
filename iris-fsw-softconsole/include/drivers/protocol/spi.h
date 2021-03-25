@@ -32,6 +32,7 @@
 #define WAIT_FOR_CORE_MAX_DELAY(core) 	WAIT_FOR_CORE(core, portMAX_DELAY)                       // Macro for acquiring a FreeRTOS mutex for an SPI core, with a timeout of portMAX_DELAY.
 #define RELEASE_CORE(core) 				xSemaphoreGive(core_lock[(core)])                        // Macro for releasing a FreeRTOS mutex for an SPI core.
 
+#define SPI_BUFF_SIZE                   512
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -39,6 +40,11 @@ typedef enum
 {
     CORE_SPI_0,
     CORE_SPI_1,
+    CORE_SPI_2,
+    CORE_SPI_3,
+    CORE_SPI_4,
+	CORE_SPI_5,
+    MSS_SPI_0,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;
 
@@ -132,7 +138,6 @@ void spi_transaction_block_read_with_toggle(
 void spi_transaction_block_write_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
     spi_slave_t slave,       // The SPI slave configuration to use.
-	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
     uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * wr_buffer,     // The buffer containing the data to write.
@@ -147,7 +152,6 @@ void spi_transaction_block_write_without_toggle(
 void spi_transaction_block_read_without_toggle(
     CoreSPIInstance_t core,  // The SPI core used.
     spi_slave_t slave,       // The SPI slave configuration to use.
-	mss_gpio_id_t pin,       // The GPIO pin to use for the slave select.
     uint8_t * cmd_buffer,    // The buffer containing the command.
     uint16_t cmd_size,         // The size of the command buffer.
     uint8_t * rd_buffer,     // The buffer containing the data to write.

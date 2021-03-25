@@ -2,11 +2,11 @@
 
 # User I/O Constraints file 
 
-# Version: v12.1 12.600.0.14
+# Version: v12.6 12.900.20.24
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Tue May  5 18:42:11 2020 
+# Date generated: Wed Mar 24 09:56:59 2021 
 
 
 # 
@@ -25,6 +25,34 @@
 # User Locked I/O settings
 # 
 
+set_io ADCS_SPI_CS     \
+    -pinname 142       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io ADCS_SPI_MISO  \
+    -pinname 141      \
+    -fixed yes        \
+    -iostd LVCMOS25   \
+    -DIRECTION INPUT
+
+
+set_io ADCS_SPI_MOSI   \
+    -pinname 144       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io ADCS_SPI_SCK    \
+    -pinname 143       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
 set_io CAN_RX_F2M     \
     -pinname 4        \
     -fixed yes        \
@@ -33,6 +61,78 @@ set_io CAN_RX_F2M     \
 
 set_io CAN_TX_M2F      \
     -pinname 3         \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH1_HOLDn    \
+    -pinname 7         \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH1_SPI_CS   \
+    -pinname 13        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH1_SPI_MISO  \
+    -pinname 14         \
+    -fixed yes          \
+    -DIRECTION INPUT
+
+
+set_io FLASH1_SPI_MOSI  \
+    -pinname 9          \
+    -fixed yes          \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH1_SPI_SCK  \
+    -pinname 10        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH1_WP       \
+    -pinname 8         \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_CS       \
+    -pinname 64        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_HOLDn    \
+    -pinname 57        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_MISO    \
+    -pinname 66       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io FLASH2_MOSI     \
+    -pinname 52        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_SCK      \
+    -pinname 53        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io FLASH2_WP       \
+    -pinname 67        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
@@ -51,46 +151,6 @@ set_io GPIO_1_M2F      \
     -DIRECTION OUTPUT
 
 
-set_io GPIO_3_M2F      \
-    -pinname 125       \
-    -fixed yes         \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_5_M2F      \
-    -pinname 124       \
-    -fixed yes         \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_6_M2F      \
-    -pinname 123       \
-    -fixed yes         \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_7_M2F      \
-    -pinname 122       \
-    -fixed yes         \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_8_M2F      \
-    -pinname 85        \
-    -fixed yes         \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_9_M2F      \
-    -pinname 87        \
-    -fixed yes         \
-    -DIRECTION OUTPUT
-
-
 set_io MMUART_0_RXD_F2M  \
     -pinname 1           \
     -fixed yes           \
@@ -103,51 +163,109 @@ set_io MMUART_0_TXD_M2F  \
     -DIRECTION OUTPUT
 
 
-set_io SPISCLKO        \
-    -pinname 94        \
+set_io MRAM1_CS        \
+    -pinname 20        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
 
-set_io SPISCLKO_0      \
-    -pinname 81        \
+set_io MRAM1_HOLDn     \
+    -pinname 15        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
 
-set_io SPISDI         \
-    -pinname 92       \
+set_io MRAM1_MISO     \
+    -pinname 21       \
     -fixed yes        \
     -DIRECTION INPUT
 
 
-set_io SPISDI_0       \
-    -pinname 93       \
-    -fixed yes        \
-    -DIRECTION INPUT
+set_io MRAM1_MOSI      \
+    -pinname 19        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
 
 
-set_io SPISDO          \
+set_io MRAM1_SCK       \
+    -pinname 16        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io MRAM1_WP        \
     -pinname 22        \
     -fixed yes         \
     -DIRECTION OUTPUT
 
 
-set_io SPISDO_0        \
-    -pinname 83        \
+set_io MRAM2_HOLDn     \
+    -pinname 122       \
     -fixed yes         \
+    -iostd LVCMOS25    \
     -DIRECTION OUTPUT
 
 
-set_io SPISS           \
-    -pinname 21        \
+set_io MRAM2_SPI_CS    \
+    -pinname 125       \
     -fixed yes         \
+    -iostd LVCMOS25    \
     -DIRECTION OUTPUT
 
 
-set_io SPISS_0         \
-    -pinname 82        \
+set_io MRAM2_SPI_MISO  \
+    -pinname 124       \
     -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION INPUT
+
+
+set_io MRAM2_SPI_MOSI  \
+    -pinname 117       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io MRAM2_SPI_SCK   \
+    -pinname 118       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io MRAM2_WP        \
+    -pinname 123       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io RTC_SPI_CS      \
+    -pinname 137       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io RTC_SPI_MISO   \
+    -pinname 135      \
+    -fixed yes        \
+    -iostd LVCMOS25   \
+    -DIRECTION INPUT
+
+
+set_io RTC_SPI_MOSI    \
+    -pinname 134       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io RTC_SPI_SCK     \
+    -pinname 136       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
     -DIRECTION OUTPUT
 
 
@@ -156,32 +274,32 @@ set_io SPISS_0         \
 # Dedicated Peripheral I/O Settings
 # 
 
-set_io SPI_0_CLK      \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INOUT
-
-
-set_io SPI_0_DI       \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INPUT
-
-
-set_io SPI_0_DO        \
-    -FF_IO_AVAIL Yes   \
-    -DIRECTION OUTPUT
-
-
-set_io SPI_0_SS0      \
-    -FF_IO_AVAIL Yes  \
-    -DIRECTION INOUT
-
-
 
 # 
 # Unlocked I/O settings
 # The I/Os in this section are unplaced or placed but are not locked
 # the other listed attributes have been applied
 # 
+
+set_io GPIO_3_M2F      \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io GPIO_5_M2F      \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io GPIO_6_M2F      \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io GPIO_7_M2F      \
+    -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
 
 
 #

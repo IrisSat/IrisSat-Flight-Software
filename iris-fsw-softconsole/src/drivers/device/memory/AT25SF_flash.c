@@ -13,6 +13,7 @@
 #include <firmware/drivers/mss_spi/mss_spi.h>
 #include <FreeRTOS-Kernel/include/FreeRTOS.h>
 #include <FreeRTOS-Kernel/include/task.h>
+#include "drivers/mss_gpio/mss_gpio.h"
 
 //Returns 1 if device is busy, 0 if not.
 uint8_t AT25SF_is_busy(AT25SF_Device_t * dev);

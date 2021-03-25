@@ -39,9 +39,6 @@ AdcsDriverError_t adcs_init_driver(){
 
 	AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
 
-	//spi_configure_slave(ADCS_SPI_CORE, ADCS_SLAVE_CORE, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
-	spi_configure_gpio_ss(ADCS_SS_PIN);
-
 }
 
 AdcsDriverError_t adcs_power_on(){
@@ -51,7 +48,7 @@ AdcsDriverError_t adcs_power_on(){
     uint8_t cmd[2] = {(ADCS_POWER_ON>>8)&0xFF,ADCS_POWER_ON&0xFF};
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX || (ack[1]<<8+ack[2]) != ADCS_POWER_ON){
 
@@ -69,7 +66,7 @@ AdcsDriverError_t adcs_power_off(){
     uint8_t cmd[2] = {(ADCS_POWER_OFF>>8)&0xFF,ADCS_POWER_OFF&0xFF};
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX || (ack[1]<<8+ack[2]) != ADCS_POWER_OFF){
 
@@ -88,7 +85,7 @@ AdcsDriverError_t adcs_initiate_telemetry(){
     uint8_t cmd[2] = {(ADSC_INITIATE_TELEMETRY>>8)&0xFF,ADSC_INITIATE_TELEMETRY&0xFF};
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX || (ack[1]<<8+ack[2]) != ADSC_INITIATE_TELEMETRY){
 
@@ -107,7 +104,7 @@ AdcsDriverError_t adcs_read_telemetry(uint8_t * databuffer){
     uint8_t cmd[2] = {(ADCS_READ_TELEMETRY>>8)&0xFF,ADCS_READ_TELEMETRY&0xFF};
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX || (ack[1]<<8+ack[2]) != ADCS_READ_TELEMETRY){
 
@@ -115,7 +112,7 @@ AdcsDriverError_t adcs_read_telemetry(uint8_t * databuffer){
     }
     else{
 
-        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_TELEMETRY_TOTAL_SIZE);
+        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,NULL,0,databuffer,ADCS_TELEMETRY_TOTAL_SIZE);
     }
 
     return status;
@@ -157,7 +154,7 @@ AdcsDriverError_t adcs_turn_on_magnetorquer(MagnetorquerID_t id, uint8_t pwm_dut
     
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if( (ack[0] != ADCS_ACK_PREFIX) || (ack[1] != cmd[1]) || (ack[2] != ack[2]) ){
 
@@ -202,7 +199,7 @@ AdcsDriverError_t status = ADCS_DRIVER_NO_ERROR;
     
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if( (ack[0] != ADCS_ACK_PREFIX) || (ack[1] != cmd[1]) || (ack[2] != ack[2]) ){
 
@@ -221,7 +218,7 @@ AdcsDriverError_t adcs_reset(){
     uint8_t cmd[2] = {(ADCS_RESET>>8)&0xFF,ADCS_RESET&0xFF};
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX || (ack[1]<<8+ack[2]) != ADCS_RESET){
 
@@ -240,7 +237,7 @@ AdcsDriverError_t adcs_read_magnetorquer_data(uint8_t * databuffer){
     uint8_t cmd= ADCS_READ_MAGNETORQUERS;
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,&cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,&cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX ||(ack[1] != ADCS_READ_MAGNETORQUERS)){
 
@@ -248,7 +245,7 @@ AdcsDriverError_t adcs_read_magnetorquer_data(uint8_t * databuffer){
     }
     else{
 
-        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_MAGNETORQUER_DATA_SIZE);
+        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,NULL,0,databuffer,ADCS_MAGNETORQUER_DATA_SIZE);
     }
 
     return status;
@@ -262,7 +259,7 @@ AdcsDriverError_t adcs_read_gyro_data(uint8_t * databuffer){
     uint8_t cmd= ADCS_READ_GYRO;
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,&cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,&cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX ||(ack[1] != ADCS_READ_GYRO)){
 
@@ -270,7 +267,7 @@ AdcsDriverError_t adcs_read_gyro_data(uint8_t * databuffer){
     }
     else{
 
-        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_GYRO_DATA_SIZE);
+        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,NULL,0,databuffer,ADCS_GYRO_DATA_SIZE);
     }
 
     return status;
@@ -284,7 +281,7 @@ AdcsDriverError_t adcs_read_sunsensor_data(uint8_t* databuffer){
     uint8_t cmd= ADCS_READ_SUN_SENSOR;
     uint8_t ack [1+sizeof(cmd)] = {0}; // The acknowledge consists of 0x01 followed by the command echoed back.
 
-    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,&cmd,sizeof(cmd),ack,sizeof(ack));
+    spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,&cmd,sizeof(cmd),ack,sizeof(ack));
 
     if(ack[0] != ADCS_ACK_PREFIX ||(ack[1] != ADCS_READ_SUN_SENSOR)){
 
@@ -292,7 +289,7 @@ AdcsDriverError_t adcs_read_sunsensor_data(uint8_t* databuffer){
     }
     else{
 
-        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,ADCS_SS_PIN,NULL,0,databuffer,ADCS_SUN_SENSOR_DATA_SIZE);
+        spi_transaction_block_read_without_toggle(ADCS_SPI_CORE,ADCS_SLAVE_CORE,NULL,0,databuffer,ADCS_SUN_SENSOR_DATA_SIZE);
     }
 
     return status;
