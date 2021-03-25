@@ -237,6 +237,8 @@ int main( void )
 //						 1,
 //						 NULL);
 
+    status = xTaskCreate(vTestADC, "adcTest", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+
     vTaskStartScheduler();
 
     return 0;
