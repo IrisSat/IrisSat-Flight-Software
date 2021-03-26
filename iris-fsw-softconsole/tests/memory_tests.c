@@ -28,7 +28,7 @@ void vTestMRAM(void *pvParameters)
 //    MSS_GPIO_set_output(MSS_GPIO_11, 1);
 
     // Test code that writes to all locations of the MRAM, and then reads it back.
-    static uint8_t write_buffer[0x10];
+    static uint8_t write_buffer[0x100];
     static uint8_t read_buffer1[sizeof(write_buffer)];
     uint8_t status_reg;
 
@@ -69,9 +69,9 @@ void vTestMRAM(void *pvParameters)
                }
            }
 
-           vTaskDelay(pdMS_TO_TICKS(2000)); // Breakpoint here to make sure you are done!
+           vTaskDelay(pdMS_TO_TICKS(1)); // Breakpoint here to make sure you are done!
         }
-    }
+        vTaskSuspend(NULL);}
 }
 
 void vTestFlash(void *pvParameters)
