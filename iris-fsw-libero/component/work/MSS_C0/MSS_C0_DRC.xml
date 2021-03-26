@@ -3,10 +3,10 @@
 <drcreport>
   <header>MSS_C0</header>
   <drc>
-    <status>C:\Microsemi\Libero_SoC_v12.1\Designer/data/drcreport\warn.png</status>
+    <status>C:\Microsemi\Libero_SoC_v12.6\Designer/data/drcreport\warn.png</status>
     <StatusMessage>Warning</StatusMessage>
-    <message>Floating Driver</message>
-    <detail>Floating output pin CORESPI_C0_0:SPIMODE</detail>
-    <crossprobe>liberoaction://cross_probe/smartdesign/MSS_C0/pins/CORESPI_C0_0:SPIMODE</crossprobe>
+    <message>Unconnected Bus Interface</message>
+    <detail>Unconnected bus interface pin CORESPI_C1_5:APB_bif</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/MSS_C0/pins/CORESPI_C1_5:APB_bif</crossprobe>
   </drc>
 </drcreport>

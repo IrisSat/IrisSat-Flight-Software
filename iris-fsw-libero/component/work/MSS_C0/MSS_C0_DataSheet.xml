@@ -12,7 +12,7 @@
     <project-description>
     </project-description>
     <location>C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/work/MSS_C0</location>
-    <state>GENERATED ( Wed Mar 24 10:16:36 2021 )</state>
+    <state>GENERATED ( Fri Mar 26 12:21:27 2021 )</state>
     <swide-toolchain>SoftConsole workspace has not been generated</swide-toolchain>
   </project-settings>
   <site-map>
@@ -145,6 +145,15 @@
           <combinedAddressSpace>0x5005_0000 - 0x5005_FFFF</combinedAddressSpace>
           <remapAddress>0x3005_0000</remapAddress>
           <combinedAddressSpace>0x3005_0000 - 0x3005_FFFF</combinedAddressSpace>
+          <range>0x0001_0000</range>
+        </slave>
+        <slave>
+          <name>CORESPI_C1_5</name>
+          <fullPinName>CORESPI_C1_5:APB_bif</fullPinName>
+          <remapAddress>0x5006_0000</remapAddress>
+          <combinedAddressSpace>0x5006_0000 - 0x5006_FFFF</combinedAddressSpace>
+          <remapAddress>0x3006_0000</remapAddress>
+          <combinedAddressSpace>0x3006_0000 - 0x3006_FFFF</combinedAddressSpace>
           <range>0x0001_0000</range>
         </slave>
         <slave>
