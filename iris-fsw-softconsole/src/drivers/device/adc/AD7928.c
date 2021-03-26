@@ -35,7 +35,7 @@ void readADC(AD7928_Measurement_t* measurement){
     spi_transaction_block_read_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, NULL, 0, result, 2);
 
     measurement->channel =result[0]>>(AD7928_ADD0>>8);
-    measurement->value = (*((uint16_t*)result)) & (0x0FFF);
+    measurement->value = ((result[0]&0x0F)<<8)+result[1];
 
 }
 

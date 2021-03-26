@@ -44,6 +44,7 @@ typedef enum
     CORE_SPI_3,
     CORE_SPI_4,
 	CORE_SPI_5,
+	CORE_SPI_6,
     MSS_SPI_0,
     NUM_SPI_INSTANCES,
 } CoreSPIInstance_t;

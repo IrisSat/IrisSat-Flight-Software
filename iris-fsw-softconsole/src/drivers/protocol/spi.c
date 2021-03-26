@@ -47,14 +47,16 @@ addr_t core_base_addr[NUM_SPI_INSTANCES] = {	CORESPI_C0_0,
 												CORESPI_C1_1,
 												CORESPI_C1_2,
 												CORESPI_C1_3,
-												CORESPI_C1_4	};
+												CORESPI_C1_4,
+												CORESPI_C1_5	};
 //The length of each CoreSPI fifo.
 uint16_t core_fifo_len[NUM_SPI_INSTANCES] = {	8,
 												8,
 												8,
 												8,
 												8,
-												8};
+												8,
+												8	};
 
 //SPI tempoary buffer
 uint8_t spi_temp_buff[SPI_BUFF_SIZE];

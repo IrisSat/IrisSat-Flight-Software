@@ -40,7 +40,7 @@
 #define FLASH2_SLAVE_CORE SPI_SLAVE_0 // MRAM1 uses MSS_GPIO for SS, so this is not relevant.
 
 
-#define ADC_SPI_CORE   CORE_SPI_5
+#define ADC_SPI_CORE   CORE_SPI_6
 #define ADC_SLAVE_CORE SPI_SLAVE_0 // MRAM1 uses MSS_GPIO for SS, so this is not relevant.
 
 // MRAM_n in SoftConsole is equivalent to MRAM_(n+1) in schematics
