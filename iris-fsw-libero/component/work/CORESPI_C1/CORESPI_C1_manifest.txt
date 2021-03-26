@@ -1,18 +1,31 @@
-Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
+Microsemi Corporation - Microsemi Libero Software Release v12.6 (Version 12.900.20.24)
 
-Date      :  Fri May  1 16:41:12 2020
-Project   :  C:\Users\howarth3-INS\Desktop\iris-fsw-libero
+Date      :  Fri Mar 26 15:51:08 2021
+Project   :  C:\Users\mites\Desktop\CDH-Phase-C-Tests\IrisSat-Flight-Software\iris-fsw-libero
 Component :  CORESPI_C1
 Family    :  SmartFusion2
 
 
 HDL source files for all Synthesis and Simulation tools:
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/corespi.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_chanctrl.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_clockmux.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_control.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_fifo.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_rf.v
-    C:/Users/howarth3-INS/Desktop/iris-fsw-libero/component/work/CORESPI_C1/CORESPI_C1.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/corespi.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_chanctrl.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_clockmux.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_control.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_fifo.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/core/spi_rf.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/work/CORESPI_C1/CORESPI_C1.v
+
+Stimulus files for all Simulation tools:
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/mti/bfmtovec.exe
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/mti/bfmtovec.lin
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/mti/bfmtovec_compile.do
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/mti/user_tb.bfm
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/mti/wave.do
+
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/amba_bfm/bfm_ahbtoapb.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/amba_bfm/bfm_apb.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/amba_bfm/bfm_main.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/amba_bfm/bfm_package.v
+    C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/component/Actel/DirectCore/CORESPI/5.2.104/rtl/vlog/test/user/testbench.v
 
