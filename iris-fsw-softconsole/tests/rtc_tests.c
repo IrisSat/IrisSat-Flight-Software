@@ -21,12 +21,12 @@ void vTestRTC(void *pvParameters)
 
     static Calendar_t buffer = {
             00u, // seconds
-            57u, // minutes
-            12u, // hours
-            24u, // day
-            3u, // February
+            10u, // minutes
+            10u, // hours
+            31u, // day
+            3u, // March
             21u, // year (2020)
-            4u, // weekday
+            3u, // weekday
             1u, // week (not used), HOWEVER it must be 1 or greater.
     };
 

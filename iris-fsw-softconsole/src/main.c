@@ -149,7 +149,7 @@ int main( void )
 //                         NULL,
 //                         1,
 //                         NULL);
-////
+//
 //    status = xTaskCreate(vTestCANRx,
 //                         "Test CAN Rx",
 //                         configMINIMAL_STACK_SIZE,
@@ -239,6 +239,13 @@ int main( void )
 
     status = xTaskCreate(vTestADC, "adcTest", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
+//      status = xTaskCreate(vTestAdcsDriver,
+//                           "Test ADCS SPI",
+//						   configMINIMAL_STACK_SIZE,
+//                           NULL,
+//                           1,
+//                           NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -259,7 +266,7 @@ static void prvSetupHardware( void )
     init_spi();
 //    init_rtc();
 //    init_mram();
-//    //init_CAN(CAN_BAUD_RATE_250K,NULL);
+//    init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
 //    flash_device_init(flash_devices[PROGRAM_FLASH]);
 }

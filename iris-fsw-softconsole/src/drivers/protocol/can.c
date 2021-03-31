@@ -151,7 +151,7 @@ __attribute__((__interrupt__)) void CAN_IRQHandler(void)
               q_buf.data[ix] = rx_buf.DATA[ix];
           }
 
-          //xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
+//          xQueueSendToBackFromISR(can_rx_queue, &q_buf, NULL);
 
           //NOTE: The queue (and CSP) use an internal can_frame_t but we are sending a CANMessage_t.
           // Make sure these are the same otherwise CSP will interpret the messages wrong.

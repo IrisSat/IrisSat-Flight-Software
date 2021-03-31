@@ -22,7 +22,7 @@ double getBoardTemp(){
 
     double resistance = ((30000-20000*voltage)/(30000+20000*voltage) )* 10000;
 
-    double temp = 1/(9.02e-4 + 2.49e-4*log(resistance)+2.01e-7*pow(log(resistance),3)) - 273.15;
+    double temp = 1/(1.02985e-3 + 2.3917e-4*log(resistance)+1.6e-7*pow(log(resistance),3)) - 273.15;
 
     return temp;
 }

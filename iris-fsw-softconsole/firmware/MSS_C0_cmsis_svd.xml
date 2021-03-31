@@ -2,7 +2,7 @@
 <device>
   <name>MSS_C0</name>
   <version>1.0</version>
-  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Fri Mar 26 12:21:22 2021</description>
+  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Wed Mar 31 18:06:28 2021</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
