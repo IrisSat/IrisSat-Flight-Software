@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri Mar 26 12:08:17 2021
+// Created by SmartDesign Wed Mar 31 17:43:56 2021
 // Version: v12.6 12.900.20.24
 //////////////////////////////////////////////////////////////////////
 
@@ -333,64 +333,64 @@ wire   [31:0] FIC_2_APB_M_PRDATA_const_net_0;
 //--------------------------------------------------------------------
 // Bus Interface Nets Declarations - Unequal Pin Widths
 //--------------------------------------------------------------------
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_1;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_2;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0;
-wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_6_6to0;
 wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_6;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_3;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_4;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0;
+wire   [6:0]  CoreAPB3_C0_0_APBmslave0_PADDR_5;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PADDR;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave0_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PRDATA;
-wire   [31:0] CoreAPB3_C0_0_APBmslave0_PWDATA;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_1;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_2;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_6_7to0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_6;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_3;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_4;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave0_PWDATA_5;
+wire   [31:0] CoreAPB3_C0_0_APBmslave0_PWDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave1_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave1_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave1_PRDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave2_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave2_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave2_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave3_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave3_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave3_PRDATA_0;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave3_PRDATA;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave4_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave4_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave4_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave4_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave5_PRDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave4_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave5_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave5_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave5_PRDATA_0;
-wire   [7:0]  CoreAPB3_C0_0_APBmslave6_PRDATA;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave5_PRDATA;
 wire   [31:8] CoreAPB3_C0_0_APBmslave6_PRDATA_0_31to8;
 wire   [7:0]  CoreAPB3_C0_0_APBmslave6_PRDATA_0_7to0;
 wire   [31:0] CoreAPB3_C0_0_APBmslave6_PRDATA_0;
+wire   [7:0]  CoreAPB3_C0_0_APBmslave6_PRDATA;
 //--------------------------------------------------------------------
 // Constant assignments
 //--------------------------------------------------------------------
@@ -540,39 +540,39 @@ assign MSS_INT_F2M_net_0 = { 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'b0 , 1'
 //--------------------------------------------------------------------
 // Bus Interface Nets Assignments - Unequal Pin Widths
 //--------------------------------------------------------------------
-assign CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
-assign CoreAPB3_C0_0_APBmslave0_PADDR_5 = { CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 };
-assign CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
-assign CoreAPB3_C0_0_APBmslave0_PADDR_4 = { CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_0 = { CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_1 = { CoreAPB3_C0_0_APBmslave0_PADDR_1_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_2 = { CoreAPB3_C0_0_APBmslave0_PADDR_2_6to0 };
-assign CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
-assign CoreAPB3_C0_0_APBmslave0_PADDR_3 = { CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 };
-assign CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
-assign CoreAPB3_C0_0_APBmslave0_PADDR_0 = { CoreAPB3_C0_0_APBmslave0_PADDR_0_6to0 };
 assign CoreAPB3_C0_0_APBmslave0_PADDR_6_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
 assign CoreAPB3_C0_0_APBmslave0_PADDR_6 = { CoreAPB3_C0_0_APBmslave0_PADDR_6_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_3 = { CoreAPB3_C0_0_APBmslave0_PADDR_3_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_4 = { CoreAPB3_C0_0_APBmslave0_PADDR_4_6to0 };
+assign CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 = CoreAPB3_C0_0_APBmslave0_PADDR[6:0];
+assign CoreAPB3_C0_0_APBmslave0_PADDR_5 = { CoreAPB3_C0_0_APBmslave0_PADDR_5_6to0 };
 
 assign CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8 = 24'h0;
 assign CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave0_PRDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PRDATA_0 = { CoreAPB3_C0_0_APBmslave0_PRDATA_0_31to8, CoreAPB3_C0_0_APBmslave0_PRDATA_0_7to0 };
 
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_5 = { CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 };
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_4 = { CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_0 = { CoreAPB3_C0_0_APBmslave0_PWDATA_0_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_1 = { CoreAPB3_C0_0_APBmslave0_PWDATA_1_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_2 = { CoreAPB3_C0_0_APBmslave0_PWDATA_2_7to0 };
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
-assign CoreAPB3_C0_0_APBmslave0_PWDATA_3 = { CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 };
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_6_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
 assign CoreAPB3_C0_0_APBmslave0_PWDATA_6 = { CoreAPB3_C0_0_APBmslave0_PWDATA_6_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_3 = { CoreAPB3_C0_0_APBmslave0_PWDATA_3_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_4 = { CoreAPB3_C0_0_APBmslave0_PWDATA_4_7to0 };
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 = CoreAPB3_C0_0_APBmslave0_PWDATA[7:0];
+assign CoreAPB3_C0_0_APBmslave0_PWDATA_5 = { CoreAPB3_C0_0_APBmslave0_PWDATA_5_7to0 };
 
 assign CoreAPB3_C0_0_APBmslave1_PRDATA_0_31to8 = 24'h0;
 assign CoreAPB3_C0_0_APBmslave1_PRDATA_0_7to0 = CoreAPB3_C0_0_APBmslave1_PRDATA[7:0];
@@ -604,47 +604,47 @@ assign CoreAPB3_C0_0_APBmslave6_PRDATA_0 = { CoreAPB3_C0_0_APBmslave6_PRDATA_0_3
 //--------CoreAPB3_C0
 CoreAPB3_C0 CoreAPB3_C0_0(
         // Inputs
-        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
         .PSEL      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSELx ),
         .PENABLE   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PENABLE ),
         .PWRITE    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWRITE ),
-        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
-        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
         .PREADYS0  ( CoreAPB3_C0_0_APBmslave0_PREADY ),
         .PSLVERRS0 ( CoreAPB3_C0_0_APBmslave0_PSLVERR ),
-        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
         .PREADYS1  ( CoreAPB3_C0_0_APBmslave1_PREADY ),
         .PSLVERRS1 ( CoreAPB3_C0_0_APBmslave1_PSLVERR ),
-        .PRDATAS2  ( CoreAPB3_C0_0_APBmslave2_PRDATA_0 ),
         .PREADYS2  ( CoreAPB3_C0_0_APBmslave2_PREADY ),
         .PSLVERRS2 ( CoreAPB3_C0_0_APBmslave2_PSLVERR ),
-        .PRDATAS3  ( CoreAPB3_C0_0_APBmslave3_PRDATA_0 ),
         .PREADYS3  ( CoreAPB3_C0_0_APBmslave3_PREADY ),
         .PSLVERRS3 ( CoreAPB3_C0_0_APBmslave3_PSLVERR ),
-        .PRDATAS4  ( CoreAPB3_C0_0_APBmslave4_PRDATA_0 ),
         .PREADYS4  ( CoreAPB3_C0_0_APBmslave4_PREADY ),
         .PSLVERRS4 ( CoreAPB3_C0_0_APBmslave4_PSLVERR ),
-        .PRDATAS5  ( CoreAPB3_C0_0_APBmslave5_PRDATA_0 ),
         .PREADYS5  ( CoreAPB3_C0_0_APBmslave5_PREADY ),
         .PSLVERRS5 ( CoreAPB3_C0_0_APBmslave5_PSLVERR ),
-        .PRDATAS6  ( CoreAPB3_C0_0_APBmslave6_PRDATA_0 ),
         .PREADYS6  ( CoreAPB3_C0_0_APBmslave6_PREADY ),
         .PSLVERRS6 ( CoreAPB3_C0_0_APBmslave6_PSLVERR ),
+        .PADDR     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .PWDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .PRDATAS0  ( CoreAPB3_C0_0_APBmslave0_PRDATA_0 ),
+        .PRDATAS1  ( CoreAPB3_C0_0_APBmslave1_PRDATA_0 ),
+        .PRDATAS2  ( CoreAPB3_C0_0_APBmslave2_PRDATA_0 ),
+        .PRDATAS3  ( CoreAPB3_C0_0_APBmslave3_PRDATA_0 ),
+        .PRDATAS4  ( CoreAPB3_C0_0_APBmslave4_PRDATA_0 ),
+        .PRDATAS5  ( CoreAPB3_C0_0_APBmslave5_PRDATA_0 ),
+        .PRDATAS6  ( CoreAPB3_C0_0_APBmslave6_PRDATA_0 ),
         // Outputs
-        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
         .PREADY    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PREADY ),
         .PSLVERR   ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PSLVERR ),
-        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
         .PSELS0    ( CoreAPB3_C0_0_APBmslave0_PSELx ),
         .PENABLES  ( CoreAPB3_C0_0_APBmslave0_PENABLE ),
         .PWRITES   ( CoreAPB3_C0_0_APBmslave0_PWRITE ),
-        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ),
         .PSELS1    ( CoreAPB3_C0_0_APBmslave1_PSELx ),
         .PSELS2    ( CoreAPB3_C0_0_APBmslave2_PSELx ),
         .PSELS3    ( CoreAPB3_C0_0_APBmslave3_PSELx ),
         .PSELS4    ( CoreAPB3_C0_0_APBmslave4_PSELx ),
         .PSELS5    ( CoreAPB3_C0_0_APBmslave5_PSELx ),
-        .PSELS6    ( CoreAPB3_C0_0_APBmslave6_PSELx ) 
+        .PSELS6    ( CoreAPB3_C0_0_APBmslave6_PSELx ),
+        .PRDATA    ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
+        .PADDRS    ( CoreAPB3_C0_0_APBmslave0_PADDR ),
+        .PWDATAS   ( CoreAPB3_C0_0_APBmslave0_PWDATA ) 
         );
 
 //--------CoreResetP_C0
@@ -879,12 +879,12 @@ MSS_C0_MSS MSS_C0_MSS_0(
         .FIC_2_APB_M_PREADY     ( VCC_net ), // tied to 1'b1 from definition
         .FIC_2_APB_M_PSLVERR    ( GND_net ), // tied to 1'b0 from definition
         .M3_RESET_N             ( CoreResetP_C0_0_M3_RESET_N ),
-        .MSS_INT_F2M            ( MSS_INT_F2M_net_0 ),
-        .FIC_0_APB_M_PRDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
-        .FIC_2_APB_M_PRDATA     ( FIC_2_APB_M_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         .SPI_0_DI_F2M           ( GND_net ),
         .SPI_0_CLK_F2M          ( GND_net ),
         .SPI_0_SS0_F2M          ( GND_net ),
+        .MSS_INT_F2M            ( MSS_INT_F2M_net_0 ),
+        .FIC_0_APB_M_PRDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PRDATA ),
+        .FIC_2_APB_M_PRDATA     ( FIC_2_APB_M_PRDATA_const_net_0 ), // tied to 32'h00000000 from definition
         // Outputs
         .MMUART_0_TXD_M2F       ( MMUART_0_TXD_M2F_net_0 ),
         .GPIO_0_M2F             ( GPIO_0_M2F_net_0 ),
@@ -912,14 +912,14 @@ MSS_C0_MSS MSS_C0_MSS_0(
         .GPIO_15_M2F            ( MRAM2_HOLDn_net_0 ),
         .GPIO_16_M2F            ( FLASH2_WP_net_0 ),
         .GPIO_17_M2F            ( FLASH2_HOLDn_net_0 ),
-        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
-        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
-        .FIC_2_APB_M_PADDR      (  ),
-        .FIC_2_APB_M_PWDATA     (  ),
         .SPI_0_DO_M2F           (  ),
         .SPI_0_CLK_M2F          (  ),
         .SPI_0_SS0_M2F          (  ),
-        .SPI_0_SS0_M2F_OE       (  ) 
+        .SPI_0_SS0_M2F_OE       (  ),
+        .FIC_0_APB_M_PADDR      ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PADDR ),
+        .FIC_0_APB_M_PWDATA     ( MSS_C0_MSS_0_FIC_0_APB_MASTER_PWDATA ),
+        .FIC_2_APB_M_PADDR      (  ),
+        .FIC_2_APB_M_PWDATA     (  ) 
         );
 
 //--------OR3

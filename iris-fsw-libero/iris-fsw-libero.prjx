@@ -72,8 +72,8 @@ PARENT="<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf"
 ENDFILE
 VALUE "<project>\component\Actel\DirectCore\CoreAPB3\4.1.100\coreparameters.v,tb_hdl"
 STATE="utd"
-TIME="1616778432"
-SIZE="1284"
+TIME="1616796398"
+SIZE="1239"
 PARENT="<project>\component\Actel\DirectCore\CoreAPB3\4.1.100\CoreAPB3.cxf"
 IS_READONLY="TRUE"
 IS_INCLUDED="TRUE"
@@ -181,7 +181,7 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\Actel\DirectCore\CORESPI\5.2.104\CORESPI.cxf,actgen_cxf"
 STATE="utd"
-TIME="1616606505"
+TIME="1616791868"
 SIZE="2961"
 PARENT="<project>\component\work\CORESPI_C0\CORESPI_C0.cxf"
 PARENT="<project>\component\work\CORESPI_C1\CORESPI_C1.cxf"
@@ -457,13 +457,13 @@ PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 ENDFILE
 VALUE "<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf,actgen_cxf"
 STATE="utd"
-TIME="1616778434"
+TIME="1616796398"
 SIZE="18633"
 ENDFILE
 VALUE "<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.v,hdl"
 STATE="utd"
-TIME="1616778432"
-SIZE="14393"
+TIME="1616796398"
+SIZE="13994"
 PARENT="<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf"
 IS_READONLY="TRUE"
 ENDFILE
@@ -493,19 +493,19 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\CORESPI_C1\CORESPI_C1.cxf,actgen_cxf"
 STATE="utd"
-TIME="1611764320"
+TIME="1616796398"
 SIZE="6540"
 ENDFILE
 VALUE "<project>\component\work\CORESPI_C1\CORESPI_C1.v,hdl"
 STATE="utd"
-TIME="1611764320"
+TIME="1616796398"
 SIZE="4976"
 PARENT="<project>\component\work\CORESPI_C1\CORESPI_C1.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\DESIGN_FIRMWARE\DESIGN_FIRMWARE.cxf,actgen_cxf"
 STATE="utd"
-TIME="1616779252"
+TIME="1616796398"
 SIZE="3871"
 ENDFILE
 VALUE "<project>\component\work\FCCC_C0\FCCC_C0.cxf,actgen_cxf"
@@ -535,42 +535,42 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\MSS_C0.cxf,actgen_cxf"
 STATE="utd"
-TIME="1616779288"
+TIME="1617231992"
 SIZE="11111"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\MSS_C0.v,hdl"
 STATE="utd"
-TIME="1616778497"
+TIME="1617230636"
 SIZE="42269"
 PARENT="<project>\component\work\MSS_C0\MSS_C0.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\subsystem.bfm,sim"
 STATE="utd"
-TIME="1616778498"
+TIME="1617230637"
 SIZE="840"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\CM3_compile_bfm.tcl,sim"
 STATE="utd"
-TIME="1616776515"
-SIZE="504"
+TIME="1616796398"
+SIZE="491"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf,actgen_cxf"
 STATE="utd"
-TIME="1616776516"
+TIME="1616796398"
 SIZE="23620"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.v,hdl"
 STATE="utd"
-TIME="1616776515"
-SIZE="50134"
+TIME="1616796398"
+SIZE="49278"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS_pre.v,hdl"
 STATE="utd"
-TIME="1616776514"
-SIZE="59275"
+TIME="1616796398"
+SIZE="57868"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 BEGIN_USE_CONSTRAINT
 TOOL_CONSTRAINT_TYPE="ideSYNTHESIS"
@@ -581,8 +581,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS_syn.v,hdl"
 STATE="utd"
-TIME="1616776514"
-SIZE="51313"
+TIME="1616796398"
+SIZE="49907"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 BEGIN_USE_CONSTRAINT
 TOOL_CONSTRAINT_TYPE="ideSYNTHESIS"
@@ -593,8 +593,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\test.bfm,sim"
 STATE="utd"
-TIME="1616776515"
-SIZE="734"
+TIME="1616796398"
+SIZE="710"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\user.bfm,sim"
 STATE="utd"
@@ -628,8 +628,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\constraint\io\user.pdc,io_pdc"
 STATE="utd"
-TIME="1616778786"
-SIZE="5765"
+TIME="1617211279"
+SIZE="5816"
 IS_TARGET="TRUE"
 ENDFILE
 VALUE "<project>\simulation\bfmtovec_compile.tcl,sim"
@@ -658,7 +658,7 @@ PARENT="<project>\component\Actel\SmartFusion2MSS\MSS\1.1.500\MSS.cxf"
 ENDFILE
 VALUE "<project>\simulation\subsystem.bfm,sim"
 STATE="utd"
-TIME="1616778498"
+TIME="1617230637"
 SIZE="840"
 PARENT="<project>\component\work\MSS_C0\MSS_C0.cxf"
 ENDFILE
@@ -682,22 +682,22 @@ PARENT="<project>\component\Actel\DirectCore\CORESPI\5.2.104\CORESPI.cxf"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.so,so"
 STATE="utd"
-TIME="1616770148"
+TIME="1617230700"
 SIZE="267"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.vm,syn_vm"
 STATE="utd"
-TIME="1616770146"
-SIZE="995992"
+TIME="1617230698"
+SIZE="1192446"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_syn.prj,prj"
 STATE="utd"
-TIME="1616770149"
+TIME="1617230701"
 SIZE="6233"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_vm.sdc,syn_sdc"
 STATE="utd"
-TIME="1616770146"
+TIME="1617230699"
 SIZE="1099"
 ENDFILE
 ENDLIST
@@ -962,7 +962,7 @@ SmartDesign;MSS_C0;0
 Constraint Manager;Constraint Manager;0
 SmartDesign;DESIGN_FIRMWARE;0
 StartPage;StartPage;0
-ACTIVEVIEW;DESIGN_FIRMWARE
+ACTIVEVIEW;Reports
 ENDLIST
 LIST ModuleSubBlockList
 LIST "CoreAPB3_C0::work","component\work\CoreAPB3_C0\CoreAPB3_C0.v","TRUE","FALSE"
@@ -981,22 +981,6 @@ SUBBLOCK "CORESPI::CORESPI_LIB","component\Actel\DirectCore\CORESPI\5.2.104\rtl\
 ENDLIST
 LIST "CORESPI_C1::work","component\work\CORESPI_C1\CORESPI_C1.v","TRUE","FALSE"
 SUBBLOCK "CORESPI::CORESPI_LIB","component\Actel\DirectCore\CORESPI\5.2.104\rtl\vlog\core\corespi.v","FALSE","FALSE"
-ENDLIST
-LIST "CoreSPI_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "DESIGN_FIRMWARE::work","component\work\DESIGN_FIRMWARE\DESIGN_FIRMWARE.cxf","TRUE","FALSE"
-SUBBLOCK "CoreSPI_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_CMSIS::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_CAN_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_GPIO_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_HPDMA_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_MMUART_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_NVM_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_RTC_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_SPI_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_System_Services_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_Timer_Driver::work","","FALSE","FALSE"
-SUBBLOCK "SmartFusion2_MSS_Watchdog_Driver::work","","FALSE","FALSE"
 ENDLIST
 LIST "MSS_010::work","component\work\MSS_C0_MSS\MSS_C0_MSS_syn.v","FALSE","FALSE"
 ENDLIST
@@ -1031,28 +1015,6 @@ ENDLIST
 LIST "RCOSC_25_50MHZ::work","component\Actel\SgCore\OSC\2.0.101\osc_comps.v","FALSE","FALSE"
 ENDLIST
 LIST "RCOSC_25_50MHZ_FAB::work","component\Actel\SgCore\OSC\2.0.101\osc_comps.v","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_CMSIS::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_CAN_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_GPIO_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_HPDMA_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_MMUART_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_NVM_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_RTC_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_SPI_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_System_Services_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_Timer_Driver::work","","FALSE","FALSE"
-ENDLIST
-LIST "SmartFusion2_MSS_Watchdog_Driver::work","","FALSE","FALSE"
 ENDLIST
 LIST "XTLOSC::work","component\Actel\SgCore\OSC\2.0.101\osc_comps.v","FALSE","FALSE"
 ENDLIST
