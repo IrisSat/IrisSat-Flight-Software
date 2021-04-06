@@ -17,7 +17,7 @@
 void readADC(AD7928_Measurement_t* measurement){
 
     //Write to cmd reg, normal range (0 to Vref), binary coding, channel 0.
-    uint16_t fullCmd = AD7928_WRITE_BIT + AD7928_RANGE + AD7928_CODING + AD7928_PM1 +AD7928_PM0;
+    uint16_t fullCmd = AD7928_WRITE_BIT + AD7928_CODING + AD7928_PM1 +AD7928_PM0;
 
     uint8_t cmd[2];
     cmd[0] = fullCmd >>8;
