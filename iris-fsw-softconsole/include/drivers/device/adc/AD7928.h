@@ -35,4 +35,6 @@ typedef struct{
 
 void readADC(AD7928_Measurement_t* measurement);
 
+void initADC();
+
 #endif /* ADC_AD7928_H_ */

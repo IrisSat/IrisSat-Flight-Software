@@ -69,6 +69,8 @@
 #include "drivers/device/adcs_driver.h"
 #include "drivers/filesystem_driver.h"
 #include "tests.h"
+#include "drivers/device/adc/AD7928.h"
+
 
 
 //#define SERVER
@@ -237,7 +239,7 @@ int main( void )
 //						 1,
 //						 NULL);
 
-    status = xTaskCreate(vTestADC, "adcTest", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+    status = xTaskCreate(vTestADC, "adcTest", 160, NULL, 1, NULL);
 
     vTaskStartScheduler();
 
@@ -257,6 +259,7 @@ static void prvSetupHardware( void )
 //
 //    init_WD();
     init_spi();
+//    initADC();
 //    init_rtc();
 //    init_mram();
 //    //init_CAN(CAN_BAUD_RATE_250K,NULL);

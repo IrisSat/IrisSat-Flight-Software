@@ -21,7 +21,7 @@ void vTestADC(void * pvParams){
         //Get the board temp.Manually compare to external thermometer....
         temp = getBoardTemp();
 
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        vTaskDelay(pdMS_TO_TICKS(500));
 
     }
 }

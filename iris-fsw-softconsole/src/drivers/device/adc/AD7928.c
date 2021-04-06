@@ -17,13 +17,13 @@
 void readADC(AD7928_Measurement_t* measurement){
 
     //Write to cmd reg, normal range (0 to Vref), binary coding, channel 0.
-    uint16_t fullCmd = AD7928_WRITE_BIT + AD7928_RANGE + AD7928_CODING;
+    uint16_t fullCmd = AD7928_WRITE_BIT + AD7928_RANGE + AD7928_CODING + AD7928_PM1 +AD7928_PM0;
 
     uint8_t cmd[2];
     cmd[0] = fullCmd >>8;
     cmd[1] = fullCmd &(0xFF);
 
-    spi_transaction_block_write_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, &cmd, 2, NULL, 0);
+    spi_transaction_block_write_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, cmd, 2, NULL, 0);
 
     //Wait at least 50 ns (tQuiet), here wait 1 ms
     if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
@@ -34,8 +34,21 @@ void readADC(AD7928_Measurement_t* measurement){
     //Get the value.
     spi_transaction_block_read_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, NULL, 0, result, 2);
 
-    measurement->channel =result[0]>>(AD7928_ADD0>>8);
+    measurement->channel =(result[0]>>4)&0x07;
     measurement->value = ((result[0]&0x0F)<<8)+result[1];
 
 }
 
+void initADC(){
+	uint8_t cmd[2]= {0xFF,0xFF};
+		spi_transaction_block_write_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, cmd, 2, NULL, 0);
+		//Wait at least 50 ns (tQuiet), here wait 1 ms
+		if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+			vTaskDelay(pdMS_TO_TICKS(1));
+		}
+	spi_transaction_block_write_without_toggle(ADC_SPI_CORE, ADC_SLAVE_CORE, cmd, 2, NULL, 0);
+		//Wait at least 50 ns (tQuiet), here wait 1 ms
+		if(xTaskGetSchedulerState() == taskSCHEDULER_RUNNING){
+			vTaskDelay(pdMS_TO_TICKS(1));
+		}
+}
