@@ -16,6 +16,8 @@
 #include "drivers/device/memory/flash_common.h"
 #include <string.h>
 
+#include "drivers/device/memory/mr2xh40_mram.h"
+
 void vTestMRAM(void *pvParameters)
 {
     //Write the pins low(0V)
@@ -27,9 +29,10 @@ void vTestMRAM(void *pvParameters)
     MSS_GPIO_set_output(MSS_GPIO_11, 1);
 
     // Test code that writes to all locations of the MRAM, and then reads it back.
-    static uint8_t write_buffer[0x10];
+    static uint8_t write_buffer[256];
     static uint8_t read_buffer1[sizeof(write_buffer)];
     uint8_t status_reg;
+//    uint8_t mram_test_variable;
 
     static volatile int error_occurred = 0;
 
@@ -39,7 +42,9 @@ void vTestMRAM(void *pvParameters)
     }
     for(;;)
     {
-        // Loop through all addresses.
+//    	mr2xh40_read_status_register(&mram_instances[MRAM_INSTANCE_0], &mram_test_variable);
+
+    	// Loop through all addresses.
         for (int ix = 0; ix < MAX_MRAM_ADDRESS; ix += sizeof(write_buffer))
         {
            for (int ix = 0; ix < sizeof(write_buffer); ix++)
@@ -65,7 +70,7 @@ void vTestMRAM(void *pvParameters)
                }
            }
 
-           vTaskDelay(pdMS_TO_TICKS(2000)); // Breakpoint here to make sure you are done!
+           vTaskDelay(pdMS_TO_TICKS(10)); // Breakpoint here to make sure you are done!
         }
     }
 }
