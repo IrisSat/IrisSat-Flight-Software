@@ -17,6 +17,8 @@
  *      Author: Taylor
  */
 
+#include "drivers/mss_uart/mss_uart.h"
+
 void vInitializeUARTs(uint32_t baud0);
 void vTaskUARTBridge(void *pvParameters);
 static void prvUARTRxNotificationHandler( mss_uart_instance_t *pxUART );

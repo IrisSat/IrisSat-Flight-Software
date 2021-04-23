@@ -15,12 +15,17 @@
 // INCLUDES
 //------------------------------------------------------------------------------
 #include "tasks/csp_server.h"
+#include "tasks/telemetry.h"
 
 #include "csp/csp.h"
 #include "csp/interfaces/csp_if_can.h"
+#include "csp/interfaces/csp_if_kiss.h"
+#include "drivers/uart_driver_csp.h"
 
 #include "FreeRTOS.h"
 #include "queue.h"
+
+
 
 //------------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
@@ -110,7 +115,7 @@ uint8_t configure_csp(){
         return result;
     }
     /* Init CSP with address 0 */
-    status = csp_init(CSP_MY_ADDRESS);
+    status = csp_init(CDH_CSP_ADDRESS);
     if(status != CSP_ERR_NONE){
         result = 0;
         return result;
@@ -123,15 +128,22 @@ uint8_t configure_csp(){
         return result;
     }
 
+    csp_kiss_init(&uartInterface, &uartHandle, uartPutChar, NULL, "KISS");
+
     /* Setup default route to CAN interface */
-    status = csp_rtable_set(CSP_DEFAULT_ROUTE,0, &csp_if_can,CSP_NODE_MAC);
+    //status = csp_rtable_set(CSP_DEFAULT_ROUTE,0, &csp_if_can,CSP_NODE_MAC);
+    char* canRoute = "0/2 CAN";
+    char* gndRoute = "9/5 KISS";
+
+   csp_rtable_load(canRoute);
+   csp_rtable_load(gndRoute);
     if(status != CSP_ERR_NONE){
         result = 0;
         return result;
     }
 
     /* Start router task with 100 word stack, OS task priority 1 */
-    status = csp_route_start_task(CSP_DEFAULT_ROUTER_STACK_SIZE, CSP_DEFAULT_ROUTER_PRIORITY);
+    status = csp_route_start_task(4*CSP_DEFAULT_ROUTER_STACK_SIZE, CSP_DEFAULT_ROUTER_PRIORITY);
     if(status != CSP_ERR_NONE){
         result = 0;
         return result;

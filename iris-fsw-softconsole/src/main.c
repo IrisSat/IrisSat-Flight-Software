@@ -70,8 +70,9 @@
 #include "drivers/filesystem_driver.h"
 #include "tests.h"
 #include "tasks/telemetry.h"
+#include "tasks/csp_server.h"
 
-#define SERVER
+//#define SERVER
 //#define CLIENT
 
 
@@ -180,7 +181,7 @@ int main( void )
 #endif
 //
 
-    status = xTaskCreate(vTestingTask, "test", 512, NULL, 1, NULL);
+    status = xTaskCreate(vCSP_Server, "cspServer", 500, NULL, 1, NULL);
 
     status = xTaskCreate(vTestWD,
                          "Test WD",
@@ -350,7 +351,7 @@ static void vTestCspClient(void * pvParameters){
 
 	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
-	csp_route_start_task(100, 1);
+	csp_route_start_task(200, 1);
 
 
 	while(1){
@@ -429,8 +430,8 @@ void vApplicationMallocFailedHook( void )
 
  // TODO - Log event!
 
-    taskDISABLE_INTERRUPTS();
-    for( ;; );
+//    taskDISABLE_INTERRUPTS();
+//    for( ;; );
 }
 /*-----------------------------------------------------------*/
 

@@ -12,6 +12,7 @@
 #include "tests.h"
 
 #include "drivers/device/watchdog.h"
+#include "drivers/mss_gpio/mss_gpio.h"
 
 void vTestWD(void *pvParameters)
 {
@@ -31,9 +32,12 @@ void vTestWD(void *pvParameters)
     {
         // TODO - Log event!
     }
+   uint8_t pinState = 0;
 
     for (;;)
     {
+        MSS_GPIO_set_output(WDI_PIN, pinState);
+        pinState = ~pinState;
         service_WD();
         vTaskDelay(pdMS_TO_TICKS(WD_TASK_PERIOD_ms));
     }
