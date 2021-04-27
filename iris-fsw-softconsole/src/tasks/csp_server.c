@@ -16,6 +16,8 @@
 //------------------------------------------------------------------------------
 #include "tasks/csp_server.h"
 #include "tasks/telemetry.h"
+#include "tasks/scheduler.h"
+#include "drivers/filesystem_driver.h"
 
 #include "csp/csp.h"
 #include "csp/interfaces/csp_if_can.h"
@@ -61,6 +63,42 @@ void vCSP_Server(void * pvParameters){
     //Have up to 4 backlog connections.
     csp_listen(socket,4);
 
+    int result_fs = 1;
+    uint32_t boot_count = 0;
+
+    lfs_file_t file = {0}; //Set to 0 because debugger tries to read fields of struct one of which is a pointer, but since this is on free rtos heap, initial value is a5a5a5a5.
+
+    FilesystemError_t stat = fs_init();
+    if(stat != FS_OK){
+        while(1){}
+    }
+    //Mount the file system.
+    int err = fs_mount();
+
+    // reformat if we can't mount the filesystem
+    // this should only happen on the first boot
+    if (err) {
+        fs_format();
+        fs_mount();
+    }
+   result_fs = fs_file_open( &file, "boot_count", LFS_O_RDWR | LFS_O_CREAT);
+   if(result_fs < 0) while(1){}
+
+   result_fs = fs_file_read( &file, &boot_count, sizeof(boot_count));
+   if(result_fs < 0) while(1){}
+
+   // update boot count
+   boot_count += 1;
+   result_fs = fs_file_rewind( &file);
+   if(result_fs < 0) while(1){}
+
+   result_fs = fs_file_write( &file, &boot_count, sizeof(boot_count));
+   if(result_fs < 0) while(1){}
+
+   // remember the storage is not updated until the file is closed successfully
+   result_fs = fs_file_close( &file);
+   if(result_fs < 0) while(1){}
+
     //TODO: Check return of csp_bind and listen, then handle errors.
     while(1) {
 
@@ -75,16 +113,33 @@ void vCSP_Server(void * pvParameters){
 			#endif
 
             //Handle the message based on the port it was sent to.
-            int dest_port = csp_conn_dst(conn);
+            int dest_port = csp_conn_dport(conn);
 
             switch(dest_port){
 
-                CSP_COMMAND_PORT:
-                    xQueueSendToBack(queues->command_queue,packet->data,100);
-                    break;
+            case CSP_CMD_PORT:{
 
-                CSP_DATA_PORT:
-                    xQueueSendToBack(queues->data_queue,packet->data,100);
+                    telemetryPacket_t t ;
+                    unpackTelemetry(packet->data, &t);
+
+                    switch(t.telem_id){
+
+                    case CDH_SCHEDULE_TTT_CMD:{
+
+                            uint8_t taskCode = t.data[0];
+                            Calendar_t timeTag = *((Calendar_t*)&t.data[1]);
+
+                            schedule_task(taskCode, timeTag);
+
+                        }
+
+
+                    }
+                    break;
+                }
+
+            case CSP_TELEM_PORT:
+
                     break;
 
                 default:

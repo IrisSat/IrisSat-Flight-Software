@@ -126,7 +126,12 @@ int main( void )
                             (void *) &g_mss_uart0,       // Task parameter is the UART instance used by the task
                             2,                           // Task runs at priority 2
                             &xUART0RxTaskToNotify);      // Task handle for task notification
-
+    status = xTaskCreate(vTTT_Scheduler,
+                         "TTT",
+                         1000,
+                         NULL,
+                         1,
+                         NULL);
 
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
@@ -180,6 +185,11 @@ int main( void )
 
 #endif
 //
+    init_rtc();
+
+
+
+
 
     status = xTaskCreate(vCSP_Server, "cspServer", 500, NULL, 1, NULL);
 
@@ -259,12 +269,12 @@ static void prvSetupHardware( void )
     vInitializeUARTs(MSS_UART_115200_BAUD);
 
     init_WD();
-//    init_spi();
+    init_spi();
 //    init_rtc();
 //    init_mram();
     //init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
-//    flash_device_init(flash_devices[PROGRAM_FLASH]);
+    flash_device_init(flash_devices[DATA_FLASH]);
 }
 
 

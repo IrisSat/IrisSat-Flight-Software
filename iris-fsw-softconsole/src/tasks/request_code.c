@@ -19,8 +19,9 @@
 #include <string.h>
 #include <FreeRTOS.h>
 #include <task.h>
+#include "drivers/device/rtc/rtc_common.h"
+#include "tasks/request_code.h"
 
-#include "request_code.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -45,21 +46,27 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-void handle_request(request_code_t req){
+void handle_request(cdhTask_t req,Calendar_t time){
 	int temp = 0;
 	switch(req){
-		case(INVALID_REQUEST_CODE):
-			return;
+
+		case(TASK_TAKE_IMAGE):{
+		        uint8_t imgNum =1;
+                telemetryPacket_t telemetry={0};
+                telemetry.telem_id= PAYLOAD_FULL_IMAGE_CMD;
+                telemetry.timestamp = time;
+                telemetry.length = 1;
+                telemetry.data = &imgNum;
+                sendCommand(&telemetry, PAYLOAD_CSP_ADDRESS);
+
 			break;
-		case(TEST_CODE_0):
-			temp = 123; // Do stuff
-			break;
-		case(TEST_CODE_1):
-			temp = 456; // Do other stuff
-			break;
-		case(TEST_CODE_2):
-			temp = 789; // Do other stuff
-			break;
+		}
+//		case(TEST_CODE_1):
+//			temp = 456; // Do other stuff
+//			break;
+//		case(TEST_CODE_2):
+//			temp = 789; // Do other stuff
+//			break;
 		default:
 			return;
 	}

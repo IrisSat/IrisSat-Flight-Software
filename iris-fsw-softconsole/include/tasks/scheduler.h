@@ -73,4 +73,6 @@ int schedule_task(
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 void vTestTaskScheduler(void *pvParameters);
 
+void vTTT_Scheduler(void *pvParameters);
+
 #endif // SCHEDULER_H

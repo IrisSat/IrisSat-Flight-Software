@@ -36,7 +36,7 @@ void vTestWD(void *pvParameters)
 
     for (;;)
     {
-        MSS_GPIO_set_output(WDI_PIN, pinState);
+//        MSS_GPIO_set_output(WDI_PIN, pinState);
         pinState = ~pinState;
         service_WD();
         vTaskDelay(pdMS_TO_TICKS(WD_TASK_PERIOD_ms));
