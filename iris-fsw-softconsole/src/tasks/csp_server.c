@@ -18,6 +18,8 @@
 #include "tasks/telemetry.h"
 #include "tasks/scheduler.h"
 #include "drivers/filesystem_driver.h"
+#include "drivers/device/rtc/rtc_ds1393.h"
+#include "drivers/device/rtc/rtc_time.h"
 
 #include "csp/csp.h"
 #include "csp/interfaces/csp_if_can.h"
@@ -133,6 +135,38 @@ void vCSP_Server(void * pvParameters){
 
                         }
 
+                    case CDH_SET_TIME_CMD:{
+
+                        //They send us a Calendar_t
+                        Calendar_t *newTime = t.data;
+                        int err = time_valid(newTime);
+
+                        if(err == TIME_SUCCESS){
+                              //Uncomment for cdh with rtc installed.
+//                            ds1393_write_time(newTime);
+//                            resync_rtc();
+                            MSS_RTC_set_calendar_count(newTime);//This is just for testing without actual external rtc. Comment out if using the CDH EM board.
+                        }else{
+
+                            //Log error...
+                        }
+
+                    }
+
+                    case CDH_GET_TIME_CMD:{
+
+                        //They send us a Calendar_t
+                        Calendar_t currTime;
+                        MSS_RTC_get_calendar_count(&currTime);
+                        telemetryPacket_t telem;
+                        telem.telem_id = CDH_TIME_ID;
+                        telem.timestamp = currTime;
+                        telem.length =0;//No data, since the data is in the timestamp.
+                        telem.data = NULL;
+
+                        sendTelemetry_direct(&telem, conn);
+
+                    }
 
                     }
                     break;
