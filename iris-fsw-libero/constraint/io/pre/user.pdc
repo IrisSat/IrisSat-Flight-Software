@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Wed Mar 24 11:33:49 2021 
+# Date generated: Thu Apr 29 15:54:48 2021 
 
 
 # 
@@ -266,6 +266,12 @@ set_io RTC_SPI_SCK     \
     -pinname 136       \
     -fixed yes         \
     -iostd LVCMOS25    \
+    -DIRECTION OUTPUT
+
+
+set_io WDI             \
+    -pinname 56        \
+    -fixed yes         \
     -DIRECTION OUTPUT
 
 
