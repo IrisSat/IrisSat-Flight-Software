@@ -79,7 +79,7 @@ int init_spi()
 
     if (rc)
     {
-    	for(int ix = 0; ix < NUM_SPI_INSTANCES; ix++){
+    	for(int ix = 0; ix < NUM_SPI_INSTANCES-1; ix++){
 		  // Initialize the core SPI instance. Make sure the fifo depth matches
 		  // the value set in the Libero project
 		  SPI_init(&core_spi[ix], core_base_addr[ix], core_fifo_len[ix]);

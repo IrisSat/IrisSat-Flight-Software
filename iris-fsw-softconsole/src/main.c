@@ -180,12 +180,12 @@ int main( void )
 
 #endif
 ////
-//    status = xTaskCreate(vTestWD,
-//                         "Test WD",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestWD,
+                         "Test WD",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 
 //    status = xTaskCreate(vTestFS,
 //                         "Test FS",
@@ -208,12 +208,12 @@ int main( void )
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
 //
-    status = xTaskCreate(vTestMRAM,
-                         "Test MRAM",
-                         512,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestMRAM,
+//                         "Test MRAM",
+//                         512,
+//                         NULL,
+//                         1,
+//                         NULL);
 //
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
@@ -257,11 +257,11 @@ static void prvSetupHardware( void )
 //     * UART 0 set to 115200 to connect to terminal */
 //    vInitializeUARTs(MSS_UART_115200_BAUD);
 //
-//    init_WD();
+    init_WD();
     init_spi();
 //    initADC();
 //    init_rtc();
-    init_mram();
+//    init_mram();
 //    //init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
 //    flash_device_init(flash_devices[PROGRAM_FLASH]);
