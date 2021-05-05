@@ -57,6 +57,22 @@ void mr2xh40_init(MRAMInstance_t * mram)
 	MSS_GPIO_config(MSS_GPIO_11, MSS_GPIO_OUTPUT_MODE);
 	MSS_GPIO_set_output(MSS_GPIO_10, 1);
 	MSS_GPIO_set_output(MSS_GPIO_11, 1);
+
+	//Enable writes so we can write status reg.
+		mr2xh40_single_cmd(mram, MRAM_CMD_WREN);
+
+	//Prepare command: write status reg, with value 0.
+	uint8_t cmd[2] = { MRAM_CMD_WRSR,
+						0};
+
+	spi_transaction_block_write_without_toggle(
+					mram->core,
+					mram->slave,
+					&cmd,
+					2,
+					NULL,
+					0);
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -99,6 +115,8 @@ void mr2xh40_write(MRAMInstance_t * mram, uint32_t address, uint8_t * wr_buffer,
 					  (address) & 0xFF
 	};
 	mr2xh40_single_cmd(mram, MRAM_CMD_WREN); // Enable writes.
+//	uint8_t stat_reg = 0xA5;
+//	mr2xh40_read_status_register(mram, &stat_reg);
 
 	spi_transaction_block_write_without_toggle(
 					mram->core,

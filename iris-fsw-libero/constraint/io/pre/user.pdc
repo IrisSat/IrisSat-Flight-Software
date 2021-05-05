@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Wed Mar 24 11:33:49 2021 
+# Date generated: Wed May  5 13:27:17 2021 
 
 
 # 
@@ -53,15 +53,41 @@ set_io ADCS_SPI_SCK    \
     -DIRECTION OUTPUT
 
 
-set_io CAN_RX_F2M     \
-    -pinname 4        \
+set_io ADC_CS          \
+    -pinname 102       \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io ADC_MISO       \
+    -pinname 100      \
     -fixed yes        \
     -DIRECTION INPUT
 
 
-set_io CAN_TX_M2F      \
-    -pinname 3         \
+set_io ADC_MOSI        \
+    -pinname 103       \
     -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io ADC_SCK         \
+    -pinname 101       \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io CAN_RX_F2M     \
+    -pinname 111      \
+    -fixed yes        \
+    -iostd LVCMOS25   \
+    -DIRECTION INPUT
+
+
+set_io CAN_TX_M2F      \
+    -pinname 112       \
+    -fixed yes         \
+    -iostd LVCMOS25    \
     -DIRECTION OUTPUT
 
 
@@ -152,13 +178,13 @@ set_io GPIO_1_M2F      \
 
 
 set_io MMUART_0_RXD_F2M  \
-    -pinname 1           \
+    -pinname 2           \
     -fixed yes           \
     -DIRECTION INPUT
 
 
 set_io MMUART_0_TXD_M2F  \
-    -pinname 2           \
+    -pinname 1           \
     -fixed yes           \
     -DIRECTION OUTPUT
 
@@ -269,6 +295,18 @@ set_io RTC_SPI_SCK     \
     -DIRECTION OUTPUT
 
 
+set_io WDI             \
+    -pinname 56        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
+set_io WDSEL           \
+    -pinname 55        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
 
 # 
 # Dedicated Peripheral I/O Settings
@@ -291,19 +329,14 @@ set_io GPIO_5_M2F      \
     -DIRECTION OUTPUT
 
 
-set_io GPIO_6_M2F      \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
-set_io GPIO_7_M2F      \
-    -iostd LVCMOS25    \
-    -DIRECTION OUTPUT
-
-
 
 #
 #Ports using Dedicated Pins
 
 #
+
+set_io DEVRST_N       \
+    -pinname 72       \
+    -DIRECTION INPUT
+
 

@@ -69,9 +69,11 @@
 #include "drivers/device/adcs_driver.h"
 #include "drivers/filesystem_driver.h"
 #include "tests.h"
+#include "drivers/device/adc/AD7928.h"
 
 
-//#define SERVER
+
+#define SERVER
 //#define CLIENT
 
 
@@ -192,12 +194,12 @@ int main( void )
 //                         1,
 //                         NULL);
 
-    status = xTaskCreate(vTestRTC,
-                         "Test RTC",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestRTC,
+//                         "Test RTC",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
 
     // TR - Not quite sure of the reason, but it appears that when we have a task created for both
     //      vTestRTC and vTestMRAM, the device stops communicating over SPI after the vTestRTC task
@@ -216,7 +218,7 @@ int main( void )
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
 //                         2000,
-//                         (void *)flash_devices[PROGRAM_FLASH],
+//                         (void *)flash_devices[DATA_FLASH],
 //                         1,
 //                         NULL);
 //
@@ -237,6 +239,15 @@ int main( void )
 //						 1,
 //						 NULL);
 
+//    status = xTaskCreate(vTestADC, "adcTest", 160, NULL, 1, NULL);
+
+//    status = xTaskCreate(vTestAdcsDriver,
+//                         "Test ADCS",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -255,11 +266,13 @@ static void prvSetupHardware( void )
 //
 //    init_WD();
     init_spi();
-    init_rtc();
+//    initADC();
+//    init_rtc();
 //    init_mram();
-//    //init_CAN(CAN_BAUD_RATE_250K,NULL);
+//    asMram_init();
+//    init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
-//    flash_device_init(flash_devices[PROGRAM_FLASH]);
+//    flash_device_init(flash_devices[DATA_FLASH]);
 }
 
 
@@ -275,8 +288,8 @@ static void vTestCspServer(void * pvParameters){
 	/* Init buffer system with 5 packets of maximum 256 bytes each */
 	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
 
-	/* Init CSP with address 0 */
-	csp_init(0);
+	/* Init CSP with address 4 */
+	csp_init(4);
 
 	/* Init the CAN interface with hardware filtering */
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
@@ -325,7 +338,7 @@ static void vTestCspClient(void * pvParameters){
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
 
 	/* Setup address 0 to route to CAN interface */
-	csp_rtable_set(0,0, &csp_if_can,0);
+	csp_rtable_set(4,0, &csp_if_can,0);
 
 	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
@@ -335,7 +348,7 @@ static void vTestCspClient(void * pvParameters){
 	while(1){
 		csp_conn_t * conn;
 		csp_packet_t * packet;
-		conn = csp_connect(2,0,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
+		conn = csp_connect(2,4,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
 		packet = csp_buffer_get(sizeof("Hello World")); // Get a buffer large enough to fit our data. Max size is 256.
 		sprintf(packet->data,"Hello World");
 		packet->length=strlen("Hello World");

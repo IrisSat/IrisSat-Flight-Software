@@ -1,5 +1,5 @@
 #===========================================================
-# Created by Microsemi SmartDesign Wed Mar 24 12:21:55 2021
+# Created by Microsemi SmartDesign Wed May  5 13:40:53 2021
 #
 # Syntax: 
 # ------- 
@@ -23,3 +23,4 @@ memmap CORESPI_C1_1 0x5002_0000;
 memmap CORESPI_C1_2 0x5003_0000;
 memmap CORESPI_C1_3 0x5004_0000;
 memmap CORESPI_C1_4 0x5005_0000;
+memmap CORESPI_C1_5 0x5006_0000;
