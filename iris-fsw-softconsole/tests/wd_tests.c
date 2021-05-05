@@ -10,7 +10,7 @@
 #include <FreeRTOS-Kernel/include/FreeRTOS.h>
 #include <FreeRTOS-Kernel/include/task.h>
 #include "tests.h"
-
+#include "drivers/mss_gpio/mss_gpio.h"
 #include "drivers/device/watchdog.h"
 
 void vTestWD(void *pvParameters)
@@ -32,9 +32,22 @@ void vTestWD(void *pvParameters)
         // TODO - Log event!
     }
 
+    uint8_t pinState=0;
+    MSS_GPIO_set_output(MSS_GPIO_19, 1);
+
     for (;;)
     {
-        service_WD();
-        vTaskDelay(pdMS_TO_TICKS(WD_TASK_PERIOD_ms));
+    	for (int ix=0; ix<6; ix+=1)
+    	{
+    		MSS_GPIO_set_output(MSS_GPIO_18, pinState);
+    		pinState = ~pinState;
+    		service_WD();
+            vTaskDelay(pdMS_TO_TICKS(500));
+    	}
+
+		MSS_GPIO_set_output(MSS_GPIO_18, pinState);
+		pinState = ~pinState;
+		service_WD();
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }

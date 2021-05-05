@@ -22,11 +22,10 @@ data VCCI_2.5_VOLTR COM
 data VCCI_3.3_VOLTR COM
 data FLOW_TYPE NEW
 data PLANNER_IOMODE 1
-data AFL 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/MSS_C0.afl'
+data AFL 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/COMPILE/MSS_C0.afl'
 data ADL 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/MSS_C0.adl'
-data LOC 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/MSS_C0.loc'
-data SEG 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/MSS_C0.seg'
-data NMAT_PDC 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/MSS_C0.nmatinit.pdc'
+data LOC 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/COMPILE/MSS_C0.loc'
+data SEG 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/designer/MSS_C0/COMPILE/MSS_C0.seg'
 
 data IO_PDC_0 'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/constraint/io/user.pdc'
 data TARGET_IOPDC  'C:/Users/mites/Desktop/CDH-Phase-C-Tests/IrisSat-Flight-Software/iris-fsw-libero/constraint/io/user.pdc'

@@ -69,6 +69,8 @@
 #include "drivers/device/adcs_driver.h"
 #include "drivers/filesystem_driver.h"
 #include "tests.h"
+#include "drivers/device/adc/AD7928.h"
+
 
 
 //#define SERVER
@@ -178,12 +180,12 @@ int main( void )
 
 #endif
 ////
-//    status = xTaskCreate(vTestWD,
-//                         "Test WD",
-//                         configMINIMAL_STACK_SIZE,
-//                         NULL,
-//                         1,
-//                         NULL);
+    status = xTaskCreate(vTestWD,
+                         "Test WD",
+                         configMINIMAL_STACK_SIZE,
+                         NULL,
+                         1,
+                         NULL);
 
 //    status = xTaskCreate(vTestFS,
 //                         "Test FS",
@@ -237,6 +239,8 @@ int main( void )
 //						 1,
 //						 NULL);
 
+//    status = xTaskCreate(vTestADC, "adcTest", 160, NULL, 1, NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -253,10 +257,11 @@ static void prvSetupHardware( void )
 //     * UART 0 set to 115200 to connect to terminal */
 //    vInitializeUARTs(MSS_UART_115200_BAUD);
 //
-//    init_WD();
+    init_WD();
     init_spi();
+//    initADC();
 //    init_rtc();
-    init_mram();
+//    init_mram();
 //    //init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
 //    flash_device_init(flash_devices[PROGRAM_FLASH]);
