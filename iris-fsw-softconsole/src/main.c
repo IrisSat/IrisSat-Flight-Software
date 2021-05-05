@@ -73,7 +73,7 @@
 
 
 
-//#define SERVER
+#define SERVER
 //#define CLIENT
 
 
@@ -180,12 +180,12 @@ int main( void )
 
 #endif
 ////
-    status = xTaskCreate(vTestWD,
-                         "Test WD",
-                         configMINIMAL_STACK_SIZE,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestWD,
+//                         "Test WD",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
 
 //    status = xTaskCreate(vTestFS,
 //                         "Test FS",
@@ -208,17 +208,17 @@ int main( void )
     //      rx_data_ready variable never evaluates to "true", and so the software is entering an infinite
     //      loop, waiting for the CoreSPI status to be "rx ready" to perform the final read.
 //
-    status = xTaskCreate(vTestMRAM,
-                         "Test MRAM",
-                         512,
-                         NULL,
-                         1,
-                         NULL);
+//    status = xTaskCreate(vTestMRAM,
+//                         "Test MRAM",
+//                         512,
+//                         NULL,
+//                         1,
+//                         NULL);
 //
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
 //                         2000,
-//                         (void *)flash_devices[PROGRAM_FLASH],
+//                         (void *)flash_devices[DATA_FLASH],
 //                         1,
 //                         NULL);
 //
@@ -241,6 +241,13 @@ int main( void )
 
 //    status = xTaskCreate(vTestADC, "adcTest", 160, NULL, 1, NULL);
 
+//    status = xTaskCreate(vTestAdcsDriver,
+//                         "Test ADCS",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -257,14 +264,15 @@ static void prvSetupHardware( void )
 //     * UART 0 set to 115200 to connect to terminal */
 //    vInitializeUARTs(MSS_UART_115200_BAUD);
 //
-    init_WD();
+//    init_WD();
     init_spi();
 //    initADC();
 //    init_rtc();
 //    init_mram();
-//    //init_CAN(CAN_BAUD_RATE_250K,NULL);
+//    asMram_init();
+//    init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
-//    flash_device_init(flash_devices[PROGRAM_FLASH]);
+//    flash_device_init(flash_devices[DATA_FLASH]);
 }
 
 
@@ -280,8 +288,8 @@ static void vTestCspServer(void * pvParameters){
 	/* Init buffer system with 5 packets of maximum 256 bytes each */
 	csp_buffer_init(5, 256);//The 256 number is from the MTU of the CAN interface.
 
-	/* Init CSP with address 0 */
-	csp_init(0);
+	/* Init CSP with address 4 */
+	csp_init(4);
 
 	/* Init the CAN interface with hardware filtering */
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
@@ -330,7 +338,7 @@ static void vTestCspClient(void * pvParameters){
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
 
 	/* Setup address 0 to route to CAN interface */
-	csp_rtable_set(0,0, &csp_if_can,0);
+	csp_rtable_set(4,0, &csp_if_can,0);
 
 	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
@@ -340,7 +348,7 @@ static void vTestCspClient(void * pvParameters){
 	while(1){
 		csp_conn_t * conn;
 		csp_packet_t * packet;
-		conn = csp_connect(2,0,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
+		conn = csp_connect(2,4,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
 		packet = csp_buffer_get(sizeof("Hello World")); // Get a buffer large enough to fit our data. Max size is 256.
 		sprintf(packet->data,"Hello World");
 		packet->length=strlen("Hello World");

@@ -44,12 +44,11 @@ void vTestMRAM(void *pvParameters)
     for(;;)
     {
         // Loop through all addresses.
-        //for (int ix = 0; ix < AS_MAX_MRAM_ADDR; ix += sizeof(write_buffer))
-=======
+        for (int ix = 0; ix < AS_MAX_MRAM_ADDR; ix += sizeof(write_buffer))
 //    	mr2xh40_read_status_register(&mram_instances[MRAM_INSTANCE_0], &mram_test_variable);
 
     	// Loop through all addresses.
-        for (int ix = 0; ix < MAX_MRAM_ADDRESS; ix += sizeof(write_buffer))
+//        for (int ix = 0; ix < MAX_MRAM_ADDRESS; ix += sizeof(write_buffer))
         {
            for (int ix = 0; ix < sizeof(write_buffer); ix++)
            {
