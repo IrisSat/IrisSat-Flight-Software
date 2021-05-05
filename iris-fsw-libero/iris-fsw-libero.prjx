@@ -625,8 +625,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\constraint\io\user.pdc,io_pdc"
 STATE="utd"
-TIME="1620228480"
-SIZE="5391"
+TIME="1620229663"
+SIZE="5768"
 IS_TARGET="TRUE"
 ENDFILE
 VALUE "<project>\simulation\bfmtovec_compile.tcl,sim"
@@ -679,22 +679,22 @@ PARENT="<project>\component\Actel\DirectCore\CORESPI\5.2.104\CORESPI.cxf"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.so,so"
 STATE="utd"
-TIME="1620228254"
+TIME="1620228767"
 SIZE="267"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.vm,syn_vm"
 STATE="utd"
-TIME="1620228252"
-SIZE="996242"
+TIME="1620228765"
+SIZE="995642"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_syn.prj,prj"
 STATE="utd"
-TIME="1620228255"
+TIME="1620228768"
 SIZE="6233"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_vm.sdc,syn_sdc"
 STATE="utd"
-TIME="1620228253"
+TIME="1620228766"
 SIZE="1099"
 ENDFILE
 ENDLIST
@@ -883,8 +883,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v12.6\SynplifyPro\bin\synplify_pro.exe"
-PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
-BATCH=1
+PARAM=""
+BATCH=0
 LICENSE=""
 IS32BIT="1"
 EndProfile
@@ -953,13 +953,13 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-Reports;Reports;0
-ReportsCurrentItem;Synthesize:synplify.log
+StartPage;StartPage;0
 Constraint Manager;Constraint Manager;0
 SmartDesign;MSS_C0;0
 SmartDesign;MSS_C0_MSS;0
 SmartDesign;DESIGN_FIRMWARE;0
-StartPage;StartPage;0
+Reports;Reports;0
+ReportsCurrentItem;Synthesize:synplify.log
 ACTIVEVIEW;Constraint Manager
 ENDLIST
 LIST ModuleSubBlockList

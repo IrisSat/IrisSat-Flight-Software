@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Wed May  5 10:33:11 2021 
+# Date generated: Wed May  5 10:47:43 2021 
 
 
 # 
@@ -54,14 +54,16 @@ set_io ADCS_SPI_SCK    \
 
 
 set_io CAN_RX_F2M     \
-    -pinname 4        \
+    -pinname 111      \
     -fixed yes        \
+    -iostd LVCMOS25   \
     -DIRECTION INPUT
 
 
 set_io CAN_TX_M2F      \
-    -pinname 3         \
+    -pinname 112       \
     -fixed yes         \
+    -iostd LVCMOS25    \
     -DIRECTION OUTPUT
 
 
@@ -152,13 +154,13 @@ set_io GPIO_1_M2F      \
 
 
 set_io MMUART_0_RXD_F2M  \
-    -pinname 1           \
+    -pinname 2           \
     -fixed yes           \
     -DIRECTION INPUT
 
 
 set_io MMUART_0_TXD_M2F  \
-    -pinname 2           \
+    -pinname 1           \
     -fixed yes           \
     -DIRECTION OUTPUT
 
@@ -318,4 +320,9 @@ set_io GPIO_7_M2F      \
 #Ports using Dedicated Pins
 
 #
+
+set_io DEVRST_N       \
+    -pinname 72       \
+    -DIRECTION INPUT
+
 
