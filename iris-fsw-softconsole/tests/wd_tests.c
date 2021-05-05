@@ -12,6 +12,7 @@
 #include "tests.h"
 #include "drivers/mss_gpio/mss_gpio.h"
 #include "drivers/device/watchdog.h"
+#include "drivers/mss_gpio/mss_gpio.h"
 
 void vTestWD(void *pvParameters)
 {
@@ -31,12 +32,14 @@ void vTestWD(void *pvParameters)
     {
         // TODO - Log event!
     }
+   uint8_t pinState = 0;
 
     uint8_t pinState=0;
     MSS_GPIO_set_output(MSS_GPIO_19, 1);
 
     for (;;)
     {
+
     	for (int ix=0; ix<6; ix+=1)
     	{
     		MSS_GPIO_set_output(MSS_GPIO_18, pinState);

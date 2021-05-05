@@ -27,12 +27,12 @@
 #include "tasks/scheduler.h"
 #include "tasks/priority_queue.h"
 #include "drivers/device/rtc/rtc_time.h"
-#include "request_code.h"
+#include "tasks/request_code.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-#define SCHEDULER_TASK_DELAY_MS				(2000)	// The delay time of each task cycle in ms.
+#define SCHEDULER_TASK_DELAY_MS				(500)	// The delay time of each task cycle in ms.
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ENUMS AND ENUM TYPEDEFS
@@ -127,11 +127,53 @@ void vTestTaskScheduler(void *pvParameters){
 		request = check_queue(p_rtc_calendar); // check queue for tasks at this current time
 
 		if(request != INVALID_REQUEST_CODE){
-			handle_request(request);
+			handle_request(request,p_rtc_calendar);
 		}
 
 		vTaskDelay(pdMS_TO_TICKS(SCHEDULER_TASK_DELAY_MS));
 	}
+}
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+void vTTT_Scheduler(void *pvParameters){
+    request_code_t request;
+    init_TaskScheduler();
+
+//    static BaseType_t rslt; // Variable to hold result of various functions
+//    static time_tagged_task_t task_buf; // Buffer variable to hold a task
+//
+//    MSS_RTC_get_calendar_count(&p_rtc_calendar); // get current time
+//
+//    // add 60s to current time
+//    mss_rtc_calendar_t p_rtc_cal_1 = p_rtc_calendar;
+//    p_rtc_cal_1.minute += 1;
+//    schedule_task(TEST_CODE_1, p_rtc_cal_1); // create task to be executed in 60s
+//
+//    // add 90s to current time
+//    mss_rtc_calendar_t p_rtc_cal_2 = p_rtc_calendar;
+//    p_rtc_cal_2.second += 30;
+//    p_rtc_cal_2.minute += 1;
+//    schedule_task(TEST_CODE_2, p_rtc_cal_2); // create task to be executed in 90s
+//
+//    // add 30s to current time
+//    mss_rtc_calendar_t p_rtc_cal_0 = p_rtc_calendar;
+//    p_rtc_cal_0.second += 30;
+//    schedule_task(TEST_CODE_0, p_rtc_cal_0); // create task to be executed in 30s
+//
+//    MSS_RTC_start(); // Start RTC
+
+    for( ;; ) {
+        MSS_RTC_get_calendar_count(&p_rtc_calendar); // get current time
+
+        request = check_queue(p_rtc_calendar); // check queue for tasks at this current time
+
+        if(request != INVALID_REQUEST_CODE){
+            handle_request(request,p_rtc_calendar);
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(SCHEDULER_TASK_DELAY_MS));
+    }
 }
 
 int schedule_task(request_code_t req, mss_rtc_calendar_t time){

@@ -24,10 +24,13 @@
 #include <FreeRTOS-Kernel/include/task.h>
 
 /* Library includes. */
-#include "drivers/mss_uart/mss_uart.h"
+
 #include <firmware/CMSIS/system_m2sxxx.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "csp/interfaces/csp_if_kiss.h"
+#include "drivers/uart_driver_csp.h"
 
 /* Application includes. */
 #include "drivers/protocol/uart.h"
@@ -107,7 +110,8 @@ void vTaskUARTBridge(void *pvParameters)
 		/* Do any special processing based on the origin on the data */
 		if(my_uart == &g_mss_uart0)
 		{
-			prvProcessUART0(copied_buffer, uxBytesRead);
+//			prvProcessUART0(copied_buffer, uxBytesRead);
+		    csp_kiss_rx(&uartInterface, copied_buffer, uxBytesRead, NULL);
 		}
 	}
 }
