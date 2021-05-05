@@ -34,6 +34,7 @@
 
 
 #include "drivers/device/memory/W25N_flash.h"
+#include "drivers/mss_gpio/mss_gpio.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // DEFINITIONS AND MACROS
@@ -598,6 +599,9 @@ out:
 
 
 FlashStatus_t w25n_dev_init(W25NDevice_t * dev, uint8_t bb_reserve, W25NEccCheck_t ecc_check){
+	// Set HOLDn signal high
+	MSS_GPIO_config(MSS_GPIO_13, MSS_GPIO_OUTPUT_MODE);
+    MSS_GPIO_set_output(MSS_GPIO_13, 1);
 
 	FlashStatus_t result = FLASH_ERROR;
 

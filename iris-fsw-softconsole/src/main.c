@@ -71,6 +71,9 @@
 #include "tests.h"
 #include "tasks/telemetry.h"
 #include "tasks/csp_server.h"
+#include "drivers/device/adc/AD7928.h"
+
+
 
 //#define SERVER
 //#define CLIENT
@@ -132,6 +135,7 @@ int main( void )
                          NULL,
                          1,
                          NULL);
+
 
 //    status = xTaskCreate(vTestSPI,
 //                         "Test SPI",
@@ -231,7 +235,7 @@ int main( void )
 //	status = xTaskCreate(vTestFlash,
 //                         "Test Flash",
 //                         2000,
-//                         (void *)flash_devices[PROGRAM_FLASH],
+//                         (void *)flash_devices[DATA_FLASH],
 //                         1,
 //                         NULL);
 //
@@ -252,6 +256,15 @@ int main( void )
 //						 1,
 //						 NULL);
 
+//    status = xTaskCreate(vTestADC, "adcTest", 160, NULL, 1, NULL);
+
+//    status = xTaskCreate(vTestAdcsDriver,
+//                         "Test ADCS",
+//                         configMINIMAL_STACK_SIZE,
+//                         NULL,
+//                         1,
+//                         NULL);
+
     vTaskStartScheduler();
 
     return 0;
@@ -262,19 +275,22 @@ int main( void )
 static void prvSetupHardware( void )
 {
     /* Perform any configuration necessary to use the hardware peripherals on the board. */
-    vInitializeLEDs();
-
-    /* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
-     * UART 0 set to 115200 to connect to terminal */
-    vInitializeUARTs(MSS_UART_115200_BAUD);
-
-    init_WD();
+//    vInitializeLEDs();
+//
+//    /* UARTs are set for 8 data - no parity - 1 stop bit, see the vInitializeUARTs function to modify
+//     * UART 0 set to 115200 to connect to terminal */
+//    vInitializeUARTs(MSS_UART_115200_BAUD);
+//
+//    init_WD();
     init_spi();
 //    init_rtc();
 //    init_mram();
     //init_CAN(CAN_BAUD_RATE_250K,NULL);
 //    adcs_init_driver();
     flash_device_init(flash_devices[DATA_FLASH]);
+//    initADC();
+//    asMram_init();
+
 }
 
 
@@ -297,6 +313,7 @@ static void vTestCspServer(void * pvParameters){
 
 	/* Init CSP with address 0 */
 	csp_init(CDH_CSP_ADDRESS);
+
 
 	/* Init the CAN interface with hardware filtering */
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
@@ -357,7 +374,7 @@ static void vTestCspClient(void * pvParameters){
 	csp_can_init(CSP_CAN_MASKED, &can_conf);
 
 	/* Setup address 0 to route to CAN interface */
-	csp_rtable_set(0,0, &csp_if_can,0);
+	csp_rtable_set(4,0, &csp_if_can,0);
 
 	size_t freSpace = xPortGetFreeHeapSize();
 	/* Start router task with 100 word stack, OS task priority 1 */
@@ -367,7 +384,7 @@ static void vTestCspClient(void * pvParameters){
 	while(1){
 		csp_conn_t * conn;
 		csp_packet_t * packet;
-		conn = csp_connect(2,0,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
+		conn = csp_connect(2,4,4,1000,0);	//Create a connection. This tells CSP where to send the data (address and destination port).
 		packet = csp_buffer_get(sizeof("Hello World")); // Get a buffer large enough to fit our data. Max size is 256.
 		sprintf(packet->data,"Hello World");
 		packet->length=strlen("Hello World");

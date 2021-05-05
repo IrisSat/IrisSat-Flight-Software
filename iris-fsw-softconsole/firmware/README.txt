@@ -1,6 +1,6 @@
 Export Firmware README
 
-Microsemi Corporation - Microsemi Libero Software Release v12.1 (Version 12.600.0.14)
+Microsemi Corporation - Microsemi Libero Software Release v12.6 (Version 12.900.20.24)
 
-Date    :    Fri May  1 17:07:19 2020
-Project :    C:\Users\howarth3-INS\Desktop\iris-fsw-libero
+Date    :    Fri Mar 26 12:21:23 2021
+Project :    C:\Users\mites\Desktop\CDH-Phase-C-Tests\IrisSat-Flight-Software\iris-fsw-libero

@@ -20,13 +20,13 @@ void vTestRTC(void *pvParameters)
     static volatile int error_occurred = 0;
 
     static Calendar_t buffer = {
-            59u, // seconds
-            59u, // minutes
-            23u, // hours
-            28u, // day
-            2u, // February
-            20u, // year (2020)
-            1u, // weekday
+            00u, // seconds
+            57u, // minutes
+            11u, // hours
+            24u, // day
+            3u, // February
+            21u, // year (2020)
+            4u, // weekday
             1u, // week (not used), HOWEVER it must be 1 or greater.
     };
 

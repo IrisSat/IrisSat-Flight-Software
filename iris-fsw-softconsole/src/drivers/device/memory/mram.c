@@ -22,10 +22,10 @@
 // VARIABLES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// Use this list to maintain the list of MRAMs and the core/slave/ss pins used.
+// Use this list to maintain the list of MRAMs and the core/slave pins used.
 MRAMInstance_t mram_instances[NUM_MRAM_INSTANCES] = {
-    //                    core instance,   slave instance,       ss pin
-    [MRAM_INSTANCE_0] = { MRAM0_SPI_CORE,  MRAM0_SLAVE_CORE,     MRAM0_SS_PIN }
+    //                    core instance,   slave instance
+    [MRAM_INSTANCE_0] = { MRAM0_SPI_CORE,  MRAM0_SLAVE_CORE}
 };
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------

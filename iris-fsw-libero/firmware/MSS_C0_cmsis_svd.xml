@@ -2,7 +2,7 @@
 <device>
   <name>MSS_C0</name>
   <version>1.0</version>
-  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Fri May  1 17:07:18 2020</description>
+  <description>CMSIS description for MSS_C0.  Created by Microsemi SmartDesign on Wed Mar 24 10:16:32 2021</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <peripherals>
@@ -35,12 +35,32 @@
       <baseAddress>0x60000000</baseAddress>
     </peripheral>
     <peripheral>
+      <name>ENVM-FSW_Program</name>
+      <baseAddress>0x60000000</baseAddress>
+    </peripheral>
+    <peripheral>
       <name>CORESPI_C0_0</name>
       <baseAddress>0x50000000%0x30000000</baseAddress>
     </peripheral>
     <peripheral>
       <name>CORESPI_C1_0</name>
       <baseAddress>0x50010000%0x30010000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI_C1_1</name>
+      <baseAddress>0x50020000%0x30020000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI_C1_2</name>
+      <baseAddress>0x50030000%0x30030000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI_C1_3</name>
+      <baseAddress>0x50040000%0x30040000</baseAddress>
+    </peripheral>
+    <peripheral>
+      <name>CORESPI_C1_4</name>
+      <baseAddress>0x50050000%0x30050000</baseAddress>
     </peripheral>
     <peripheral>
       <name>CACHE_BACKDOOR</name>

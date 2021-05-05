@@ -44,5 +44,7 @@ void vTestAdcsDriver(void * pvParameters);
 //FreeRTOS Test task for file system.
 void vTestFS(void * pvParams);
 
+//Tests the onboard ADC measuring the board temp.
+void vTestADC(void * pvParams);
 
 #endif

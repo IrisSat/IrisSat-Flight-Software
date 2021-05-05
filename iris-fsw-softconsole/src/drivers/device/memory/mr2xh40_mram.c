@@ -10,6 +10,8 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 // INCLUDES
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include "drivers/mss_gpio/mss_gpio.h"
+
 #include "drivers/device/memory/mr2xh40_mram.h"
 
 #include <stdlib.h> // Used to include a definition of NULL.
@@ -51,6 +53,26 @@ void mr2xh40_init(MRAMInstance_t * mram)
 	// Note that the datasheet specifies up to a 40 MHz clock rate.
 	//spi_configure_slave(mram->core, mram->slave, SPI_MODE_MASTER, SPI_MODE3, PCLK_DIV_32);
 	spi_configure_gpio_ss(mram->cs_pin);
+	MSS_GPIO_config(MSS_GPIO_10, MSS_GPIO_OUTPUT_MODE);
+	MSS_GPIO_config(MSS_GPIO_11, MSS_GPIO_OUTPUT_MODE);
+	MSS_GPIO_set_output(MSS_GPIO_10, 1);
+	MSS_GPIO_set_output(MSS_GPIO_11, 1);
+
+	//Enable writes so we can write status reg.
+		mr2xh40_single_cmd(mram, MRAM_CMD_WREN);
+
+	//Prepare command: write status reg, with value 0.
+	uint8_t cmd[2] = { MRAM_CMD_WRSR,
+						0};
+
+	spi_transaction_block_write_without_toggle(
+					mram->core,
+					mram->slave,
+					&cmd,
+					2,
+					NULL,
+					0);
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -60,7 +82,6 @@ void mr2xh40_read_status_register(MRAMInstance_t * mram, uint8_t * buffer)
 	spi_transaction_block_read_without_toggle(
 				mram->core,
 				mram->slave,
-				mram->cs_pin,
 				&cmd,
 				1,
 				buffer,
@@ -73,12 +94,12 @@ void mr2xh40_read(MRAMInstance_t * mram, uint32_t address, uint8_t * rd_buffer, 
 	uint8_t cmd[4] = { MRAM_CMD_READ,
 					  (address >> 16) & 0x07,
 					  (address >> 8) & 0xFF,
-					  (address) && 0xFF
+					  (address) & 0xFF
 	};
 	spi_transaction_block_read_without_toggle(
 					mram->core,
 					mram->slave,
-					mram->cs_pin,
+
 					cmd,
 					sizeof(cmd),
 					rd_buffer,
@@ -94,11 +115,12 @@ void mr2xh40_write(MRAMInstance_t * mram, uint32_t address, uint8_t * wr_buffer,
 					  (address) & 0xFF
 	};
 	mr2xh40_single_cmd(mram, MRAM_CMD_WREN); // Enable writes.
+//	uint8_t stat_reg = 0xA5;
+//	mr2xh40_read_status_register(mram, &stat_reg);
 
 	spi_transaction_block_write_without_toggle(
 					mram->core,
 					mram->slave,
-					mram->cs_pin,
 					cmd,
 					sizeof(cmd),
 					wr_buffer,
@@ -113,7 +135,6 @@ static void mr2xh40_single_cmd(MRAMInstance_t * mram, uint8_t cmd)
     spi_transaction_block_read_without_toggle(
        mram->core,
        mram->slave,
-       mram->cs_pin,
        &cmd,
        1,
        NULL,

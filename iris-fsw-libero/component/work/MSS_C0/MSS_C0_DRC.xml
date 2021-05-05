@@ -3,10 +3,17 @@
 <drcreport>
   <header>MSS_C0</header>
   <drc>
-    <status>C:\Microsemi\Libero_SoC_v12.1\Designer/data/drcreport\warn.png</status>
-    <StatusMessage>Warning</StatusMessage>
-    <message>Floating Driver</message>
-    <detail>Floating output pin CORESPI_C0_0:SPIMODE</detail>
-    <crossprobe>liberoaction://cross_probe/smartdesign/MSS_C0/pins/CORESPI_C0_0:SPIMODE</crossprobe>
+    <status>C:\Microsemi\Libero_SoC_v12.6\Designer/data/drcreport\error.png</status>
+    <StatusMessage>Error</StatusMessage>
+    <message>Undriven Pin</message>
+    <detail>Unconnected top level output port MSS_C0:GPIO_6_M2F</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/MSS_C0/pins/MSS_C0:GPIO_6_M2F</crossprobe>
+  </drc>
+  <drc>
+    <status>C:\Microsemi\Libero_SoC_v12.6\Designer/data/drcreport\error.png</status>
+    <StatusMessage>Error</StatusMessage>
+    <message>Undriven Pin</message>
+    <detail>Unconnected top level output port MSS_C0:GPIO_7_M2F</detail>
+    <crossprobe>liberoaction://cross_probe/smartdesign/MSS_C0/pins/MSS_C0:GPIO_7_M2F</crossprobe>
   </drc>
 </drcreport>
