@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-// Created by SmartDesign Fri Mar 26 15:51:08 2021
+// Created by SmartDesign Wed May  5 13:40:48 2021
 // Version: v12.6 12.900.20.24
 //////////////////////////////////////////////////////////////////////
 
@@ -15,11 +15,11 @@
 # Create and Configure the core component CORESPI_C1
 create_and_configure_core -core_vlnv {Actel:DirectCore:CORESPI:5.2.104} -component_name {CORESPI_C1} -params {\
 "APB_DWIDTH:8"  \
-"CFG_CLK:5"  \
+"CFG_CLK:255"  \
 "CFG_FIFO_DEPTH:8"  \
 "CFG_FRAME_SIZE:8"  \
 "CFG_MODE:0"  \
-"CFG_MOT_MODE:0"  \
+"CFG_MOT_MODE:1"  \
 "CFG_MOT_SSEL:true"  \
 "CFG_NSC_OPERATION:0"  \
 "CFG_TI_JMB_FRAMES:false"  \
@@ -148,11 +148,11 @@ assign PRDATA[7:0]           = APB_bif_PRDATA_net_0;
 //--------CORESPI   -   Actel:DirectCore:CORESPI:5.2.104
 CORESPI #( 
         .APB_DWIDTH        ( 8 ),
-        .CFG_CLK           ( 5 ),
+        .CFG_CLK           ( 255 ),
         .CFG_FIFO_DEPTH    ( 8 ),
         .CFG_FRAME_SIZE    ( 8 ),
         .CFG_MODE          ( 0 ),
-        .CFG_MOT_MODE      ( 0 ),
+        .CFG_MOT_MODE      ( 1 ),
         .CFG_MOT_SSEL      ( 1 ),
         .CFG_NSC_OPERATION ( 0 ),
         .CFG_TI_JMB_FRAMES ( 0 ),
