@@ -6,7 +6,7 @@
 
 # Family: SmartFusion2 , Die: M2S010 , Package: 144 TQ
 
-# Date generated: Thu Apr 29 15:54:48 2021 
+# Date generated: Wed May  5 10:25:37 2021 
 
 
 # 
@@ -275,6 +275,12 @@ set_io WDI             \
     -DIRECTION OUTPUT
 
 
+set_io WDSEL           \
+    -pinname 55        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
+
+
 
 # 
 # Dedicated Peripheral I/O Settings
@@ -312,4 +318,9 @@ set_io GPIO_7_M2F      \
 #Ports using Dedicated Pins
 
 #
+
+set_io DEVRST_N       \
+    -pinname 72       \
+    -DIRECTION INPUT
+
 

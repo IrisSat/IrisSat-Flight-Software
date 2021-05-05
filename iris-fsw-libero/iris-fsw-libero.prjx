@@ -72,7 +72,7 @@ PARENT="<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf"
 ENDFILE
 VALUE "<project>\component\Actel\DirectCore\CoreAPB3\4.1.100\coreparameters.v,tb_hdl"
 STATE="utd"
-TIME="1619721882"
+TIME="1620226706"
 SIZE="1239"
 PARENT="<project>\component\Actel\DirectCore\CoreAPB3\4.1.100\CoreAPB3.cxf"
 IS_READONLY="TRUE"
@@ -457,15 +457,14 @@ PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 ENDFILE
 VALUE "<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf,actgen_cxf"
 STATE="utd"
-TIME="1619721882"
+TIME="1620226706"
 SIZE="16937"
 ENDFILE
 VALUE "<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.v,hdl"
 STATE="utd"
-TIME="1619721882"
+TIME="1620226706"
 SIZE="13756"
 PARENT="<project>\component\work\CoreAPB3_C0\CoreAPB3_C0.cxf"
-IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\CoreResetP_C0\CoreResetP_C0.cxf,actgen_cxf"
 STATE="utd"
@@ -493,19 +492,19 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\CORESPI_C1\CORESPI_C1.cxf,actgen_cxf"
 STATE="utd"
-TIME="1617982159"
+TIME="1620228125"
 SIZE="6540"
 ENDFILE
 VALUE "<project>\component\work\CORESPI_C1\CORESPI_C1.v,hdl"
 STATE="utd"
-TIME="1617982159"
+TIME="1620228125"
 SIZE="4976"
 PARENT="<project>\component\work\CORESPI_C1\CORESPI_C1.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\DESIGN_FIRMWARE\DESIGN_FIRMWARE.cxf,actgen_cxf"
 STATE="utd"
-TIME="1619721882"
+TIME="1620226706"
 SIZE="3702"
 ENDFILE
 VALUE "<project>\component\work\FCCC_C0\FCCC_C0.cxf,actgen_cxf"
@@ -535,42 +534,40 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\MSS_C0.cxf,actgen_cxf"
 STATE="utd"
-TIME="1619728000"
+TIME="1620228125"
 SIZE="12675"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\MSS_C0.v,hdl"
 STATE="utd"
-TIME="1619727999"
-SIZE="39456"
+TIME="1620228125"
+SIZE="38501"
 PARENT="<project>\component\work\MSS_C0\MSS_C0.cxf"
-IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0\subsystem.bfm,sim"
 STATE="utd"
-TIME="1619727999"
-SIZE="806"
+TIME="1620228125"
+SIZE="781"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\CM3_compile_bfm.tcl,sim"
 STATE="utd"
-TIME="1619727925"
-SIZE="504"
+TIME="1620228125"
+SIZE="491"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf,actgen_cxf"
 STATE="utd"
-TIME="1619727927"
+TIME="1620228125"
 SIZE="23907"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.v,hdl"
 STATE="utd"
-TIME="1619727925"
-SIZE="52195"
+TIME="1620228125"
+SIZE="51281"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
-IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS_pre.v,hdl"
 STATE="utd"
-TIME="1619727925"
-SIZE="59275"
+TIME="1620226706"
+SIZE="57868"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 BEGIN_USE_CONSTRAINT
 TOOL_CONSTRAINT_TYPE="ideSYNTHESIS"
@@ -581,8 +578,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\MSS_C0_MSS_syn.v,hdl"
 STATE="utd"
-TIME="1619727925"
-SIZE="51313"
+TIME="1620226706"
+SIZE="49907"
 PARENT="<project>\component\work\MSS_C0_MSS\MSS_C0_MSS.cxf"
 BEGIN_USE_CONSTRAINT
 TOOL_CONSTRAINT_TYPE="ideSYNTHESIS"
@@ -593,8 +590,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\test.bfm,sim"
 STATE="utd"
-TIME="1619727925"
-SIZE="734"
+TIME="1620228125"
+SIZE="710"
 ENDFILE
 VALUE "<project>\component\work\MSS_C0_MSS\user.bfm,sim"
 STATE="utd"
@@ -628,8 +625,8 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\constraint\io\user.pdc,io_pdc"
 STATE="utd"
-TIME="1619728126"
-SIZE="5612"
+TIME="1620228337"
+SIZE="5717"
 IS_TARGET="TRUE"
 ENDFILE
 VALUE "<project>\simulation\bfmtovec_compile.tcl,sim"
@@ -682,22 +679,22 @@ PARENT="<project>\component\Actel\DirectCore\CORESPI\5.2.104\CORESPI.cxf"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.so,so"
 STATE="utd"
-TIME="1619728055"
+TIME="1620227538"
 SIZE="267"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0.vm,syn_vm"
 STATE="utd"
-TIME="1619728053"
-SIZE="996242"
+TIME="1620227536"
+SIZE="995642"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_syn.prj,prj"
 STATE="utd"
-TIME="1619728056"
+TIME="1620227539"
 SIZE="6233"
 ENDFILE
 VALUE "<project>\synthesis\MSS_C0_vm.sdc,syn_sdc"
 STATE="utd"
-TIME="1619728053"
+TIME="1620227537"
 SIZE="1099"
 ENDFILE
 ENDLIST
@@ -886,8 +883,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v12.6\SynplifyPro\bin\synplify_pro.exe"
-PARAM=""
-BATCH=0
+PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
+BATCH=1
 LICENSE=""
 IS32BIT="1"
 EndProfile
@@ -957,11 +954,12 @@ ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
 Reports;Reports;0
-ReportsCurrentItem;Run Programming Action:MSS_C0_PROGRAM.log
+ReportsCurrentItem;Synthesize:synplify.log
+StartPage;StartPage;0
 Constraint Manager;Constraint Manager;0
 SmartDesign;MSS_C0;0
 SmartDesign;MSS_C0_MSS;0
-StartPage;StartPage;0
+SmartDesign;DESIGN_FIRMWARE;0
 ACTIVEVIEW;Constraint Manager
 ENDLIST
 LIST ModuleSubBlockList
